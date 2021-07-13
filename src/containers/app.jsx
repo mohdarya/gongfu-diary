@@ -1,8 +1,9 @@
-import {createStackNavigator} from "@react-navigation/stack";
+import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import {persistor, store} from "../reducer/store";
 import {Provider} from "react-redux";
 import {NavigationContainer} from "@react-navigation/native";
 import {PersistGate} from "redux-persist/integration/react";
+import HomeScreen from "./homescreen";
 
 function App(props)
 {
@@ -23,7 +24,7 @@ function App(props)
 
                                      }}
                     >
-                        <Stack.Screen name="HomePage" component={HomePage}/>
+                        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
 
                     </Stack.Navigator>
                 </NavigationContainer>
@@ -34,4 +35,4 @@ function App(props)
 }
 
 
-    export default App
+export default App

@@ -55,7 +55,7 @@ function HomeScreen(props) {
         settingButton: {
 
             backgroundColor: 'grey',
-            borderRadius: 10,
+            borderRadius: 5,
             height: '45%',
             width: '25%',
             alignItems: 'center',

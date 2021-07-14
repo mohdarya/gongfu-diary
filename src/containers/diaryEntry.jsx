@@ -24,7 +24,7 @@ function DiaryEntry(props) {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
-          height: 75,
+       flex: 1,
             margin: 10,
             marginTop: 0,
 
@@ -37,7 +37,7 @@ function DiaryEntry(props) {
             marginRight: 10,
             flexDirection: 'row',
             justifyContent: 'space-around',
-           height: 160,
+           flex: 2,
         },
         countdownTimer: {
 
@@ -83,18 +83,17 @@ function DiaryEntry(props) {
 
         },
         incrementTag: {
-            fontSize: 20,
+            fontSize: 17,
             margin: 5,
             marginTop: 1,
 
         }, incrementNumber: {
             alignSelf: 'flex-end',
-            fontSize: 35,
-            marginRight: 20,
-            marginBottom: 10,
+            fontSize: 30,
+
 
         }, teaNameView: {
-          height: 90,
+          height: 80,
             flexDirection: 'row',
             marginBottom: 30,
             marginLeft: 20,
@@ -106,7 +105,7 @@ function DiaryEntry(props) {
             justifyContent: 'space-between',
         }, teaFlavorView: {
             backgroundColor: 'grey',
-            height: 350,
+            flex: 4,
 
             marginLeft: 20,
             marginRight: 20,
@@ -120,23 +119,23 @@ function DiaryEntry(props) {
             alignItems: 'center',
         },
         teaNameTag: {
-            fontSize: 20,
+            fontSize: 17,
             margin: 5,
             marginTop: 1,
         },
         teaName: {
             height: '100%',
             textAlign: 'center',
+            textAlignVertical: 'center',
             fontSize: 15,
-            marginRight: 5,
-            
             borderTopRightRadius: 20,
             color: 'black',
         },
         teaNameTextView: {
 
 
-            width: '75%',
+            width: '70%',
+            justifyContent: 'center',
             alignSelf: 'flex-end',
 
 
@@ -158,7 +157,13 @@ function DiaryEntry(props) {
             textAlign: 'center',
             bottom: '5%',
             fontSize: 25,
-        }
+        },
+        incrementNumberView: {
+
+            height: '50%',
+            marginRight: 20,
+            marginBottom: 20,
+        },
 
 
     });
@@ -195,7 +200,7 @@ function DiaryEntry(props) {
                         </Text>
                     </View>
 
-                    <View>
+                    <View style={styles.incrementNumberView}>
                         <Text style={styles.incrementNumber}>
                             5
                         </Text>
@@ -214,12 +219,12 @@ function DiaryEntry(props) {
                     </Text>
                 </View>
 
-                <View style={styles.teaNameTextView}>
-                    <TextInput style={styles.teaName}
-                               multiline={true}>
+                <TouchableOpacity style={styles.teaNameTextView}>
+                    <Text style={styles.teaName}
+                    >
                         Red Tiger Oolong
-                    </TextInput>
-                </View>
+                    </Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.teaFlavorView}>
 

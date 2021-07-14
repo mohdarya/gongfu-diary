@@ -1,3 +1,4 @@
+import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import {persistor, store} from "../reducer/store";
 import {Provider} from "react-redux";
@@ -15,7 +16,7 @@ function App(props)
             <PersistGate loading={null} persistor={persistor}>
                 <NavigationContainer>
 
-                    <Stack.Navigator initialRouteName="HomePage"
+                    <Stack.Navigator initialRouteName="HomeScreen"
                                      screenOptions={{
                                          headerShown: false,
                                          gestureEnabled: true,

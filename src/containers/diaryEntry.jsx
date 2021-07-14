@@ -1,5 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
+import {useHeaderHeight} from "@react-navigation/stack";
 
 function DiaryEntry(props) {
 
@@ -14,7 +24,7 @@ function DiaryEntry(props) {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
-            flex: 1,
+          height: 75,
             margin: 10,
             marginTop: 0,
 
@@ -27,7 +37,7 @@ function DiaryEntry(props) {
             marginRight: 10,
             flexDirection: 'row',
             justifyContent: 'space-around',
-            flex: 2,
+           height: 160,
         },
         countdownTimer: {
 
@@ -45,13 +55,7 @@ function DiaryEntry(props) {
             fontSize: 45,
         },
 
-        list: {
-            backgroundColor: 'grey',
-            margin: 20,
-            flex: 7,
-            borderTopRightRadius: 20,
-            borderBottomLeftRadius: 20,
-        },
+
         endButton: {
 
             backgroundColor: 'grey',
@@ -90,7 +94,7 @@ function DiaryEntry(props) {
             marginBottom: 10,
 
         }, teaNameView: {
-            flex: 0.8,
+          height: 90,
             flexDirection: 'row',
             marginBottom: 30,
             marginLeft: 20,
@@ -102,7 +106,8 @@ function DiaryEntry(props) {
             justifyContent: 'space-between',
         }, teaFlavorView: {
             backgroundColor: 'grey',
-            flex: 4,
+            height: 350,
+
             marginLeft: 20,
             marginRight: 20,
             borderRadius: 20,
@@ -110,6 +115,9 @@ function DiaryEntry(props) {
             borderBottomRightRadius: 0,
         }, doneButtonView: {
             flex: 2,
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
         },
         teaNameTag: {
             fontSize: 20,
@@ -120,22 +128,53 @@ function DiaryEntry(props) {
             height: '100%',
             textAlign: 'center',
             fontSize: 15,
+            marginRight: 5,
+            
             borderTopRightRadius: 20,
             color: 'black',
         },
         teaNameTextView: {
 
 
-
-            width: '70%',
+            width: '75%',
             alignSelf: 'flex-end',
 
 
+        },
+        graphView: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+
+        }, doneButton: {
+            backgroundColor: 'grey',
+            width: 200,
+            height: 50,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignContent: 'center',
+        },
+        doneButtonText: {
+            textAlign: 'center',
+            bottom: '5%',
+            fontSize: 25,
         }
 
 
     });
     return (
+
+        <KeyboardAvoidingView
+            style={{flex: 1}}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={useHeaderHeight() + 27}>
+
+            <TouchableOpacity style={{flex: 1}} onPress={() =>
+            {
+                Keyboard.dismiss();
+
+            }
+            } activeOpacity={1}>
         <View style={styles.container}>
 
             <View style={styles.topBar}>
@@ -177,20 +216,38 @@ function DiaryEntry(props) {
 
                 <View style={styles.teaNameTextView}>
                     <TextInput style={styles.teaName}
-                    multiline={true}>
+                               multiline={true}>
                         Red Tiger Oolong
                     </TextInput>
                 </View>
             </View>
             <View style={styles.teaFlavorView}>
 
+                <View>
+                    <Text style={styles.teaNameTag}>
+                        Flavor
+                    </Text>
+                </View>
+                <View style={styles.graphView}>
+                    <Text>
+                        graph
+                    </Text>
+                </View>
             </View>
             <View style={styles.doneButtonView}>
-
+                <TouchableOpacity style={styles.doneButton}>
+                    <Text style={styles.doneButtonText}>
+                        Done
+                    </Text>
+                </TouchableOpacity>
             </View>
 
 
         </View>
+
+            </TouchableOpacity>
+
+        </KeyboardAvoidingView>
     )
 }
 

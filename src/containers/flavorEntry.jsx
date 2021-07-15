@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Keyboard,
     KeyboardAvoidingView,
-    Platform,
+    Platform, ScrollView,
     StyleSheet,
     Text,
     TextInput,
@@ -10,6 +10,8 @@ import {
     View
 } from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
+import FlavorItem from "../components/flavorListItem";
+
 
 function FlavorEntry(props) {
 
@@ -21,27 +23,63 @@ function FlavorEntry(props) {
             backgroundColor: 'white',
 
         },
+        doneButtonView: {
+            flex: 1,
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+        },
+        doneButton: {
+            backgroundColor: 'grey',
+            width: 200,
+            height: 50,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignContent: 'center',
+        },
+        doneButtonText: {
+            textAlign: 'center',
+            bottom: '5%',
+            fontSize: 25,
+        }, flavorList: {
+            flex: 8,
+
+        },
+
 
     })
 
     return (
-    <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={useHeaderHeight() + 27}>
 
-        <TouchableOpacity style={{flex: 1}} onPress={() =>
-        {
-            Keyboard.dismiss();
-
-        }
-        } activeOpacity={1}>
             <View style={styles.container}>
-
+                <View style={styles.flavorList}>
+                <ScrollView  style={{flex: 1}}  contentContainerStyle={{flexGrow:1}}>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                    <FlavorItem/>
+                </ScrollView>
+                </View>
+                <View style={styles.doneButtonView}>
+                    <TouchableOpacity style={styles.doneButton}>
+                        <Text style={styles.doneButtonText}>
+                            Done
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
             </View>
-        </TouchableOpacity>
-    </KeyboardAvoidingView>
+
+
     )
 }
 

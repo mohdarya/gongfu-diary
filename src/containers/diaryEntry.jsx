@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
+import {Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
 
 function DiaryEntry(props) {
@@ -24,7 +15,7 @@ function DiaryEntry(props) {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
-       flex: 1,
+            flex: 1,
             margin: 10,
             marginTop: 0,
 
@@ -37,7 +28,7 @@ function DiaryEntry(props) {
             marginRight: 10,
             flexDirection: 'row',
             justifyContent: 'space-around',
-           flex: 2,
+            flex: 2,
         },
         countdownTimer: {
 
@@ -93,7 +84,7 @@ function DiaryEntry(props) {
 
 
         }, teaNameView: {
-          height: 80,
+            height: 80,
             flexDirection: 'row',
             marginBottom: 30,
             marginLeft: 20,
@@ -174,81 +165,80 @@ function DiaryEntry(props) {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={useHeaderHeight() + 27}>
 
-            <TouchableOpacity style={{flex: 1}} onPress={() =>
-            {
+            <TouchableOpacity style={{flex: 1}} onPress={() => {
                 Keyboard.dismiss();
 
             }
             } activeOpacity={1}>
-        <View style={styles.container}>
+                <View style={styles.container}>
 
-            <View style={styles.topBar}>
+                    <View style={styles.topBar}>
 
 
-                <TouchableOpacity style={styles.endButton}>
-                    <Text style={styles.endButtonText}>
-                        End
-                    </Text>
-                </TouchableOpacity>
+                        <TouchableOpacity style={styles.endButton}>
+                            <Text style={styles.endButtonText}>
+                                End
+                            </Text>
+                        </TouchableOpacity>
 
-            </View>
-            <View style={styles.timerView}>
-                <TouchableOpacity style={styles.incrementView}>
-                    <View>
-                        <Text style={styles.incrementTag}>
-                            Increment
-                        </Text>
+                    </View>
+                    <View style={styles.timerView}>
+                        <TouchableOpacity style={styles.incrementView}>
+                            <View>
+                                <Text style={styles.incrementTag}>
+                                    Increment
+                                </Text>
+                            </View>
+
+                            <View style={styles.incrementNumberView}>
+                                <Text style={styles.incrementNumber}>
+                                    5
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={styles.countdownTimer}>
+                            <Text style={styles.countdownTimerText}>
+                                15
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.teaNameView}>
+                        <View>
+                            <Text style={styles.teaNameTag}>
+                                Tea
+                            </Text>
+                        </View>
+
+                        <TouchableOpacity style={styles.teaNameTextView}>
+                            <Text style={styles.teaName}
+                            >
+                                Red Tiger Oolong
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.teaFlavorView}>
+
+                        <View>
+                            <Text style={styles.teaNameTag}>
+                                Flavor
+                            </Text>
+                        </View>
+                        <View style={styles.graphView}>
+                            <Text>
+                                graph
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.doneButtonView}>
+                        <TouchableOpacity style={styles.doneButton}>
+                            <Text style={styles.doneButtonText}>
+                                Done
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.incrementNumberView}>
-                        <Text style={styles.incrementNumber}>
-                            5
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-                <View style={styles.countdownTimer}>
-                    <Text style={styles.countdownTimerText}>
-                        15
-                    </Text>
-                </View>
-            </View>
-            <View style={styles.teaNameView}>
-                <View>
-                    <Text style={styles.teaNameTag}>
-                        Tea
-                    </Text>
-                </View>
 
-                <TouchableOpacity style={styles.teaNameTextView}>
-                    <Text style={styles.teaName}
-                    >
-                        Red Tiger Oolong
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.teaFlavorView}>
-
-                <View>
-                    <Text style={styles.teaNameTag}>
-                        Flavor
-                    </Text>
                 </View>
-                <View style={styles.graphView}>
-                    <Text>
-                        graph
-                    </Text>
-                </View>
-            </View>
-            <View style={styles.doneButtonView}>
-                <TouchableOpacity style={styles.doneButton}>
-                    <Text style={styles.doneButtonText}>
-                        Done
-                    </Text>
-                </TouchableOpacity>
-            </View>
-
-
-        </View>
 
             </TouchableOpacity>
 

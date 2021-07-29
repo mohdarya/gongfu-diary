@@ -6,9 +6,11 @@ import {NavigationContainer} from "@react-navigation/native";
 import {PersistGate} from "redux-persist/integration/react";
 import HomeScreen from "./homescreen";
 import DiaryEntry from "./diaryEntry";
+import FlavorEntry from "./flavorEntry";
+import DiaryListingPage from "./diaryListingPage";
+import FlavorDiary from "./flavorDiary";
 
-function App(props)
-{
+function App(props) {
     const Stack = createStackNavigator();
     return (
 
@@ -17,7 +19,7 @@ function App(props)
             <PersistGate loading={null} persistor={persistor}>
                 <NavigationContainer>
 
-                    <Stack.Navigator initialRouteName="DiaryEntry"
+                    <Stack.Navigator initialRouteName="HomeScreen"
                                      screenOptions={{
                                          headerShown: false,
                                          gestureEnabled: true,
@@ -28,7 +30,9 @@ function App(props)
                     >
                         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
                         <Stack.Screen name="DiaryEntry" component={DiaryEntry}/>
-
+                        <Stack.Screen name="FlavorEntry" component={FlavorEntry}/>
+                        <Stack.Screen name="DiaryListing" component={DiaryListingPage}/>
+                        <Stack.Screen name="FlavorDiaryEntry" component={FlavorDiary}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </PersistGate>

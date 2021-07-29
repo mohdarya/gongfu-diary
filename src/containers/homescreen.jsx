@@ -1,16 +1,19 @@
 import React from 'react';
-import {ScrollView, Text,StyleSheet, TouchableOpacity, View} from "react-native";
+import {ScrollView, Text, StyleSheet, TouchableOpacity, View} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from "@react-navigation/core";
+
 function HomeScreen(props) {
 
 
+    const navigation = useNavigation();
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: 'white',
 
         },
-        topBar:{
+        topBar: {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -20,7 +23,7 @@ function HomeScreen(props) {
 
 
         },
-        buttonsView:{
+        buttonsView: {
             alignItems: 'center',
 
             marginLeft: 10,
@@ -40,12 +43,12 @@ function HomeScreen(props) {
         },
         buttonText: {
 
-          textAlign: 'center',
+            textAlign: 'center',
 
             fontSize: 45,
         },
 
-        list:{
+        list: {
             backgroundColor: 'grey',
             margin: 20,
             flex: 7,
@@ -65,27 +68,31 @@ function HomeScreen(props) {
 
             textAlign: 'center',
             bottom: '5%',
-          fontSize: 23,
+            fontSize: 23,
         }, listText: {
-          fontSize: 20,
+            fontSize: 20,
             marginTop: 10,
             margin: 15,
         },
 
 
     });
+
+
+    const goToDiary = () => {
+        navigation.navigate('DiaryEntry')
+    }
     return (
         <View style={styles.container}>
 
             <View style={styles.topBar}>
 
 
-
-                    <TouchableOpacity style={styles.settingButton}>
-                        <Text style={styles.settingButtonText}>
-                            setting
-                        </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style={styles.settingButton}>
+                    <Text style={styles.settingButtonText}>
+                        setting
+                    </Text>
+                </TouchableOpacity>
 
                 <View>
                     <Icon.Button
@@ -102,19 +109,22 @@ function HomeScreen(props) {
                     />
                 </View>
             </View>
-            <View  style={styles.buttonsView}>
+            <View style={styles.buttonsView}>
                 <TouchableOpacity style={styles.buttons}>
                     <Text style={styles.buttonText}>
                         Timer
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttons}>
+                <TouchableOpacity style={styles.buttons}
+                                  activeOpacity={1}
+                                  onPress={goToDiary}
+                >
                     <Text style={styles.buttonText}>
                         Diary
                     </Text>
                 </TouchableOpacity>
             </View>
-            <View  style={styles.list}>
+            <View style={styles.list}>
                 <Text style={styles.listText}>
                     History
                 </Text>

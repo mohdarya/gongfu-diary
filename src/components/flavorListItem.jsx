@@ -12,20 +12,18 @@ import {
 import Slider from '@react-native-community/slider';
 
 
-
-function FlavorItem(props)
-{
+function FlavorItem(props) {
 
     const styles = StyleSheet.create({
         container: {
-           height: 120,
+            height: 120,
             margin: 15,
             width: 'auto',
             justifyContent: 'space-between',
 
         }, sliderView: {
             height: '52%',
-            width: '90%',
+            width: '100%',
             borderRadius: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
@@ -33,7 +31,7 @@ function FlavorItem(props)
         },
         detailView: {
             height: '38%',
-            width: '50%',
+            width: '40%',
 
             borderRadius: 20,
             borderTopLeftRadius: 0,
@@ -59,38 +57,39 @@ function FlavorItem(props)
         },
 
 
-
     })
 
     const [value, setValue] = useState(0)
-    return(
+    return (
         <View style={styles.container}>
             <View style={styles.sliderView}>
                 <Text style={styles.fieldTag}>
                     fruity
                 </Text>
-                <View >
+                <View>
                     <View style={styles.valueTextView}>
-                    <Text style={styles.valueText}>
-                        {value}
-                    </Text>
+                        <Text style={styles.valueText}>
+                            {value}
+                        </Text>
                     </View>
-                <Slider
-                    style={{width: '100%', height: 40}}
-                    minimumValue={0}
-                    maximumValue={10}
-                    step={1}
-                    onValueChange={(value => {setValue(value)})}
-                    minimumTrackTintColor="#FFFFFF"
-                    maximumTrackTintColor="#000000"
-                />
+                    <Slider
+                        style={{width: '100%', height: 40}}
+                        minimumValue={0}
+                        maximumValue={10}
+                        step={1}
+                        onValueChange={(value => {
+                            setValue(value)
+                        })}
+                        minimumTrackTintColor="#FFFFFF"
+                        maximumTrackTintColor="#000000"
+                    />
                 </View>
             </View>
             <View style={styles.detailView}>
-                    <Text style={styles.fieldTag}>
-                        detail
-                    </Text>
-                <Text style={{alignSelf: 'flex-end', marginRight: 15, top: '20%',fontSize: 20,}}>
+                <Text style={styles.fieldTag}>
+                    detail
+                </Text>
+                <Text style={{alignSelf: 'flex-end', marginRight: 15, top: '20%', fontSize: 20,}}>
                     cherry
                 </Text>
             </View>

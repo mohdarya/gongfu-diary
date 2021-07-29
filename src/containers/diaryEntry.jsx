@@ -1,10 +1,12 @@
 import React from 'react';
 import {Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
+import {useNavigation} from "@react-navigation/core";
 
 function DiaryEntry(props) {
 
 
+    const navigation = useNavigation()
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -158,6 +160,10 @@ function DiaryEntry(props) {
 
 
     });
+
+    const goToFlavorSelection = () => {
+        navigation.navigate('FlavorEntry')
+    }
     return (
 
         <KeyboardAvoidingView
@@ -216,7 +222,10 @@ function DiaryEntry(props) {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.teaFlavorView}>
+                    <TouchableOpacity style={styles.teaFlavorView}
+                                      activeOpacity={1}
+                                      onPress={goToFlavorSelection}
+                    >
 
                         <View>
                             <Text style={styles.teaNameTag}>
@@ -228,7 +237,7 @@ function DiaryEntry(props) {
                                 graph
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.doneButtonView}>
                         <TouchableOpacity style={styles.doneButton}>
                             <Text style={styles.doneButtonText}>

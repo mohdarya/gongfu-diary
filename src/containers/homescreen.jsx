@@ -80,7 +80,7 @@ function HomeScreen(props) {
 
 
     const goToDiary = () => {
-        navigation.navigate('DiaryEntry')
+        navigation.navigate('TeaName')
     }
     return (
         <View style={styles.container}>

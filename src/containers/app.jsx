@@ -9,6 +9,7 @@ import DiaryEntry from "./diaryEntry";
 import FlavorEntry from "./flavorEntry";
 import DiaryListingPage from "./diaryListingPage";
 import FlavorDiary from "./flavorDiary";
+import TeaNameEntryPage from "./teaNameEntryPage";
 
 function App(props) {
     const Stack = createStackNavigator();
@@ -33,6 +34,7 @@ function App(props) {
                         <Stack.Screen name="FlavorEntry" component={FlavorEntry}/>
                         <Stack.Screen name="DiaryListing" component={DiaryListingPage}/>
                         <Stack.Screen name="FlavorDiaryEntry" component={FlavorDiary}/>
+                        <Stack.Screen name="TeaName" component={TeaNameEntryPage}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </PersistGate>

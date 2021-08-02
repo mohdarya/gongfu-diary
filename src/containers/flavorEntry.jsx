@@ -11,10 +11,10 @@ import {
 } from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
 import FlavorItem from "../components/flavorListItem";
+import {useRoute} from "@react-navigation/core";
 
 
 function FlavorEntry(props) {
-
 
 
     const styles = StyleSheet.create({
@@ -51,9 +51,9 @@ function FlavorEntry(props) {
 
     return (
 
-            <View style={styles.container}>
-                <View style={styles.flavorList}>
-                <ScrollView  style={{flex: 1}}  contentContainerStyle={{flexGrow:1}}>
+        <View style={styles.container}>
+            <View style={styles.flavorList}>
+                <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
                     <FlavorItem/>
                     <FlavorItem/>
                     <FlavorItem/>
@@ -68,16 +68,16 @@ function FlavorEntry(props) {
                     <FlavorItem/>
                     <FlavorItem/>
                 </ScrollView>
-                </View>
-                <View style={styles.doneButtonView}>
-                    <TouchableOpacity style={styles.doneButton}>
-                        <Text style={styles.doneButtonText}>
-                            Done
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-
             </View>
+            <View style={styles.doneButtonView}>
+                <TouchableOpacity style={styles.doneButton}>
+                    <Text style={styles.doneButtonText}>
+                        Done
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+        </View>
 
 
     )

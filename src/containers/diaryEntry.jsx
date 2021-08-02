@@ -1,12 +1,16 @@
 import React from 'react';
 import {Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
-import {useNavigation} from "@react-navigation/core";
+import {useNavigation, useRoute} from "@react-navigation/core";
 
 function DiaryEntry(props) {
 
 
     const navigation = useNavigation()
+    const route = useRoute()
+
+
+    const {teaName, startingTime} = route.params
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -204,7 +208,7 @@ function DiaryEntry(props) {
                         </TouchableOpacity>
                         <View style={styles.countdownTimer}>
                             <Text style={styles.countdownTimerText}>
-                                15
+                                {startingTime}
                             </Text>
                         </View>
                     </View>
@@ -218,7 +222,7 @@ function DiaryEntry(props) {
                         <TouchableOpacity style={styles.teaNameTextView}>
                             <Text style={styles.teaName}
                             >
-                                Red Tiger Oolong
+                                {teaName}
                             </Text>
                         </TouchableOpacity>
                     </View>

@@ -1,5 +1,14 @@
 import React from 'react';
-import {Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
 import {useNavigation, useRoute} from "@react-navigation/core";
 
@@ -11,6 +20,7 @@ function DiaryEntry(props) {
 
 
     const {teaName, startingTime} = route.params
+    let increment = 5;
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -71,6 +81,7 @@ function DiaryEntry(props) {
         incrementView: {
             backgroundColor: 'grey',
             borderRadius: 20,
+            flexDirection: 'row',
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
             justifyContent: 'space-between',
@@ -87,6 +98,7 @@ function DiaryEntry(props) {
         }, incrementNumber: {
             alignSelf: 'flex-end',
             fontSize: 30,
+            color: 'black',
 
 
         }, teaNameView: {
@@ -157,7 +169,10 @@ function DiaryEntry(props) {
         },
         incrementNumberView: {
 
-            height: '50%',
+
+            justifyContent: 'flex-end',
+
+            height: '100%',
             marginRight: 20,
             marginBottom: 20,
         },
@@ -170,92 +185,92 @@ function DiaryEntry(props) {
     }
     return (
 
-        <KeyboardAvoidingView
-            style={{flex: 1}}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={useHeaderHeight() + 27}>
 
-            <TouchableOpacity style={{flex: 1}} onPress={() => {
-                Keyboard.dismiss();
+        <TouchableOpacity style={{flex: 1}} onPress={() => {
+            Keyboard.dismiss();
 
-            }
-            } activeOpacity={1}>
-                <View style={styles.container}>
+        }
+        } activeOpacity={1}>
+            <View style={styles.container}>
 
-                    <View style={styles.topBar}>
+                <View style={styles.topBar}>
 
 
-                        <TouchableOpacity style={styles.endButton}>
-                            <Text style={styles.endButtonText}>
-                                End
-                            </Text>
-                        </TouchableOpacity>
-
-                    </View>
-                    <View style={styles.timerView}>
-                        <TouchableOpacity style={styles.incrementView}>
-                            <View>
-                                <Text style={styles.incrementTag}>
-                                    Increment
-                                </Text>
-                            </View>
-
-                            <View style={styles.incrementNumberView}>
-                                <Text style={styles.incrementNumber}>
-                                    5
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={styles.countdownTimer}>
-                            <Text style={styles.countdownTimerText}>
-                                {startingTime}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.teaNameView}>
-                        <View>
-                            <Text style={styles.teaNameTag}>
-                                Tea
-                            </Text>
-                        </View>
-
-                        <TouchableOpacity style={styles.teaNameTextView}>
-                            <Text style={styles.teaName}
-                            >
-                                {teaName}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity style={styles.teaFlavorView}
-                                      activeOpacity={1}
-                                      onPress={goToFlavorSelection}
-                    >
-
-                        <View>
-                            <Text style={styles.teaNameTag}>
-                                Flavor
-                            </Text>
-                        </View>
-                        <View style={styles.graphView}>
-                            <Text>
-                                graph
-                            </Text>
-                        </View>
+                    <TouchableOpacity style={styles.endButton}>
+                        <Text style={styles.endButtonText}>
+                            End
+                        </Text>
                     </TouchableOpacity>
-                    <View style={styles.doneButtonView}>
-                        <TouchableOpacity style={styles.doneButton}>
-                            <Text style={styles.doneButtonText}>
-                                Done
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
 
                 </View>
+                <View style={styles.timerView}>
+                    <View style={styles.incrementView}>
+                        <View>
+                            <Text style={styles.incrementTag}>
+                                Increment
+                            </Text>
+                        </View>
 
-            </TouchableOpacity>
+                        <View style={styles.incrementNumberView}>
+                            <TextInput selectTextOnFocus={true} keyboardType={"number-pad"}
+                                       style={styles.incrementNumber}
+                                       onChangeText={(text) => {
+                                           increment = text
+                                       }}>
+                                {increment}
+                            </TextInput>
+                        </View>
+                    </View>
+                    <View style={styles.countdownTimer}>
+                        <Text style={styles.countdownTimerText}>
+                            {startingTime}
+                        </Text>
+                    </View>
+                </View>
+                <View style={styles.teaNameView}>
+                    <View>
+                        <Text style={styles.teaNameTag}>
+                            Tea
+                        </Text>
+                    </View>
 
-        </KeyboardAvoidingView>
+                    <TouchableOpacity style={styles.teaNameTextView}>
+                        <Text style={styles.teaName}
+                        >
+                            {teaName}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.teaFlavorView}
+                                  activeOpacity={1}
+                                  onPress={goToFlavorSelection}
+                >
+
+                    <View>
+                        <Text style={styles.teaNameTag}>
+                            Flavor
+                        </Text>
+                    </View>
+                    <View style={styles.graphView}>
+                        <Text>
+                            graph
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+                <View style={styles.doneButtonView}>
+                    <TouchableOpacity style={styles.doneButton}>
+                        <Text style={styles.doneButtonText}>
+                            Start
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+
+            </View>
+
+        </TouchableOpacity>
+
+
     )
 }
 

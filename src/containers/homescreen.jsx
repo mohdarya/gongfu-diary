@@ -110,7 +110,9 @@ function HomeScreen(props) {
                 </View>
             </View>
             <View style={styles.buttonsView}>
-                <TouchableOpacity style={styles.buttons}>
+                <TouchableOpacity style={styles.buttons} activeOpacity={1} onPress={() => {
+                    navigation.navigate("TimerTeaName")
+                }}>
                     <Text style={styles.buttonText}>
                         Timer
                     </Text>

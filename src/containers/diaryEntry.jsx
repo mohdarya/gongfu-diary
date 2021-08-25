@@ -174,6 +174,9 @@ function DiaryEntry(props) {
     });
 
 
+    const endButtonAction = () => {
+        navigation.navigate("HomeScreen")
+    }
     const startInterval = () => {
 
         setCurrenTime(countdownTimer)
@@ -219,7 +222,7 @@ function DiaryEntry(props) {
                 <View style={styles.topBar}>
 
 
-                    <TouchableOpacity style={styles.endButton}>
+                    <TouchableOpacity style={styles.endButton} activeOpacity={1} onPress={endButtonAction}>
                         <Text style={styles.endButtonText}>
                             End
                         </Text>

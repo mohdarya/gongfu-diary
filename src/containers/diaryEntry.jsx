@@ -15,7 +15,7 @@ function DiaryEntry(props) {
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
-    let increment = 5;
+    const [increment, setIncrement] = useState(5);
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -239,7 +239,7 @@ function DiaryEntry(props) {
                             <TextInput selectTextOnFocus={true} keyboardType={"number-pad"}
                                        style={styles.incrementNumber}
                                        onChangeText={(text) => {
-                                           increment = text
+                                           setIncrement(parseInt(text))
                                        }}>
                                 {increment}
                             </TextInput>

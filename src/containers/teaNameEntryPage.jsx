@@ -16,7 +16,7 @@ import {useNavigation} from "@react-navigation/core";
 function TeaNameEntryPage(props) {
 
     let startingTime = 20;
-    let teaName = 'Enter Tea Name';
+    let teaName
     const navigation = useNavigation()
     const
         styles = StyleSheet.create({
@@ -30,10 +30,10 @@ function TeaNameEntryPage(props) {
             teaNameTag: {
                 fontSize: 15,
                 margin: 10,
-                marginTop: 1,
+                marginTop: 10,
             },
             teaName: {
-                marginTop: '3%',
+                marginBottom: '3%',
                 textAlign: 'center',
                 textAlignVertical: 'top',
                 fontSize: 15,
@@ -55,7 +55,7 @@ function TeaNameEntryPage(props) {
             teaNameView: {
 
 
-                height: 120,
+                height: 70,
                 flexDirection: 'column',
                 marginBottom: '5%',
                 marginLeft: 20,
@@ -99,7 +99,7 @@ function TeaNameEntryPage(props) {
             },
             timerTag: {
                 backgroundColor: 'grey',
-                height: 130,
+                height: 80,
                 width: 130,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -112,7 +112,7 @@ function TeaNameEntryPage(props) {
             },
             startingTimeView: {
                 backgroundColor: 'grey',
-                height: 130,
+                height: 80,
                 width: 130,
                 borderRadius: 15,
                 justifyContent: 'center',
@@ -151,9 +151,11 @@ function TeaNameEntryPage(props) {
 
                     <View style={styles.teaNameTextView}>
                         <TextInput style={styles.teaName}
+                                   selectTextOnFocus={true}
                                    onChangeText={(text) => {
                                        teaName = text
                                    }}
+                                   placeholder={"Enter Tea Name"}
                         >
                             {teaName}
                         </TextInput>
@@ -168,6 +170,7 @@ function TeaNameEntryPage(props) {
 
                     <View style={styles.startingTimeView}>
                         <TextInput style={styles.startingTime}
+                                   selectTextOnFocus={true}
                                    keyboardType={"number-pad"}
                                    onChangeText={(text) => {
                                        startingTime = text

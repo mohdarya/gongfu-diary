@@ -1,15 +1,5 @@
-import React from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
-import {useHeaderHeight} from "@react-navigation/stack";
+import React, {useEffect, useState} from 'react';
+import {Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 
 function DiaryEntry(props) {
@@ -19,7 +9,12 @@ function DiaryEntry(props) {
     const route = useRoute()
 
 
+    const [buttonText, setButtonText] = useState('Start');
+
     const {teaName, startingTime} = route.params
+    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
+    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
+    const [startTimer, setStartTimer] = useState(false)
     let increment = 5;
     const styles = StyleSheet.create({
         container: {
@@ -180,6 +175,35 @@ function DiaryEntry(props) {
 
     });
 
+
+    const startInterval = () => {
+
+        setCurrenTime(countdownTimer)
+        setCountdownTimer((t) => t - 1)
+        setStartTimer(true)
+    }
+
+
+    useEffect(() => {
+
+            if (startTimer) {
+                setTimeout(() => {
+                        if (countdownTimer <= 0) {
+                            setStartTimer(false)
+                            setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+
+                        } else {
+                            setCountdownTimer((t) => t - 1)
+                        }
+                    }, 1000
+                )
+            }
+        }
+
+
+        ,
+        [countdownTimer]
+    )
     const goToFlavorSelection = () => {
         navigation.navigate('FlavorEntry')
     }
@@ -223,7 +247,7 @@ function DiaryEntry(props) {
                     </View>
                     <View style={styles.countdownTimer}>
                         <Text style={styles.countdownTimerText}>
-                            {startingTime}
+                            {countdownTimer}
                         </Text>
                     </View>
                 </View>
@@ -258,9 +282,9 @@ function DiaryEntry(props) {
                     </View>
                 </TouchableOpacity>
                 <View style={styles.doneButtonView}>
-                    <TouchableOpacity style={styles.doneButton}>
+                    <TouchableOpacity style={styles.doneButton} onPress={startInterval}>
                         <Text style={styles.doneButtonText}>
-                            Start
+                            {buttonText}
                         </Text>
                     </TouchableOpacity>
                 </View>

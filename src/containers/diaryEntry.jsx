@@ -181,6 +181,7 @@ function DiaryEntry(props) {
         setCurrenTime(countdownTimer)
         setCountdownTimer((t) => t - 1)
         setStartTimer(true)
+
     }
 
 
@@ -282,9 +283,9 @@ function DiaryEntry(props) {
                     </View>
                 </TouchableOpacity>
                 <View style={styles.doneButtonView}>
-                    <TouchableOpacity style={styles.doneButton} onPress={startInterval}>
+                    <TouchableOpacity style={styles.doneButton} onPress={startInterval} activeOpacity={1}>
                         <Text style={styles.doneButtonText}>
-                            {buttonText}
+                            Start
                         </Text>
                     </TouchableOpacity>
                 </View>

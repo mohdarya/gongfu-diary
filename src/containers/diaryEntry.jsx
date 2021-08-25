@@ -9,8 +9,6 @@ function DiaryEntry(props) {
     const route = useRoute()
 
 
-    const [buttonText, setButtonText] = useState('Start');
-
     const {teaName, startingTime} = route.params
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))

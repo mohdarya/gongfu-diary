@@ -31,20 +31,21 @@ function TimerPage(props) {
 
         },
         timerView: {
-            alignItems: 'flex-start',
+            alignItems: 'center',
             marginTop: 100,
             marginLeft: 10,
             marginRight: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
             flex: 3,
         },
         countdownTimer: {
 
             backgroundColor: 'grey',
             borderRadius: 15,
-            height: 80,
-            width: '35%',
+            marginBottom: 50,
+            height: 180,
+            width: 180,
             alignItems: 'center',
             justifyContent: 'center',
         },
@@ -52,7 +53,7 @@ function TimerPage(props) {
 
             textAlign: 'center',
 
-            fontSize: 45,
+            fontSize: 60,
         },
 
 
@@ -79,7 +80,7 @@ function TimerPage(props) {
             borderBottomRightRadius: 0,
             justifyContent: 'space-between',
             height: 80,
-            width: '55%',
+            width: '70%',
 
 
         },
@@ -230,6 +231,12 @@ function TimerPage(props) {
 
                 </View>
                 <View style={styles.timerView}>
+
+                    <View style={styles.countdownTimer}>
+                        <Text style={styles.countdownTimerText}>
+                            {countdownTimer}
+                        </Text>
+                    </View>
                     <View style={styles.incrementView}>
                         <View>
                             <Text style={styles.incrementTag}>
@@ -246,11 +253,6 @@ function TimerPage(props) {
                                 {increment}
                             </TextInput>
                         </View>
-                    </View>
-                    <View style={styles.countdownTimer}>
-                        <Text style={styles.countdownTimerText}>
-                            {countdownTimer}
-                        </Text>
                     </View>
                 </View>
 

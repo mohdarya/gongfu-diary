@@ -32,7 +32,7 @@ function TeaNameEntryPage(props) {
                 marginLeft: 20,
                 marginRight: 20,
                 marginTop: '20%',
-                backgroundColor: 'white',
+
                 borderRadius: 20,
                 borderTopLeftRadius: 0,
                 borderBottomRightRadius: 0,
@@ -65,20 +65,20 @@ function TeaNameEntryPage(props) {
             },
 
             timerTagText: {
-                fontSize: 17,
-                margin: 10,
-                marginTop: 8,
+                fontSize: 20,
+                top: 4,
+                textAlign: 'center',
             },
             incrementView: {
                 alignSelf: 'center',
                 backgroundColor: 'grey',
                 borderRadius: 20,
-                flexDirection: 'row',
+
                 borderTopLeftRadius: 0,
                 borderBottomRightRadius: 0,
                 justifyContent: 'space-between',
-                height: 80,
-                width: '70%',
+                height: 120,
+                width: 200,
             },
             incrementNumberView: {
                 justifyContent: 'flex-end',
@@ -117,7 +117,7 @@ function TeaNameEntryPage(props) {
                         </Text>
                     </View>
 
-                    <View style={styles.incrementNumberView}>
+                    <View>
                         <TextInput style={styles.startingTime}
                                    selectTextOnFocus={true}
                                    keyboardType={"number-pad"}

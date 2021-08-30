@@ -120,8 +120,20 @@ function TeaNameEntryPage(props) {
             },
             timerTagText: {
                 fontSize: 20,
+                top: 4,
                 textAlign: 'center',
-            }
+            },
+            incrementView: {
+                alignSelf: 'center',
+                backgroundColor: 'grey',
+                borderRadius: 20,
+
+                borderTopLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                justifyContent: 'space-between',
+                height: 110,
+                width: 170,
+            },
 
 
         })
@@ -161,14 +173,14 @@ function TeaNameEntryPage(props) {
                         </TextInput>
                     </View>
                 </View>
-                <View style={styles.timeView}>
-                    <View style={styles.timerTag}>
+                <View style={styles.incrementView}>
+                    <View>
                         <Text style={styles.timerTagText}>
                             Starting Time
                         </Text>
                     </View>
 
-                    <View style={styles.startingTimeView}>
+                    <View>
                         <TextInput style={styles.startingTime}
                                    selectTextOnFocus={true}
                                    keyboardType={"number-pad"}
@@ -178,6 +190,7 @@ function TeaNameEntryPage(props) {
                         >
                             {startingTime}
                         </TextInput>
+
                     </View>
                 </View>
                 <View style={styles.doneButtonView}>

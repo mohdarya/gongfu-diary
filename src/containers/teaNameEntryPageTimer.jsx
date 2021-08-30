@@ -24,37 +24,8 @@ function TeaNameEntryPage(props) {
                 flex: 1,
                 backgroundColor: 'white',
                 justifyContent: 'center',
-
-
             },
-            teaNameTag: {
-                fontSize: 15,
-                margin: 10,
-                marginTop: 10,
-            },
-            teaName: {
-                marginBottom: '3%',
-                textAlign: 'center',
-                textAlignVertical: 'top',
-                fontSize: 15,
-                borderTopRightRadius: 20,
-                color: 'black',
-            },
-            teaNameTextView: {
-                height: '70%',
-                width: '90%',
-
-
-                justifyContent: 'flex-start',
-                alignSelf: 'center',
-
-
-            },
-
-
             teaNameView: {
-
-
                 height: 70,
                 flexDirection: 'column',
                 marginBottom: '5%',
@@ -85,43 +56,36 @@ function TeaNameEntryPage(props) {
                 textAlign: 'center',
                 bottom: '5%',
                 fontSize: 25,
-            }, timeView: {
-                height: 150,
-                flexDirection: 'row',
-                marginBottom: '30%',
-                marginLeft: 20,
-                marginRight: 20,
-
-
-                borderTopLeftRadius: 0,
-                borderBottomRightRadius: 0,
-                justifyContent: 'space-around',
             },
-            timerTag: {
-                backgroundColor: 'grey',
-                height: 80,
-                width: 130,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 15,
-            },
+
             startingTime: {
                 fontSize: 40,
                 textAlign: 'center',
                 color: 'black',
             },
-            startingTimeView: {
-                backgroundColor: 'grey',
-                height: 80,
-                width: 130,
-                borderRadius: 15,
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
+
             timerTagText: {
-                fontSize: 20,
-                textAlign: 'center',
-            }
+                fontSize: 17,
+                margin: 10,
+                marginTop: 8,
+            },
+            incrementView: {
+                alignSelf: 'center',
+                backgroundColor: 'grey',
+                borderRadius: 20,
+                flexDirection: 'row',
+                borderTopLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                justifyContent: 'space-between',
+                height: 80,
+                width: '70%',
+            },
+            incrementNumberView: {
+                justifyContent: 'flex-end',
+                height: '100%',
+                marginRight: 20,
+                marginBottom: 20,
+            },
 
 
         })
@@ -145,14 +109,15 @@ function TeaNameEntryPage(props) {
                 <View style={styles.teaNameView}>
 
                 </View>
-                <View style={styles.timeView}>
-                    <View style={styles.timerTag}>
+
+                <View style={styles.incrementView}>
+                    <View>
                         <Text style={styles.timerTagText}>
                             Starting Time
                         </Text>
                     </View>
 
-                    <View style={styles.startingTimeView}>
+                    <View style={styles.incrementNumberView}>
                         <TextInput style={styles.startingTime}
                                    selectTextOnFocus={true}
                                    keyboardType={"number-pad"}
@@ -162,8 +127,10 @@ function TeaNameEntryPage(props) {
                         >
                             {startingTime}
                         </TextInput>
+
                     </View>
                 </View>
+
                 <View style={styles.doneButtonView}>
                     <TouchableOpacity style={styles.doneButton}
                                       onPress={goToDiaryEntry} activeOpacity={1}>

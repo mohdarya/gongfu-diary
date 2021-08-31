@@ -49,15 +49,10 @@ function DiaryEntry(props) {
             justifyContent: 'center',
         },
         countdownTimerText: {
-
             textAlign: 'center',
-
             fontSize: 50,
         },
-
-
         endButton: {
-
             backgroundColor: 'grey',
             borderRadius: 5,
             height: '45%',
@@ -66,7 +61,6 @@ function DiaryEntry(props) {
             justifyContent: 'center',
         },
         endButtonText: {
-
             textAlign: 'center',
             bottom: '5%',
             fontSize: 23,
@@ -81,23 +75,17 @@ function DiaryEntry(props) {
             alignContent: 'center',
             height: 90,
             width: 150,
-
-
         },
         incrementTag: {
             fontSize: 17,
             alignSelf: 'center',
-
-
         }, incrementNumber: {
             alignSelf: 'center',
             fontSize: 30,
             color: 'black',
-
-
         }, teaNameView: {
             height: 80,
-            flexDirection: 'row',
+            flexDirection: 'column',
             marginBottom: 30,
             marginLeft: 20,
             marginRight: 20,
@@ -109,7 +97,6 @@ function DiaryEntry(props) {
         }, teaFlavorView: {
             backgroundColor: 'grey',
             flex: 4,
-
             marginLeft: 20,
             marginRight: 20,
             borderRadius: 20,
@@ -127,27 +114,21 @@ function DiaryEntry(props) {
             marginTop: 1,
         },
         teaName: {
-            height: '100%',
+            height: 50,
             textAlign: 'center',
-            textAlignVertical: 'center',
+            textAlignVertical: 'top',
             fontSize: 15,
-            borderTopRightRadius: 20,
             color: 'black',
         },
         teaNameTextView: {
-
-
-            width: '70%',
+            width: '50%',
             justifyContent: 'center',
-            alignSelf: 'flex-end',
-
-
+            alignSelf: 'center',
         },
         graphView: {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-
         }, doneButton: {
             backgroundColor: 'grey',
             width: 200,
@@ -162,12 +143,8 @@ function DiaryEntry(props) {
             fontSize: 25,
         },
         incrementNumberView: {
-
-
             justifyContent: 'center',
-
             height: 60,
-
         },
 
 

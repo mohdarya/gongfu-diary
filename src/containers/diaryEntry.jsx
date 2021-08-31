@@ -32,7 +32,7 @@ function DiaryEntry(props) {
         },
         timerView: {
             alignItems: 'center',
-
+            marginBottom: 20,
             marginLeft: 10,
             marginRight: 10,
             flexDirection: 'row',
@@ -43,8 +43,8 @@ function DiaryEntry(props) {
 
             backgroundColor: 'grey',
             borderRadius: 15,
-            height: '55%',
-            width: '35%',
+            height: 160,
+            width: 160,
             alignItems: 'center',
             justifyContent: 'center',
         },
@@ -52,7 +52,7 @@ function DiaryEntry(props) {
 
             textAlign: 'center',
 
-            fontSize: 45,
+            fontSize: 50,
         },
 
 
@@ -74,22 +74,23 @@ function DiaryEntry(props) {
         incrementView: {
             backgroundColor: 'grey',
             borderRadius: 20,
-            flexDirection: 'row',
+            flexDirection: 'column',
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            justifyContent: 'space-between',
-            height: '55%',
-            width: '55%',
+            justifyContent: 'center',
+            alignContent: 'center',
+            height: 90,
+            width: 150,
 
 
         },
         incrementTag: {
             fontSize: 17,
-            margin: 5,
-            marginTop: 1,
+            alignSelf: 'center',
+
 
         }, incrementNumber: {
-            alignSelf: 'flex-end',
+            alignSelf: 'center',
             fontSize: 30,
             color: 'black',
 
@@ -163,11 +164,10 @@ function DiaryEntry(props) {
         incrementNumberView: {
 
 
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
 
-            height: '100%',
-            marginRight: 20,
-            marginBottom: 20,
+            height: 60,
+
         },
 
 
@@ -230,6 +230,11 @@ function DiaryEntry(props) {
 
                 </View>
                 <View style={styles.timerView}>
+                    <View style={styles.countdownTimer}>
+                        <Text style={styles.countdownTimerText}>
+                            {countdownTimer}
+                        </Text>
+                    </View>
                     <View style={styles.incrementView}>
                         <View>
                             <Text style={styles.incrementTag}>
@@ -247,11 +252,7 @@ function DiaryEntry(props) {
                             </TextInput>
                         </View>
                     </View>
-                    <View style={styles.countdownTimer}>
-                        <Text style={styles.countdownTimerText}>
-                            {countdownTimer}
-                        </Text>
-                    </View>
+
                 </View>
                 <View style={styles.teaNameView}>
                     <View>

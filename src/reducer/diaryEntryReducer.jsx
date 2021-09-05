@@ -39,7 +39,7 @@ export function diaryEntryReducer(state = initialState, action) {
         case 'REMOVE_ENTRY':
             return {
                 ...state,
-                diaryEntry: state.diaryEntry.filter(item => item.sessionID !== actions.sessionID)
+                diaryEntry: state.diaryEntry.filter(item => item.sessionID !== action.sessionID)
 
             }
 

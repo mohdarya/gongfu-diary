@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Slider from "@react-native-community/slider";
 
 
@@ -9,6 +9,79 @@ function FlavorEntry(props) {
     const [value, setValue] = useState(0)
     const [flavorNoteModalVisible, setFlavorNoteModalVisible] = useState(false)
     const [flavorDetailModalVisible, setFlavorDetailModalVisible] = useState(false)
+    const [chosenNote, setChosenNote] = useState('Flavor Note')
+    let flavorNotes = [
+        {
+            'note': 'Marine',
+            'detail': ['Seaweed', 'Ocean Air']
+        },
+        {
+            'note': 'Mineral',
+            'detail': ['Salt', 'Metallic', 'Wet Rocks']
+        },
+        {
+            'note': 'Earth',
+            'detail': ['moss', 'Musty', 'Leather', 'Compost', 'Wet Earth', 'Forest Floor', 'Decaying Wood']
+        },
+        {
+            'note': 'Wood',
+            'detail': ['Pine', 'Bark', 'Cedar', 'Resin', 'Wet Wood', 'Dark Wood', 'Green Wood', 'Cherry Wood']
+        },
+        {
+            'note': 'Vegetal',
+            'detail': ['Grass', 'Stems', 'Straw', 'Spinach', 'Broccoli', 'Zucchini', 'Asparagus', 'Garden Peas', 'Green Pepper']
+        },
+        {
+            'note': 'Herbs',
+            'detail': ['Thyme', 'Parsley', 'Cardamon', 'Eucalyptus', 'Fennel Seed', 'Coriander Seed']
+        },
+        {
+            'note': 'Floral',
+            'detail': ['Rose', 'Hops', 'Orchid', 'Violet', 'Jasmine', 'Perfume', 'Geranium', 'Dandelion', 'Honeysuckle', 'Cherry Blossom', 'Orange Blossom']
+        },
+        {
+            'note': 'Nutty',
+            'detail': ['Almond', 'Peanut', 'Walnut', 'Chestnut', 'Hazelnut', 'Roasted Nuts']
+        },
+        {
+            'note': 'Sweet',
+            'detail': ['Malt', 'Candy', 'Honey', 'Caramel', 'Molasses', 'Burnt Sugar', 'Maple Syrup']
+        },
+        {
+            'note': 'Char',
+            'detail': ['Ash', 'Tar', 'Toast', 'Smoke', 'Tobacco', 'Fireplace', 'Burnt Food', 'Grilled Food']
+        },
+        {
+            'note': 'Spicy',
+            'detail': ['Cocoa', 'Clove', 'Vanilla', 'Pepper', 'Saffron', 'Nutmeg', 'Licorice', 'Menthol', 'Cinnamon']
+        },
+        {
+            'note': 'Tropical Fruit',
+            'detail': ['Mango', 'Melon', 'Lychee', 'Banana', 'Pineapple']
+        },
+        {
+            'note': 'Tree Fruit',
+            'detail': ['Peach', 'Pear', 'Apricot', 'Red Apple', 'Green Apple', 'Dried Fruits']
+        },
+        {
+            'note': 'Citrus Fruit',
+            'detail': ['Lemon', 'Orange', 'Grapefruit', 'Citrus Zest']
+        },
+        {
+            'note': 'Berries',
+            'detail': ['Raspberry', 'Strawberry', 'Blackberry', 'Black Currant']
+        }
+
+    ]
+
+    const getFlavorNoteElements = () => {
+        let elements = []
+
+        for (let key in flavorNotes) {
+            elements.push()
+        }
+    }
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -112,10 +185,44 @@ function FlavorEntry(props) {
             textAlign: 'center',
             bottom: '5%',
             fontSize: 15,
+        }, FlavorNoteItem: {
+            height: 60,
+            width: 160,
+            borderRadius: 20,
+            flexBasis: '40%',
+            margin: 20,
+            backgroundColor: 'white',
         },
+        flavorNoteView: {
+            flex: 1,
+
+            flexDirection: 'row',
+        },
+        flavorNoteText: {
+            alignSelf: 'center',
+            height: '100%',
+            textAlignVertical: 'center',
+            fontSize: 20
+        },
+        flavorListContainer: {
+            flex: 1,
+            marginBottom: 20,
+        }
 
 
     })
+
+    const renderFlavorNoteItem = ({item}) => {
+        return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
+            setChosenNote(item.note)
+            setFlavorNoteModalVisible(!flavorNoteModalVisible)
+        }}>
+            <Text style={styles.flavorNoteText}>
+                {item.note}
+            </Text>
+        </TouchableOpacity>)
+
+    }
 
     return (
 
@@ -147,7 +254,14 @@ function FlavorEntry(props) {
                             Exit
                         </Text>
                     </TouchableOpacity>
+                    <SafeAreaView style={styles.flavorListContainer}>
+                    <FlatList data={flavorNotes}
+                              horizontal={false}
+                              numColumns={2}
+                              renderItem={renderFlavorNoteItem}
+                              keyExtractor={item => item.note}/>
 
+                    </SafeAreaView>
 
                 </View>
 
@@ -218,7 +332,7 @@ function FlavorEntry(props) {
                                 textAlign: 'center',
                                 textAlignVertical: 'center'
                             }}>
-                                Flavor Note
+                                {chosenNote}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.detailView}

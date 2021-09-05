@@ -10,7 +10,6 @@ import {
     View
 } from "react-native";
 import {useHeaderHeight} from "@react-navigation/stack";
-import FlavorItem from "../components/flavorListItem";
 import FlavorDiaryItem from "../components/flavorDiaryItem";
 
 
@@ -66,7 +65,7 @@ function FlavorDiary(props) {
                     <FlavorDiaryItem/>
                 </ScrollView>
             </View>
-        
+
 
         </View>
 

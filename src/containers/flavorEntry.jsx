@@ -107,8 +107,8 @@ function FlavorEntry(props) {
 
         }, flavorNote: {
             backgroundColor: 'grey',
-            width: 120,
-            height: 50,
+            width: 150,
+            height: 45,
             alignSelf: 'flex-end',
             margin: 5,
             marginRight: 0,
@@ -143,8 +143,8 @@ function FlavorEntry(props) {
             backgroundColor: 'grey',
         },
         detailView: {
-            width: 120,
-            height: 50,
+            width: 150,
+            height: 45,
             margin: 10,
             marginRight: 0,
             borderRadius: 20,
@@ -155,9 +155,10 @@ function FlavorEntry(props) {
             flexDirection: 'row',
         },
         fieldTag: {
-            fontSize: 15,
+            fontSize: 17,
             height: '100%',
             width: '100%',
+
             textAlign: 'center',
             textAlignVertical: 'center',
         }, flavorContainer: {
@@ -197,6 +198,7 @@ function FlavorEntry(props) {
             alignSelf: 'center',
             height: '100%',
             textAlignVertical: 'center',
+            textAlign: 'center',
             fontSize: 20
         },
         flavorListContainer: {
@@ -344,11 +346,7 @@ function FlavorEntry(props) {
                                           onPress={() => {
                                               setFlavorNoteModalVisible(true)
                                           }}>
-                            <Text style={{
-                                height: '100%',
-                                textAlign: 'center',
-                                textAlignVertical: 'center'
-                            }}>
+                            <Text style={styles.fieldTag}>
                                 {chosenNote}
                             </Text>
                         </TouchableOpacity>

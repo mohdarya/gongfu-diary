@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Modal, SafeAreaView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from "react-native";
 import Slider from "@react-native-community/slider";
 
 
@@ -10,6 +10,8 @@ function FlavorEntry(props) {
     const [flavorNoteModalVisible, setFlavorNoteModalVisible] = useState(false)
     const [flavorDetailModalVisible, setFlavorDetailModalVisible] = useState(false)
     const [chosenNote, setChosenNote] = useState('Flavor Note')
+    const [chosenNoteIndex, setChosenNoteIndex] = useState(0)
+    const [chosenDetail, setChosenDetail]= useState('Detail')
     let flavorNotes = [
         {
             'note': 'Marine',
@@ -74,13 +76,6 @@ function FlavorEntry(props) {
 
     ]
 
-    const getFlavorNoteElements = () => {
-        let elements = []
-
-        for (let key in flavorNotes) {
-            elements.push()
-        }
-    }
 
     const styles = StyleSheet.create({
         container: {
@@ -215,10 +210,24 @@ function FlavorEntry(props) {
     const renderFlavorNoteItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
             setChosenNote(item.note)
+            setChosenNoteIndex(flavorNotes.indexOf(item))
             setFlavorNoteModalVisible(!flavorNoteModalVisible)
         }}>
             <Text style={styles.flavorNoteText}>
                 {item.note}
+            </Text>
+        </TouchableOpacity>)
+
+    }
+
+
+    const renderFlavorDetailItem = ({item}) => {
+        return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
+            setChosenDetail(item)
+            setFlavorDetailModalVisible(!flavorDetailModalVisible)
+        }}>
+            <Text style={styles.flavorNoteText}>
+                {item}
             </Text>
         </TouchableOpacity>)
 
@@ -259,7 +268,7 @@ function FlavorEntry(props) {
                               horizontal={false}
                               numColumns={2}
                               renderItem={renderFlavorNoteItem}
-                              keyExtractor={item => item.note}/>
+                              keyExtractor={item => item.detail}/>
 
                     </SafeAreaView>
 
@@ -294,6 +303,14 @@ function FlavorEntry(props) {
                         </Text>
                     </TouchableOpacity>
 
+                    <SafeAreaView style={styles.flavorListContainer}>
+                        <FlatList data={flavorNotes[chosenNoteIndex].detail}
+                                  horizontal={false}
+                                  numColumns={2}
+                                  renderItem={renderFlavorDetailItem}
+                                  keyExtractor={item => item}/>
+
+                    </SafeAreaView>
                 </View>
 
             </Modal>
@@ -338,11 +355,16 @@ function FlavorEntry(props) {
                         <TouchableOpacity style={styles.detailView}
                                           activeOpacity={1}
                                           onPress={() => {
+                                              if(chosenNote !== 'Flavor Note')
+                                              {
                                               setFlavorDetailModalVisible(true)
+                                              }else {
+                                                  ToastAndroid.show("Please Select A Flavor Note", ToastAndroid.LONG)
+                                              }
                                           }}
                         >
                             <Text style={styles.fieldTag}>
-                                detail
+                                {chosenDetail}
                             </Text>
 
                         </TouchableOpacity>

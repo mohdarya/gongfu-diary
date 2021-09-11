@@ -18,6 +18,8 @@ function App(props) {
     LogBox.ignoreLogs([
         'Non-serializable values were found in the navigation state',
     ]);
+
+
     const Stack = createStackNavigator();
     return (
 

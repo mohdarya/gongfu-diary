@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from "@react-navigation/stack";
+import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import {persistor, store} from "../reducer/store";
 import {Provider} from "react-redux";
 import {NavigationContainer} from "@react-navigation/native";
@@ -25,9 +25,7 @@ function App(props) {
                     <Stack.Navigator initialRouteName="HomeScreen"
                                      screenOptions={{
                                          headerShown: false,
-                                         gestureEnabled: true,
-                                         gestureDirection: 'horizontal',
-
+                                         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
                                      }}
                     >
                         <Stack.Screen name="HomeScreen" component={HomeScreen}/>

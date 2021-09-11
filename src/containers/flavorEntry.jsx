@@ -1,21 +1,29 @@
 import React, {useState} from 'react';
 import {FlatList, Modal, SafeAreaView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from "react-native";
 import Slider from "@react-native-community/slider";
-import {useRoute} from "@react-navigation/core";
+import {useNavigation, useRoute} from "@react-navigation/core";
 
 
 function FlavorEntry(props) {
 
-
+    const route = useRoute()
+    const setSteepData = route.params.setSteepData
+    const passedSteepData = route.params.steepData
     const [value, setValue] = useState(0)
     const [flavorNoteModalVisible, setFlavorNoteModalVisible] = useState(false)
     const [flavorDetailModalVisible, setFlavorDetailModalVisible] = useState(false)
     const [chosenNote, setChosenNote] = useState('Flavor Note')
     const [chosenNoteIndex, setChosenNoteIndex] = useState(0)
-    const [chosenDetail, setChosenDetail]= useState('Detail')
-    const route = useRoute();
-    const [steepData, setCurrentSteepData] = useState({});
-    const setSteepData = route.params.setSteepData
+    const [chosenDetail, setChosenDetail] = useState('Detail')
+
+    const navigation = useNavigation()
+    const [steepData, setCurrentSteepData] = useState(() => {
+        if (passedSteepData.isEmpty) {
+            return {}
+        } else {
+            return {...passedSteepData}
+        }
+    });
 
     let flavorNotes = [
         {
@@ -216,22 +224,25 @@ function FlavorEntry(props) {
 
     const renderFlavorNoteItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
+            console.log(steepData)
             let indexOfNote = flavorNotes.indexOf(item)
-            setChosenNote(item.note)
-            setCurrentSteepData({...steepData,
-                [chosenNoteIndex]: {
-                ...steepData[chosenNoteIndex],
-                    level: value
-                }})
-            if(steepData.hasOwnProperty(indexOfNote))
-            {
-                setValue(steepData[indexOfNote].level)
+            if (steepData.hasOwnProperty(indexOfNote)) {
+                if (steepData[indexOfNote].hasOwnProperty('level')) {
+                    setValue(steepData[indexOfNote].level)
+                } else {
+                    setValue(0)
+                }
+                if (steepData[indexOfNote].hasOwnProperty('detail')) {
+                    setChosenDetail(flavorNotes[indexOfNote].detail[steepData[indexOfNote].detail])
+                } else {
+                    setChosenDetail('Detail')
+                }
 
-                setChosenDetail(flavorNotes[indexOfNote].detail[steepData[indexOfNote].detail])
-            }else {
+            } else {
                 setValue(0)
                 setChosenDetail('Detail')
             }
+            setChosenNote(item.note)
             setChosenNoteIndex(indexOfNote)
             setFlavorNoteModalVisible(!flavorNoteModalVisible)
         }}>
@@ -246,12 +257,13 @@ function FlavorEntry(props) {
     const renderFlavorDetailItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
             let indexOfDetail = flavorNotes[chosenNoteIndex].detail.indexOf(item)
-            setCurrentSteepData({...steepData,
+            setCurrentSteepData({
+                ...steepData,
                 [chosenNoteIndex]: {
                     ...steepData[chosenNoteIndex],
                     detail: indexOfDetail
-                }})
-            console.log(steepData)
+                }
+            })
             setChosenDetail(item)
 
             setFlavorDetailModalVisible(!flavorDetailModalVisible)
@@ -263,6 +275,13 @@ function FlavorEntry(props) {
 
     }
 
+    const doneButtonAction = () => {
+
+
+
+        setSteepData({...steepData})
+        navigation.goBack()
+    }
     return (
 
         <View style={styles.container}>
@@ -294,11 +313,11 @@ function FlavorEntry(props) {
                         </Text>
                     </TouchableOpacity>
                     <SafeAreaView style={styles.flavorListContainer}>
-                    <FlatList data={flavorNotes}
-                              horizontal={false}
-                              numColumns={2}
-                              renderItem={renderFlavorNoteItem}
-                              keyExtractor={item => item.detail}/>
+                        <FlatList data={flavorNotes}
+                                  horizontal={false}
+                                  numColumns={2}
+                                  renderItem={renderFlavorNoteItem}
+                                  keyExtractor={item => item.detail}/>
 
                     </SafeAreaView>
 
@@ -363,7 +382,15 @@ function FlavorEntry(props) {
                                 step={1}
                                 onValueChange={(value => {
 
-
+                                    if (value > 0) {
+                                        setCurrentSteepData({
+                                            ...steepData,
+                                            [chosenNoteIndex]: {
+                                                ...steepData[chosenNoteIndex],
+                                                level: value
+                                            }
+                                        })
+                                    }
                                     setValue(value)
                                 })}
                                 minimumTrackTintColor="#FFFFFF"
@@ -384,10 +411,9 @@ function FlavorEntry(props) {
                         <TouchableOpacity style={styles.detailView}
                                           activeOpacity={1}
                                           onPress={() => {
-                                              if(chosenNote !== 'Flavor Note')
-                                              {
-                                              setFlavorDetailModalVisible(true)
-                                              }else {
+                                              if (chosenNote !== 'Flavor Note') {
+                                                  setFlavorDetailModalVisible(true)
+                                              } else {
                                                   ToastAndroid.show("Please Select A Flavor Note", ToastAndroid.LONG)
                                               }
                                           }}
@@ -405,7 +431,7 @@ function FlavorEntry(props) {
 
 
             <View style={styles.doneButtonView}>
-                <TouchableOpacity style={styles.doneButton}>
+                <TouchableOpacity style={styles.doneButton} onPress={doneButtonAction} activeOpacity={1}>
                     <Text style={styles.doneButtonText}>
                         Done
                     </Text>

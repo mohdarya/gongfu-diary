@@ -173,9 +173,7 @@ function DiaryEntry(props) {
     }
     const startInterval = () => {
 
-        let index = props.Diary.findIndex(item => item.sessionID === sessionID)
-        console.log(props.Diary[index].steeps)
-        console.log(steepData)
+
         props.addSteep(sessionID, steepData)
         setSteepData({})
         setCurrenTime(countdownTimer)

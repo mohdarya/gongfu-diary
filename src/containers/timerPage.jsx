@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
+import Sound from "react-native-sound";
 
 function TimerPage(props) {
 
@@ -9,11 +10,20 @@ function TimerPage(props) {
     const route = useRoute()
 
 
+    let timerEndingSound
     const {startingTime} = route.params
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
     const [increment, setIncrement] = useState(5);
+    useEffect(() => {
+        timerEndingSound = new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE, (error) => {
+            if (error) {
+                console.log('failed to load the sound', error);
+                return;
+            }
+        })
+    }  )
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -193,6 +203,11 @@ function TimerPage(props) {
                 setTimeout(() => {
                         if (countdownTimer <= 0) {
                             setStartTimer(false)
+                            timerEndingSound.play((success) => {
+                                if (!success) {
+                                    console.log('Sound did not play')
+                                }
+                            })
                             setCountdownTimer(parseInt(currentTime) + parseInt(increment))
 
                         } else {

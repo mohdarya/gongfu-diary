@@ -21,9 +21,9 @@ const initialState = {
 export function diaryEntryReducer(state = initialState, action) {
     switch (action.type) {
         case 'ADD_STEEP':
-            const index = state.diaryEntry.findIndex(item => item.sessionID !== action.sessionID)
-            const newArray = [...state.diaryEntry]
-            newArray[index].steeps = [...state.diaryEntry[index].steeps, ...action.newSteep]
+            const index = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
+            const newArray = state.diaryEntry
+            newArray[index].steeps = [...state.diaryEntry[index].steeps, [action.newSteep]]
 
             return {
                 ...state,
@@ -33,7 +33,7 @@ export function diaryEntryReducer(state = initialState, action) {
         case 'ADD_ENTRY':
             return {
                 ...state,
-                diaryEntry: [...state.diaryEntry, ...action.newEntry]
+                diaryEntry: [...state.diaryEntry, {...action.newEntry}]
 
             }
         case 'REMOVE_ENTRY':

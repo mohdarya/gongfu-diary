@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {FlatList, Modal, SafeAreaView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from "react-native";
 import Slider from "@react-native-community/slider";
+import {useRoute} from "@react-navigation/core";
 
 
 function FlavorEntry(props) {
@@ -12,6 +13,10 @@ function FlavorEntry(props) {
     const [chosenNote, setChosenNote] = useState('Flavor Note')
     const [chosenNoteIndex, setChosenNoteIndex] = useState(0)
     const [chosenDetail, setChosenDetail]= useState('Detail')
+    const route = useRoute();
+    const [steepData, setCurrentSteepData] = useState({});
+    const setSteepData = route.params.setSteepData
+
     let flavorNotes = [
         {
             'note': 'Marine',
@@ -211,8 +216,23 @@ function FlavorEntry(props) {
 
     const renderFlavorNoteItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
+            let indexOfNote = flavorNotes.indexOf(item)
             setChosenNote(item.note)
-            setChosenNoteIndex(flavorNotes.indexOf(item))
+            setCurrentSteepData({...steepData,
+                [chosenNoteIndex]: {
+                ...steepData[chosenNoteIndex],
+                    level: value
+                }})
+            if(steepData.hasOwnProperty(indexOfNote))
+            {
+                setValue(steepData[indexOfNote].level)
+
+                setChosenDetail(flavorNotes[indexOfNote].detail[steepData[indexOfNote].detail])
+            }else {
+                setValue(0)
+                setChosenDetail('Detail')
+            }
+            setChosenNoteIndex(indexOfNote)
             setFlavorNoteModalVisible(!flavorNoteModalVisible)
         }}>
             <Text style={styles.flavorNoteText}>
@@ -225,7 +245,15 @@ function FlavorEntry(props) {
 
     const renderFlavorDetailItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
+            let indexOfDetail = flavorNotes[chosenNoteIndex].detail.indexOf(item)
+            setCurrentSteepData({...steepData,
+                [chosenNoteIndex]: {
+                    ...steepData[chosenNoteIndex],
+                    detail: indexOfDetail
+                }})
+            console.log(steepData)
             setChosenDetail(item)
+
             setFlavorDetailModalVisible(!flavorDetailModalVisible)
         }}>
             <Text style={styles.flavorNoteText}>
@@ -328,11 +356,14 @@ function FlavorEntry(props) {
                                 </Text>
                             </View>
                             <Slider
+                                value={value}
                                 style={{width: '100%', height: 40}}
                                 minimumValue={0}
                                 maximumValue={10}
                                 step={1}
                                 onValueChange={(value => {
+
+
                                     setValue(value)
                                 })}
                                 minimumTrackTintColor="#FFFFFF"

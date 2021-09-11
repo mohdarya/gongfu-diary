@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
+import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {connect} from 'react-redux';
 
 function DiaryEntry(props) {
 
@@ -14,6 +16,21 @@ function DiaryEntry(props) {
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
     const [increment, setIncrement] = useState(5);
+    const [steepData, setSteepData] = useState([])
+    const [sessionID, setSessionID] = useState(() => {
+        return teaName + Date.now()
+    })
+    useEffect(() => {
+
+        console.log('called')
+
+
+        props.createEntry({
+            teaName: teaName,
+            sessionID: sessionID,
+            steeps: []
+        })
+    }, [])
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -156,6 +173,11 @@ function DiaryEntry(props) {
     }
     const startInterval = () => {
 
+        let index = props.Diary.findIndex(item => item.sessionID === sessionID)
+        console.log(props.Diary[index].steeps)
+        console.log(steepData)
+        props.addSteep(sessionID, steepData)
+        setSteepData({})
         setCurrenTime(countdownTimer)
         setCountdownTimer((t) => t - 1)
         setStartTimer(true)
@@ -184,7 +206,10 @@ function DiaryEntry(props) {
         [countdownTimer]
     )
     const goToFlavorSelection = () => {
-        navigation.navigate('FlavorEntry')
+        navigation.navigate('FlavorEntry', {
+            setSteepData,
+            steepData
+        })
     }
     return (
 
@@ -278,4 +303,22 @@ function DiaryEntry(props) {
     )
 }
 
-export default DiaryEntry
+
+const mapStateToProps = (state, ownProps) =>
+{
+    const {Diary} = state;
+
+    return {
+       Diary: Diary.diaryEntry
+    };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    return {
+
+        createEntry: (data) => dispatch(addEntry(data)),
+        addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryEntry);

@@ -12,8 +12,12 @@ import FlavorDiary from "./flavorDiary";
 import TeaNameEntryPage from "./teaNameEntryPage";
 import TimerPage from "./timerPage";
 import teaNameEntryPageTimer from "./teaNameEntryPageTimer";
+import {LogBox} from "react-native";
 
 function App(props) {
+    LogBox.ignoreLogs([
+        'Non-serializable values were found in the navigation state',
+    ]);
     const Stack = createStackNavigator();
     return (
 

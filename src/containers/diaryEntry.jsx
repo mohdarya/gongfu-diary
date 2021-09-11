@@ -169,6 +169,7 @@ function DiaryEntry(props) {
 
 
     const endButtonAction = () => {
+        setStartTimer(false)
         navigation.navigate("HomeScreen")
     }
     const startInterval = () => {

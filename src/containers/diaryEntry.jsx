@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
+import RadarChart from "../components/radarChart";
 
 function DiaryEntry(props) {
 
@@ -11,6 +12,14 @@ function DiaryEntry(props) {
     const route = useRoute()
 
 
+    let data = [1,
+       2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8]
     const {teaName, startingTime} = route.params
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
@@ -101,9 +110,10 @@ function DiaryEntry(props) {
             fontSize: 30,
             color: 'black',
         }, teaNameView: {
-            height: 80,
+            height: 60,
             flexDirection: 'column',
-            marginBottom: 30,
+            marginBottom: 20,
+            marginTop: 10,
             marginLeft: 20,
             marginRight: 20,
             backgroundColor: 'grey',
@@ -113,10 +123,11 @@ function DiaryEntry(props) {
             justifyContent: 'space-between',
         }, teaFlavorView: {
             backgroundColor: 'grey',
-            flex: 4,
+            flex: 5,
             marginLeft: 20,
             marginRight: 20,
             borderRadius: 20,
+            flexDirection: 'column',
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
         }, doneButtonView: {
@@ -210,14 +221,18 @@ function DiaryEntry(props) {
             steepData
         })
     }
+
+    const render = (item) => {
+        return (
+            <View>
+                <FlavorGraphItem/>
+            </View>
+        )
+    }
     return (
 
 
-        <TouchableOpacity style={{flex: 1}} onPress={() => {
-            Keyboard.dismiss();
 
-        }
-        } activeOpacity={1}>
             <View style={styles.container}>
 
                 <View style={styles.topBar}>
@@ -269,9 +284,9 @@ function DiaryEntry(props) {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.teaFlavorView}
+                <View style={styles.teaFlavorView}
                                   activeOpacity={1}
-                                  onPress={goToFlavorSelection}
+
                 >
 
                     <View>
@@ -280,11 +295,10 @@ function DiaryEntry(props) {
                         </Text>
                     </View>
                     <View style={styles.graphView}>
-                        <Text>
-                            graph
-                        </Text>
+
+                    <RadarChart/>
                     </View>
-                </TouchableOpacity>
+                </View>
                 <View style={styles.doneButtonView}>
                     <TouchableOpacity style={styles.doneButton} onPress={startInterval} activeOpacity={1}>
                         <Text style={styles.doneButtonText}>
@@ -296,19 +310,18 @@ function DiaryEntry(props) {
 
             </View>
 
-        </TouchableOpacity>
+
 
 
     )
 }
 
 
-const mapStateToProps = (state, ownProps) =>
-{
+const mapStateToProps = (state, ownProps) => {
     const {Diary} = state;
 
     return {
-       Diary: Diary.diaryEntry
+        Diary: Diary.diaryEntry
     };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

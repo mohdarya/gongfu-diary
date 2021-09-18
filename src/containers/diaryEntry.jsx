@@ -189,15 +189,20 @@ function DiaryEntry(props) {
     const startInterval = () => {
 
 
+        console.log(props.Diary)
+        props.addSteep(sessionID, steepData)
+        setSteepData({})
         setCurrenTime(countdownTimer)
-        if(first)
-        {
+
+
+        if (first) {
             setCountdownTimer((t) => t - 1)
-        }else {
-            props.addSteep(sessionID, steepData)
-            setSteepData({})
+        } else {
+
+
             setCountdownTimer((t) => t + increment)
         }
+
         setStartTimer(true)
 
     }
@@ -236,13 +241,7 @@ function DiaryEntry(props) {
         })
     }
 
-    const render = (item) => {
-        return (
-            <View>
-                <FlavorGraphItem/>
-            </View>
-        )
-    }
+
     return (
 
 
@@ -312,7 +311,7 @@ function DiaryEntry(props) {
 
                     <RadarChart/>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.doneButtonView}>
                     <TouchableOpacity style={styles.doneButton} onPress={startInterval} activeOpacity={1}>
                         <Text style={styles.doneButtonText}>

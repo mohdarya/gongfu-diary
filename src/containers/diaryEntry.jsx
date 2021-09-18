@@ -10,16 +10,6 @@ function DiaryEntry(props) {
 
     const navigation = useNavigation()
     const route = useRoute()
-
-
-    let data = [1,
-       2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8]
     const {teaName, startingTime} = route.params
     const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))

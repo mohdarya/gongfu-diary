@@ -12,6 +12,8 @@ function TimerPage(props) {
 
     let timerEndingSound
     const {startingTime} = route.params
+
+    const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
@@ -191,7 +193,12 @@ function TimerPage(props) {
     const startInterval = () => {
 
         setCurrenTime(countdownTimer)
-        setCountdownTimer((t) => t - 1)
+
+        if(first)
+        {
+            setCountdownTimer((t) => t - 1)
+        }else {
+        setCountdownTimer((t) => t + increment)}
         setStartTimer(true)
 
     }
@@ -208,7 +215,13 @@ function TimerPage(props) {
                                     console.log('Sound did not play')
                                 }
                             })
-                            setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+                            if(first)
+                            {
+                                setCountdownTimer(parseInt(currentTime))
+                                setFirst(false)
+                            }else {
+                                setCountdownTimer(parseInt(currentTime) + parseInt(increment))}
+
 
                         } else {
                             setCountdownTimer((t) => t - 1)

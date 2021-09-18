@@ -309,7 +309,7 @@ onPress={goToFlavorSelection}
                     </View>
                     <View style={styles.graphView}>
 
-                    <RadarChart/>
+                    <RadarChart steeps={{...steepData}}/>
                     </View>
                 </TouchableOpacity>
                 <View style={styles.doneButtonView}>

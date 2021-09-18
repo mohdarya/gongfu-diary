@@ -297,9 +297,9 @@ function DiaryEntry(props) {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.teaFlavorView}
+                <TouchableOpacity style={styles.teaFlavorView}
                                   activeOpacity={1}
-
+onPress={goToFlavorSelection}
                 >
 
                     <View>

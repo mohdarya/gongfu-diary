@@ -43,9 +43,14 @@ function FlavorEntry(props) {
             'detail': ['Pine', 'Bark', 'Cedar', 'Resin', 'Wet Wood', 'Dark Wood', 'Green Wood', 'Cherry Wood']
         },
         {
-            'note': 'Vegetal',
-            'detail': ['Grass', 'Stems', 'Straw', 'Spinach', 'Broccoli', 'Zucchini', 'Asparagus', 'Garden Peas', 'Green Pepper']
+            'note': 'Grass',
+            'detail': ['Grass', 'Stems', 'Straw', 'barnyard', 'grass seed', 'freshly cut grass']
         },
+        {
+            'note': 'Vegetables',
+            'detail': ['Spinach', 'Broccoli', 'Zucchini', 'Asparagus', 'Garden Peas', 'Green Pepper']
+        },
+
         {
             'note': 'Herbs',
             'detail': ['Thyme', 'Parsley', 'Cardamon', 'Eucalyptus', 'Fennel Seed', 'Coriander Seed']
@@ -224,7 +229,7 @@ function FlavorEntry(props) {
 
     const renderFlavorNoteItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
-            console.log(steepData)
+          
             let indexOfNote = flavorNotes.indexOf(item)
             if (steepData.hasOwnProperty(indexOfNote)) {
                 if (steepData[indexOfNote].hasOwnProperty('level')) {

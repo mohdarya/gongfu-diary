@@ -21,6 +21,7 @@ function DiaryEntry(props) {
         7,
         8]
     const {teaName, startingTime} = route.params
+    const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
@@ -183,13 +184,20 @@ function DiaryEntry(props) {
         setStartTimer(false)
         navigation.navigate("HomeScreen")
     }
+
+
     const startInterval = () => {
 
 
-        props.addSteep(sessionID, steepData)
-        setSteepData({})
         setCurrenTime(countdownTimer)
-        setCountdownTimer((t) => t - 1)
+        if(first)
+        {
+            setCountdownTimer((t) => t - 1)
+        }else {
+            props.addSteep(sessionID, steepData)
+            setSteepData({})
+            setCountdownTimer((t) => t + increment)
+        }
         setStartTimer(true)
 
     }
@@ -201,7 +209,13 @@ function DiaryEntry(props) {
                 setTimeout(() => {
                         if (countdownTimer <= 0) {
                             setStartTimer(false)
-                            setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+                            if(first)
+                            {
+                                setCountdownTimer(parseInt(currentTime))
+                                setFirst(false)
+                            }else {
+                                setCountdownTimer(parseInt(currentTime) + parseInt(increment))}
+
 
                         } else {
                             setCountdownTimer((t) => t - 1)

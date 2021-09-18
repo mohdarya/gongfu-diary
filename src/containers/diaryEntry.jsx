@@ -21,10 +21,6 @@ function DiaryEntry(props) {
         return teaName + Date.now()
     })
     useEffect(() => {
-
-        console.log('called')
-
-
         props.createEntry({
             teaName: teaName,
             sessionID: sessionID,

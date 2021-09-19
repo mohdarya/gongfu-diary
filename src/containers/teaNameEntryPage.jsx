@@ -1,22 +1,12 @@
 import React from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform, ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
-import {useHeaderHeight} from "@react-navigation/stack";
+import {Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 
 
 function TeaNameEntryPage(props) {
 
     let startingTime = 20;
-    let teaName
+    let teaName = ''
     const navigation = useNavigation()
     const
         styles = StyleSheet.create({
@@ -140,10 +130,15 @@ function TeaNameEntryPage(props) {
 
 
     function goToDiaryEntry() {
-        navigation.navigate("DiaryEntry", {
-            teaName,
-            startingTime
-        })
+        if(teaName !== '') {
+            navigation.navigate("DiaryEntry", {
+                teaName,
+                startingTime
+            })
+        }
+        else {
+            ToastAndroid.show("Please Enter a Tea Name", ToastAndroid.LONG)
+        }
     }
 
     return (

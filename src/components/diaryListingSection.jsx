@@ -1,5 +1,6 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from "react-native";
+import {FlatList, StyleSheet, View} from "react-native";
+import {connect} from "react-redux";
 import DiaryListingItem from "./diaryListingItem";
 
 function DiaryListingSection(props) {
@@ -19,13 +20,21 @@ function DiaryListingSection(props) {
 
     })
 
+    const renderDiaryItem = ({item}) => {
+        console.log(item)
+        return(
+        <DiaryListingItem teaName={item.teaName} sessionID={item.sessionID}/>)
+    }
     return (
 
         <View style={styles.container}>
-            <ScrollView>
-<DiaryListingItem/>
+            <FlatList data={props.diary}
+                      horizontal={false}
+                      numColumns={2}
+                      renderItem={renderDiaryItem}
+                      keyExtractor={item => item.sessionID}/>
 
-            </ScrollView>
+
         </View>
     )
 
@@ -33,4 +42,11 @@ function DiaryListingSection(props) {
 }
 
 
-export default DiaryListingSection
+const mapStateToProps = (state, ownProps) => {
+    const {Diary} = state;
+
+    return {
+        diary: Diary.diaryEntry
+    };
+};
+export default connect(mapStateToProps)(DiaryListingSection)

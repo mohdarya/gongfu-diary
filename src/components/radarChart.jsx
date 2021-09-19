@@ -1,16 +1,17 @@
-import Svg, {Circle, Line, Polygon} from "react-native-svg";
+import Svg, {Circle, Line, Polygon, Text} from "react-native-svg";
 import React, {useState} from 'react';
 import {View} from "react-native";
+import {connect} from "react-redux";
 
 function RadarChart(props) {
 
 
     const [viewHeight, setViewHeight] = useState(0)
     const [viewWidth, setViewWidth] = useState(0)
-    let radius = 180 * 0.25 * 3;
+    let radius = 150 * 0.25 * 3;
 
     let centerX = viewWidth * 0.5;
-    let centerY = viewHeight * 0.47
+    let centerY = viewHeight * 0.5
     let degree = 90
     const calculateEdgePoint = (degree) => {
         const degreeInRadians = degToRadians(degree);
@@ -19,7 +20,13 @@ function RadarChart(props) {
             centerY + Math.sin(degreeInRadians) * radius
         ];
     };
-
+    const calculateEdgePointText = (degree) => {
+        const degreeInRadians = degToRadians(degree);
+        return [
+            centerX + Math.cos(degreeInRadians) * radius * 1.35,
+            centerY + Math.sin(degreeInRadians) * radius * 1.2
+        ];
+    };
     const calculateEdgePointPolygon = (degree, amount) => {
         const degreeInRadians = degToRadians(degree);
         return [
@@ -70,6 +77,7 @@ function RadarChart(props) {
                 />
             )
 
+
             degree += 180 / n
 
 
@@ -84,10 +92,19 @@ function RadarChart(props) {
             for (const [key, value] of Object.entries(props.steeps)) {
 
                 point += `${calculateEdgePointPolygon(degree, props.steeps[key].level * 10)[0]},${calculateEdgePointPolygon(degree + 180, props.steeps[key].level * 10)[1]} `
+                data.push(<Text
+                    key={`text_outline_${key}`} fill="black"
+                    x={calculateEdgePointText(degree)[0]}
+                    y={calculateEdgePointText(degree + 180)[1]}
+                    stroke="black"
+                    fontSize="10"
+                    textAnchor="middle">
+                    {props.flavors[key].note}
+
+                </Text>)
                 degree += 180 / n
             }
-            if(Object.keys(props.steeps).length % 2 !== 0)
-            {
+            if (Object.keys(props.steeps).length % 2 !== 0) {
                 point += `${calculateEdgePointPolygon(degree, 0 * 10)[0]},${calculateEdgePointPolygon(degree + 180, 0 * 10)[1]} `
                 degree += 180 / n
             }
@@ -95,12 +112,12 @@ function RadarChart(props) {
         }
 
         data.push(<Polygon
-            key={'polygon'}
-            points={findPoints()}
-            fill="lime"
-            strokeLinecap={"round"}
-            stroke="lime"
-            strokeWidth="5"
+                key={'polygon'}
+                points={findPoints()}
+                fill="lime"
+                strokeLinejoin="round"
+                stroke="lime"
+                strokeWidth="10"
             />
         )
 
@@ -122,6 +139,7 @@ function RadarChart(props) {
 
                 {drawCircle()}
 
+
             </Svg>
         </View>
     )
@@ -129,4 +147,12 @@ function RadarChart(props) {
 
 }
 
-export default RadarChart
+const mapStateToProps = (state, ownProps) => {
+    const {Diary} = state;
+
+    return {
+        flavors: Diary.flavorNotes
+    };
+};
+
+export default connect(mapStateToProps)(RadarChart);

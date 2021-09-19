@@ -1,14 +1,5 @@
 import React, {useState} from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform, ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import Slider from '@react-native-community/slider';
 
 
@@ -59,7 +50,7 @@ function SteepSelector(props) {
 
     })
 
-    const [value, setValue] = useState(0)
+    const [value, setValue] = useState(1)
     return (
         <View style={styles.container}>
             <View style={styles.sliderView}>
@@ -74,11 +65,12 @@ function SteepSelector(props) {
                     </View>
                     <Slider
                         style={{width: '100%', height: 40}}
-                        minimumValue={0}
-                        maximumValue={10}
+                        minimumValue={1}
+                        maximumValue={props.maxValue}
                         step={1}
                         onValueChange={(value => {
                             setValue(value)
+                            props.processChange(value)
                         })}
                         minimumTrackTintColor="#FFFFFF"
                         maximumTrackTintColor="#000000"

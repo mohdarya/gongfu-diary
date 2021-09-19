@@ -1,16 +1,8 @@
-import React from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform, ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
-import {useHeaderHeight} from "@react-navigation/stack";
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import SteepSelector from "../components/steepSelector";
+import RadarChart from "../components/radarChart";
+import {useRoute} from "@react-navigation/core";
 
 
 function DiaryListingPage(props) {
@@ -78,7 +70,7 @@ function DiaryListingPage(props) {
         steepSelector: {
             width: '90%',
             height: '10%',
-  
+
             marginLeft: 20,
             marginTop: 40,
 
@@ -88,7 +80,16 @@ function DiaryListingPage(props) {
 
     })
 
+    const route = useRoute()
 
+    let steepData = route.params.data.steeps
+
+    const [dataToDisplay, setDataToDisplay] = useState(steepData[0])
+
+
+    const steepChanged = (index) => {
+        setDataToDisplay(steepData[index - 1])
+    }
     return (
         <View style={styles.container}>
             <View style={[{marginTop: '10%',}, styles.teaNameView]}>
@@ -100,7 +101,7 @@ function DiaryListingPage(props) {
 
                 <TouchableOpacity style={styles.teaNameTextView}>
                     <Text style={styles.teaName}>
-                        Red Tiger Oolong
+                        {route.params.data.teaName}
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -113,12 +114,12 @@ function DiaryListingPage(props) {
 
                 <TouchableOpacity style={styles.teaNameTextView}>
                     <Text style={styles.teaName}>
-                        5
+                        {steepData.length}
                     </Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.steepSelector}>
-                <SteepSelector/>
+                <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>
             </View>
             <View style={styles.teaFlavorView}>
 
@@ -128,9 +129,7 @@ function DiaryListingPage(props) {
                     </Text>
                 </View>
                 <View style={styles.graphView}>
-                    <Text>
-                        graph
-                    </Text>
+                    <RadarChart steeps={dataToDisplay[0]}/>
                 </View>
             </View>
 

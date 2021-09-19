@@ -23,7 +23,9 @@ function DiaryListingSection(props) {
     const renderDiaryItem = ({item}) => {
         console.log(item)
         return(
-        <DiaryListingItem teaName={item.teaName} sessionID={item.sessionID}/>)
+
+        <DiaryListingItem data={item}/>
+            )
     }
     return (
 

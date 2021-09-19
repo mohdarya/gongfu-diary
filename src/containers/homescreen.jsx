@@ -1,7 +1,8 @@
 import React from 'react';
-import {ScrollView, Text, StyleSheet, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from "@react-navigation/core";
+import DiaryListingSection from "../components/diaryListingSection";
 
 function HomeScreen(props) {
 
@@ -73,6 +74,7 @@ function HomeScreen(props) {
             fontSize: 20,
             marginTop: 10,
             margin: 15,
+            fontWeight: 'bold'
         },
 
 
@@ -130,11 +132,9 @@ function HomeScreen(props) {
                 <Text style={styles.listText}>
                     History
                 </Text>
-                <ScrollView>
-                    <Text>
-
-                    </Text>
-                </ScrollView>
+                <View style={{height: '80%', margin: 15,}}>
+                    <DiaryListingSection/>
+                </View>
             </View>
 
         </View>

@@ -98,7 +98,7 @@ function DiaryEntry(props) {
             color: 'black',
         }, teaNameView: {
             height: 60,
-            flexDirection: 'column',
+            flexDirection: 'row',
             marginBottom: 20,
             marginTop: 10,
             marginLeft: 20,
@@ -107,7 +107,7 @@ function DiaryEntry(props) {
             borderRadius: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
         }, teaFlavorView: {
             backgroundColor: 'grey',
             flex: 5,
@@ -129,15 +129,21 @@ function DiaryEntry(props) {
             marginTop: 1,
         },
         teaName: {
-            height: 50,
+            height: 25,
+            width: 'auto',
             textAlign: 'center',
             textAlignVertical: 'top',
             fontSize: 15,
+            fontWeight: 'bold',
             color: 'black',
+
         },
         teaNameTextView: {
-            width: '50%',
+            width: 'auto',
+            right: '10%',
+
             justifyContent: 'center',
+            alignItems: 'center',
             alignSelf: 'center',
         },
         graphView: {
@@ -270,19 +276,22 @@ function DiaryEntry(props) {
 
                 </View>
                 <View style={styles.teaNameView}>
-                    <View>
+                    <View style={{height: 'auto', width: '15%', }}>
                         <Text style={styles.teaNameTag}>
                             Tea
                         </Text>
                     </View>
 
+                    <View style={{width: '85%', justifyContent: 'center', height: '100%'}}>
                     <TouchableOpacity style={styles.teaNameTextView}>
                         <Text style={styles.teaName}
                         >
                             {teaName}
                         </Text>
                     </TouchableOpacity>
+                    </View>
                 </View>
+
                 <TouchableOpacity style={styles.teaFlavorView}
                                   activeOpacity={1}
 onPress={goToFlavorSelection}

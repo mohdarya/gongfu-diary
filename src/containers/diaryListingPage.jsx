@@ -15,24 +15,27 @@ function DiaryListingPage(props) {
 
         },
         teaNameTag: {
+            textAlign: 'left',
             fontSize: 15,
             margin: 5,
             marginTop: 1,
         },
         teaName: {
-            height: '100%',
+
+
+            width: '100%',
             textAlign: 'center',
             textAlignVertical: 'center',
-            fontSize: 15,
-            borderTopRightRadius: 20,
+            fontSize: 18,
+
             color: 'black',
         },
         teaNameTextView: {
 
 
-            width: '50%',
+            width: '95%',
             justifyContent: 'center',
-            alignSelf: 'flex-end',
+            alignSelf: 'center',
 
 
         },
@@ -55,17 +58,18 @@ function DiaryListingPage(props) {
 
         },
         teaNameView: {
-            height: 50,
-            flexDirection: 'row',
-            marginBottom: 30,
+            height: 150,
+            width: 220,
+            flexDirection: 'column',
+            marginBottom: 10,
             marginLeft: 20,
             marginRight: 20,
-
+            alignSelf: 'center',
             backgroundColor: 'grey',
             borderRadius: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            justifyContent: 'space-between',
+            justifyContent: 'center',
         },
         steepSelector: {
             width: '90%',
@@ -75,6 +79,13 @@ function DiaryListingPage(props) {
             marginTop: 40,
 
 
+        },
+        teaTag: {
+            textAlign: 'center',
+            fontSize: 16,
+            margin: 5,
+            fontWeight: 'bold',
+            marginTop: 1,
         }
 
 
@@ -93,8 +104,8 @@ function DiaryListingPage(props) {
     return (
         <View style={styles.container}>
             <View style={[{marginTop: '10%',}, styles.teaNameView]}>
-                <View style={{left: '5%'}}>
-                    <Text style={styles.teaNameTag}>
+                <View style={{justifyContent: 'center'}}>
+                    <Text style={styles.teaTag}>
                         Tea
                     </Text>
                 </View>
@@ -102,19 +113,6 @@ function DiaryListingPage(props) {
                 <TouchableOpacity style={styles.teaNameTextView}>
                     <Text style={styles.teaName}>
                         {route.params.data.teaName}
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.teaNameView}>
-                <View style={{left: '5%'}}>
-                    <Text style={styles.teaNameTag}>
-                        Number of steeps
-                    </Text>
-                </View>
-
-                <TouchableOpacity style={styles.teaNameTextView}>
-                    <Text style={styles.teaName}>
-                        {steepData.length}
                     </Text>
                 </TouchableOpacity>
             </View>

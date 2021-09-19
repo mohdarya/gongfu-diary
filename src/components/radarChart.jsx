@@ -85,21 +85,33 @@ function RadarChart(props) {
 
 
         const findPoints = () => {
+            let sortable = []
+
+            for(const [key, value] of Object.entries(props.steeps))
+            {
+                sortable.push([key,value])
+            }
+            sortable.sort(function(a, b) {
+                return parseInt(a[0]) - parseInt(b[0]);
+            });
+
+
+
             degree = 90
             let size = 100
             let point = ''
             let n = Math.round(Object.keys(props.steeps).length / 2)
-            for (const [key, value] of Object.entries(props.steeps)) {
+            for (let x in sortable) {
 
-                point += `${calculateEdgePointPolygon(degree, props.steeps[key].level * 10)[0]},${calculateEdgePointPolygon(degree + 180, props.steeps[key].level * 10)[1]} `
+                point += `${calculateEdgePointPolygon(degree, sortable[x][1].level * 10)[0]},${calculateEdgePointPolygon(degree + 180, sortable[x][1].level * 10)[1]} `
                 data.push(<Text
-                    key={`text_outline_${key}`} fill="black"
+                    key={`text_outline_${sortable[x]}`} fill="black"
                     x={calculateEdgePointText(degree)[0]}
                     y={calculateEdgePointText(degree + 180)[1]}
                     stroke="black"
                     fontSize="10"
                     textAnchor="middle">
-                    {props.flavors[key].note}
+                    {props.flavors[sortable[x][0]].note}
 
                 </Text>)
                 degree += 180 / n

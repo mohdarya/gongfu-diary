@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {Animated, BackHandler, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Animated, BackHandler, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import DiaryListingSection from "../components/diaryListingSection";
 
@@ -76,7 +76,10 @@ function HomeScreen(props) {
             margin: 15,
             fontWeight: 'bold'
         }, searchView: {
-backgroundColor: 'grey',
+backgroundColor: 'white',
+            flexDirection: 'row',
+            justifyContent: "center",
+            alignItems: 'center',
 
         },
         settingView:{
@@ -190,11 +193,26 @@ backgroundColor: 'grey',
                         inputRange: [0, 100],
                         outputRange: ['23%', '100%'],
                     }),}]}>
-                    <View style={{width: 40, height: 40}}>
+                    <Animated.View style={[{width: 45, height: 45, borderRadius: 5,  backgroundColor: 'grey'}, {  borderTopRightRadius: searchAnimation.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: [5, 0],
+                    }), borderBottomRightRadius: searchAnimation.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: [5, 0],
+                    }),}]}>
+
                         <TouchableOpacity onPress={searchSelected} activeOpacity={1} style={{width: '100%', height: '100%'}}>
                             <Image style={{height: '100%', width: '100%'}} source={require('../img/search.png')}/>
                         </TouchableOpacity>
-                    </View>
+                    </Animated.View>
+                    <Animated.View style={[{backgroundColor: 'grey', borderRadius: 5,height: 45, borderTopLeftRadius: 0, borderBottomLeftRadius: 0},  {width: searchAnimation.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: ['0%', '85%'],
+                        }),}]}>
+                        <TextInput style={{width: '100%'}}>
+
+                        </TextInput>
+                    </Animated.View>
                 </Animated.View>
             </View>
             <View style={styles.buttonsView}>

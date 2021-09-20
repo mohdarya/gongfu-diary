@@ -7,7 +7,7 @@ function DiaryListingItem(props){
         container: {
             backgroundColor: 'white',
             width: '45%',
-            height: 130,
+            height: 'auto',
             margin: 8,
             borderTopLeftRadius: 15,
             alignItems: 'center',
@@ -17,7 +17,7 @@ function DiaryListingItem(props){
         },
         dateTextStyle: {
             textAlign: 'center',
-            fontSize: 16,
+            fontSize: 13,
             marginTop: 5,
             fontWeight: 'bold'
         },

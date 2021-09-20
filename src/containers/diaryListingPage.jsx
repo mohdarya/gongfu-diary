@@ -95,11 +95,19 @@ function DiaryListingPage(props) {
 
     let steepData = route.params.data.steeps
 
-    const [dataToDisplay, setDataToDisplay] = useState(steepData[0])
+    const [dataToDisplay, setDataToDisplay] = useState(()=> {
+        if(steepData[0] === undefined)
+        {
+            return null
+        }
+        else {
+            return  steepData[0][0]
+        }
+    })
 
 
     const steepChanged = (index) => {
-        setDataToDisplay(steepData[index - 1])
+        setDataToDisplay(steepData[index - 1][0])
     }
     return (
         <View style={styles.container}>
@@ -127,7 +135,7 @@ function DiaryListingPage(props) {
                     </Text>
                 </View>
                 <View style={styles.graphView}>
-                    <RadarChart steeps={dataToDisplay[0]}/>
+                    <RadarChart steeps={dataToDisplay}/>
                 </View>
             </View>
 

@@ -60,33 +60,39 @@ function RadarChart(props) {
 
         }
 
+        if(props.steeps !== null) {
+            let n = Math.round(Object.keys(props.steeps).length / 2)
+            for (let i = 0; i < n; i++) {
 
-        let n = Math.round(Object.keys(props.steeps).length / 2)
-        for (let i = 0; i < n; i++) {
-
-            data.push(<Line
-                    key={`line_outline_${i}`}
-                    x1={calculateEdgePoint(degree)[0]}
-                    y1={calculateEdgePoint(degree)[1]}
-                    x2={calculateEdgePoint(degree + 180)[0]}
-                    y2={calculateEdgePoint(degree + 180)[1]}
-                    stroke="black"
-                    strokeOpacity="1"
-                    strokeWidth="5"
-                    fill="transparent"
-                />
-            )
+                data.push(<Line
+                        key={`line_outline_${i}`}
+                        x1={calculateEdgePoint(degree)[0]}
+                        y1={calculateEdgePoint(degree)[1]}
+                        x2={calculateEdgePoint(degree + 180)[0]}
+                        y2={calculateEdgePoint(degree + 180)[1]}
+                        stroke="black"
+                        strokeOpacity="1"
+                        strokeWidth="5"
+                        fill="transparent"
+                    />
+                )
 
 
-            degree += 180 / n
+                degree += 180 / n
 
+
+            }
 
         }
 
-
         const findPoints = () => {
             let sortable = []
+            degree = 90
+            let size = 100
+            let point = ''
 
+            if(props.steeps !== null)
+            {
             for(const [key, value] of Object.entries(props.steeps))
             {
                 sortable.push([key,value])
@@ -97,9 +103,7 @@ function RadarChart(props) {
 
 
 
-            degree = 90
-            let size = 100
-            let point = ''
+
             let n = Math.round(Object.keys(props.steeps).length / 2)
             for (let x in sortable) {
 
@@ -119,7 +123,7 @@ function RadarChart(props) {
             if (Object.keys(props.steeps).length % 2 !== 0) {
                 point += `${calculateEdgePointPolygon(degree, 0 * 10)[0]},${calculateEdgePointPolygon(degree + 180, 0 * 10)[1]} `
                 degree += 180 / n
-            }
+            }}
             return point
         }
 

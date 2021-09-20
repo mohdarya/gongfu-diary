@@ -1,7 +1,7 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, {useRef, useState} from 'react';
+import {Animated, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import DiaryListingSection from "../components/diaryListingSection";
 
 function HomeScreen(props) {
@@ -60,8 +60,9 @@ function HomeScreen(props) {
 
             backgroundColor: 'grey',
             borderRadius: 5,
-            height: '45%',
-            width: '25%',
+
+            width: '100%',
+            height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
         },
@@ -75,12 +76,46 @@ function HomeScreen(props) {
             marginTop: 10,
             margin: 15,
             fontWeight: 'bold'
+        }, searchView: {
+backgroundColor: 'grey',
+
         },
+        settingView:{
+            height: '45%',
+
+        }
 
 
     });
 
+    const [showSetting, setShowSetting] = useState(true)
 
+    const searchAnimation = useRef(new Animated.Value(0)).current
+    const settingVisibility = useRef(new Animated.Value(100)).current
+    const searchSelected = () => {
+
+        Animated.parallel([
+            // after decay, in parallel:
+            Animated.timing(
+                settingVisibility,
+                {
+                    toValue: 0,
+                    duration: 100,
+                    useNativeDriver: false
+                }
+            ),
+            Animated.timing(
+                searchAnimation,
+                {
+                    toValue: 100,
+                    duration: 400,
+                    useNativeDriver: false
+                }
+            )
+        ]).start();
+
+        setShowSetting(!showSetting)
+    }
     const goToDiary = () => {
         navigation.navigate('TeaName')
     }
@@ -90,26 +125,37 @@ function HomeScreen(props) {
             <View style={styles.topBar}>
 
 
-                <TouchableOpacity style={styles.settingButton}>
+                <Animated.View style={[styles.settingView, {width: settingVisibility.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: ['0%', '25%'],
+                    }),} ]}>
+          <TouchableOpacity style={styles.settingButton}>
                     <Text style={styles.settingButtonText}>
                         setting
                     </Text>
                 </TouchableOpacity>
+                </Animated.View>
+                <Animated.View style={[styles.searchView, {width: searchAnimation.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: ['23%', '100%'],
+                    }),}]}>
 
-                <View>
-                    <Icon.Button
-                        backgroundColor="white"
-                        name="search"
-                        color="black"
-                        size={35}
-                        iconStyle={{
-                            marginRight: 0,
-                            paddingLeft: 20,
-                            paddingRight: 20,
+                    <View>
+                        <Icon.Button
+                            backgroundColor="white"
+                            name="search"
+                            color="black"
+                            size={35}
+                            iconStyle={{
+                                marginRight: 0,
+                                paddingLeft: 20,
+                                paddingRight: 20,
 
-                        }}
-                    />
-                </View>
+                            }}
+                        />
+                    </View>
+
+                </Animated.View>
             </View>
             <View style={styles.buttonsView}>
                 <TouchableOpacity style={styles.buttons} activeOpacity={1} onPress={() => {

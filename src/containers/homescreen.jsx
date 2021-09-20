@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Animated, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import DiaryListingSection from "../components/diaryListingSection";
 
 function HomeScreen(props) {
@@ -139,22 +138,11 @@ backgroundColor: 'grey',
                         inputRange: [0, 100],
                         outputRange: ['23%', '100%'],
                     }),}]}>
-
-                    <View>
-                        <Icon.Button
-                            backgroundColor="white"
-                            name="search"
-                            color="black"
-                            size={35}
-                            iconStyle={{
-                                marginRight: 0,
-                                paddingLeft: 20,
-                                paddingRight: 20,
-
-                            }}
-                        />
+                    <View style={{width: 40, height: 40}}>
+                        <TouchableOpacity onPress={searchSelected} activeOpacity={1} style={{width: '100%', height: '100%'}}>
+                            <Image style={{height: '100%', width: '100%'}} source={require('../img/search.png')}/>
+                        </TouchableOpacity>
                     </View>
-
                 </Animated.View>
             </View>
             <View style={styles.buttonsView}>

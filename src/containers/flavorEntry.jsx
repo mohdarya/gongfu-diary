@@ -72,7 +72,7 @@ function FlavorEntry(props) {
             'detail': ['Ash', 'Tar', 'Toast', 'Smoke', 'Tobacco', 'Fireplace', 'Burnt Food', 'Grilled Food']
         },
         {
-            'note': 'Spicy',
+            'note': 'Spice',
             'detail': ['Cocoa', 'Clove', 'Vanilla', 'Pepper', 'Saffron', 'Nutmeg', 'Licorice', 'Menthol', 'Cinnamon']
         },
         {
@@ -229,7 +229,7 @@ function FlavorEntry(props) {
 
     const renderFlavorNoteItem = ({item}) => {
         return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
-          
+
             let indexOfNote = flavorNotes.indexOf(item)
             if (steepData.hasOwnProperty(indexOfNote)) {
                 if (steepData[indexOfNote].hasOwnProperty('level')) {

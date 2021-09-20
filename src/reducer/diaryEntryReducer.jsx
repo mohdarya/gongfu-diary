@@ -62,7 +62,7 @@ const initialState = {
             'detail': ['Ash', 'Tar', 'Toast', 'Smoke', 'Tobacco', 'Fireplace', 'Burnt Food', 'Grilled Food']
         },
         {
-            'note': 'Spicy',
+            'note': 'Spice',
             'detail': ['Cocoa', 'Clove', 'Vanilla', 'Pepper', 'Saffron', 'Nutmeg', 'Licorice', 'Menthol', 'Cinnamon']
         },
         {

@@ -16,7 +16,7 @@ function DiaryEntry(props) {
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
     const [increment, setIncrement] = useState(5);
-    const [steepData, setSteepData] = useState([])
+    const [steepData, setSteepData] = useState({})
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
     })
@@ -182,8 +182,7 @@ function DiaryEntry(props) {
 
 
         console.log(props.Diary)
-        props.addSteep(sessionID, steepData)
-        setSteepData({})
+
         setCurrenTime(countdownTimer)
 
 
@@ -191,7 +190,8 @@ function DiaryEntry(props) {
             setCountdownTimer((t) => t - 1)
         } else {
 
-
+            props.addSteep(sessionID, steepData)
+            setSteepData({})
             setCountdownTimer((t) => t + increment)
         }
 

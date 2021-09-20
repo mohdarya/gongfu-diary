@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {Animated, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import DiaryListingSection from "../components/diaryListingSection";
@@ -87,22 +87,32 @@ backgroundColor: 'grey',
 
     });
 
-    const [showSetting, setShowSetting] = useState(true)
+
 
     const searchAnimation = useRef(new Animated.Value(0)).current
-    const settingVisibility = useRef(new Animated.Value(100)).current
+    const settingVisibility = useRef(new Animated.Value(0)).current
+    const settingWidth = useRef(new Animated.Value(0)).current
+
     const searchSelected = () => {
 
         Animated.parallel([
             // after decay, in parallel:
-            Animated.timing(
-                settingVisibility,
-                {
-                    toValue: 0,
-                    duration: 100,
-                    useNativeDriver: false
-                }
-            ),
+            Animated.sequence([
+                 Animated.timing(
+                    settingVisibility,
+                    {
+                        toValue: 100,
+                        duration: 400,
+                        useNativeDriver: false
+                    }
+                ),  Animated.timing(
+                    settingWidth,
+                    {
+                        toValue: 100,
+                        duration: 1,
+                        useNativeDriver: false
+                    }
+                )]),
             Animated.timing(
                 searchAnimation,
                 {
@@ -113,8 +123,9 @@ backgroundColor: 'grey',
             )
         ]).start();
 
-        setShowSetting(!showSetting)
+
     }
+  
     const goToDiary = () => {
         navigation.navigate('TeaName')
     }
@@ -124,10 +135,13 @@ backgroundColor: 'grey',
             <View style={styles.topBar}>
 
 
-                <Animated.View style={[styles.settingView, {width: settingVisibility.interpolate({
+                <Animated.View style={[styles.settingView, {translateX: settingVisibility.interpolate({
                         inputRange: [0, 100],
-                        outputRange: ['0%', '25%'],
-                    }),} ]}>
+                        outputRange: [0, -100],
+                    }), width: settingVisibility.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: ['25%', '0%'],
+                    })} ]}>
           <TouchableOpacity style={styles.settingButton}>
                     <Text style={styles.settingButtonText}>
                         setting

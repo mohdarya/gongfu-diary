@@ -23,7 +23,7 @@ function TeaNameEntryPage(props) {
                 marginTop: 10,
             },
             teaName: {
-                marginBottom: '3%',
+
                 textAlign: 'center',
                 textAlignVertical: 'top',
                 fontSize: 15,
@@ -34,7 +34,7 @@ function TeaNameEntryPage(props) {
                 height: '70%',
                 width: '90%',
 
-
+                marginBottom: '3%',
                 justifyContent: 'flex-start',
                 alignSelf: 'center',
 

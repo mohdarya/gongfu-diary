@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Animated, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useEffect, useRef} from 'react';
+import {Animated, BackHandler, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import DiaryListingSection from "../components/diaryListingSection";
 
@@ -125,7 +125,45 @@ backgroundColor: 'grey',
 
 
     }
-  
+    function handleBackButtonClick() {
+        Animated.parallel([
+            // after decay, in parallel:
+
+            Animated.timing(
+                searchAnimation,
+                {
+                    toValue: 0,
+                    duration: 400,
+                    useNativeDriver: false
+                }
+            ),
+            Animated.sequence([
+                Animated.timing(
+                    settingWidth,
+                    {
+                        toValue: 0,
+                        duration: 1,
+                        useNativeDriver: false
+                    }
+                ),  Animated.timing(
+                    settingVisibility,
+                    {
+                        toValue: 0,
+                        duration: 400,
+                        useNativeDriver: false
+                    }
+                )])
+        ]).start();
+
+        return true;
+    }
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, []);
     const goToDiary = () => {
         navigation.navigate('TeaName')
     }

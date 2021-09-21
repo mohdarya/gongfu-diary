@@ -93,6 +93,7 @@ backgroundColor: 'grey',
 
 
 
+
     const searchAnimation = useRef(new Animated.Value(0)).current
     const settingVisibility = useRef(new Animated.Value(0)).current
     const settingWidth = useRef(new Animated.Value(0)).current
@@ -141,6 +142,11 @@ backgroundColor: 'grey',
 
     }
     function handleBackButtonClick() {
+        if(navigation.canGoBack())
+        {
+            navigation.goBack()
+        }
+        else {
         Animated.parallel([
             // after decay, in parallel:
 
@@ -178,6 +184,7 @@ backgroundColor: 'grey',
                     }
                 )])
         ]).start();
+        }
 
         return true;
     }

@@ -190,8 +190,7 @@ function DiaryEntry(props) {
             setCountdownTimer((t) => t - 1)
         } else {
 
-            props.addSteep(sessionID, steepData)
-            setSteepData({})
+            props.addSteep(sessionID, steepData) 
             setCountdownTimer((t) => t + increment)
         }
 

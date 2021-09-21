@@ -205,7 +205,7 @@ function FlavorEntry(props) {
             borderRadius: 20,
             flexBasis: '40%',
             margin: 20,
-            backgroundColor: 'white',
+
         },
         flavorNoteView: {
             flex: 1,
@@ -228,9 +228,20 @@ function FlavorEntry(props) {
     })
 
     const renderFlavorNoteItem = ({item}) => {
-        return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
 
-            let indexOfNote = flavorNotes.indexOf(item)
+        let indexOfNote = flavorNotes.indexOf(item)
+        let styleToUse = {
+            backgroundColor: 'white',
+        }
+        if(indexOfNote in steepData)
+        {
+            styleToUse = {
+                backgroundColor: 'grey',
+            }
+        }
+        return (<TouchableOpacity style={[styles.FlavorNoteItem, styleToUse]} activeOpacity={1} onPress={() => {
+
+
             if (steepData.hasOwnProperty(indexOfNote)) {
                 if (steepData[indexOfNote].hasOwnProperty('level')) {
                     setValue(steepData[indexOfNote].level)
@@ -260,8 +271,21 @@ function FlavorEntry(props) {
 
 
     const renderFlavorDetailItem = ({item}) => {
-        return (<TouchableOpacity style={styles.FlavorNoteItem} activeOpacity={1} onPress={() => {
-            let indexOfDetail = flavorNotes[chosenNoteIndex].detail.indexOf(item)
+
+
+        let indexOfDetail = flavorNotes[chosenNoteIndex].detail.indexOf(item)
+        let styleToUse = {
+            backgroundColor: 'white',
+        }
+        if(steepData[chosenNoteIndex].detail === indexOfDetail)
+        {
+            styleToUse = {
+                backgroundColor: 'grey',
+            }
+        }
+
+        return (<TouchableOpacity style={[styles.FlavorNoteItem, styleToUse]} activeOpacity={1} onPress={() => {
+
             setCurrentSteepData({
                 ...steepData,
                 [chosenNoteIndex]: {

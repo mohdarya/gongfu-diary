@@ -258,7 +258,7 @@ backgroundColor: 'grey',
                             let text = event.nativeEvent.text
                             searchForTeaName(text)
 
-                        }} value={searchValue} style={{width: '100%'}}>
+                        }} placeholder={'What Tea Are You Looking For?'} value={searchValue} style={{width: '100%'}}>
 
                         </TextInput>
                     </Animated.View>

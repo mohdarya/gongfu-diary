@@ -6,24 +6,7 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 
 function FlavorEntry(props) {
 
-    const route = useRoute()
-    const setSteepData = route.params.setSteepData
-    const passedSteepData = route.params.steepData
-    const [value, setValue] = useState(0)
-    const [flavorNoteModalVisible, setFlavorNoteModalVisible] = useState(false)
-    const [flavorDetailModalVisible, setFlavorDetailModalVisible] = useState(false)
-    const [chosenNote, setChosenNote] = useState('Flavor Note')
-    const [chosenNoteIndex, setChosenNoteIndex] = useState(0)
-    const [chosenDetail, setChosenDetail] = useState('Detail')
 
-    const navigation = useNavigation()
-    const [steepData, setCurrentSteepData] = useState(() => {
-        if (passedSteepData.isEmpty) {
-            return {}
-        } else {
-            return {...passedSteepData}
-        }
-    });
 
     let flavorNotes = [
         {
@@ -227,6 +210,24 @@ function FlavorEntry(props) {
 
     })
 
+    const route = useRoute()
+    const setSteepData = route.params.setSteepData
+    const passedSteepData = route.params.steepData
+    const [value, setValue] = useState(0)
+    const [flavorNoteModalVisible, setFlavorNoteModalVisible] = useState(false)
+    const [flavorDetailModalVisible, setFlavorDetailModalVisible] = useState(false)
+    const [chosenNote, setChosenNote] = useState('Flavor Note')
+    const [chosenNoteIndex, setChosenNoteIndex] = useState(0)
+    const [chosenDetail, setChosenDetail] = useState('Detail')
+
+    const navigation = useNavigation()
+    const [steepData, setCurrentSteepData] = useState(() => {
+        if (passedSteepData.isEmpty) {
+            return {}
+        } else {
+            return {...passedSteepData}
+        }
+    });
     const renderFlavorNoteItem = ({item}) => {
 
         let indexOfNote = flavorNotes.indexOf(item)

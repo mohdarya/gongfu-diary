@@ -8,25 +8,7 @@ import RadarChart from "../components/radarChart";
 function DiaryEntry(props) {
 
 
-    const navigation = useNavigation()
-    const route = useRoute()
-    const {teaName, startingTime} = route.params
-    const [first, setFirst] = useState(true)
-    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
-    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
-    const [startTimer, setStartTimer] = useState(false)
-    const [increment, setIncrement] = useState(5);
-    const [steepData, setSteepData] = useState({})
-    const [sessionID, setSessionID] = useState(() => {
-        return teaName + Date.now()
-    })
-    useEffect(() => {
-        props.createEntry({
-            teaName: teaName,
-            sessionID: sessionID,
-            steeps: []
-        })
-    }, [])
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -171,7 +153,25 @@ function DiaryEntry(props) {
 
     });
 
-
+    const navigation = useNavigation()
+    const route = useRoute()
+    const {teaName, startingTime} = route.params
+    const [first, setFirst] = useState(true)
+    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
+    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
+    const [startTimer, setStartTimer] = useState(false)
+    const [increment, setIncrement] = useState(5);
+    const [steepData, setSteepData] = useState({})
+    const [sessionID, setSessionID] = useState(() => {
+        return teaName + Date.now()
+    })
+    useEffect(() => {
+        props.createEntry({
+            teaName: teaName,
+            sessionID: sessionID,
+            steeps: []
+        })
+    }, [])
     const endButtonAction = () => {
         setStartTimer(false)
         navigation.navigate("HomeScreen")
@@ -190,7 +190,7 @@ function DiaryEntry(props) {
             setCountdownTimer((t) => t - 1)
         } else {
 
-            props.addSteep(sessionID, steepData) 
+            props.addSteep(sessionID, steepData)
             setCountdownTimer((t) => t + increment)
         }
 

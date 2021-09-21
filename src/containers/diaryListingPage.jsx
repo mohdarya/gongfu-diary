@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import SteepSelector from "../components/steepSelector";
 import RadarChart from "../components/radarChart";
-import {useRoute} from "@react-navigation/core";
+import {useNavigation, useRoute} from "@react-navigation/core";
 
 
 function DiaryListingPage(props) {
@@ -92,8 +92,12 @@ function DiaryListingPage(props) {
     })
 
     const route = useRoute()
+const navigation = useNavigation();
 
-    let steepData = route.params.data.steeps
+
+
+    const [steepData, setSteepData] = useState(route.params.data.steeps)
+
 
     const [dataToDisplay, setDataToDisplay] = useState(()=> {
         if(steepData[0] === undefined)
@@ -105,6 +109,13 @@ function DiaryListingPage(props) {
         }
     })
 
+    const goToFlavorSelection = () => {
+        console.log(dataToDisplay)
+        navigation.navigate('FlavorEntry', {
+            setSteepData,
+            steepData: dataToDisplay
+        })
+    }
 
     const steepChanged = (index) => {
         setDataToDisplay(steepData[index - 1][0])
@@ -127,7 +138,11 @@ function DiaryListingPage(props) {
             <View style={styles.steepSelector}>
                 <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>
             </View>
-            <View style={styles.teaFlavorView}>
+
+            <TouchableOpacity style={styles.teaFlavorView}
+                              activeOpacity={1}
+                              onPress={goToFlavorSelection}
+            >
 
                 <View>
                     <Text style={styles.teaNameTag}>
@@ -135,9 +150,10 @@ function DiaryListingPage(props) {
                     </Text>
                 </View>
                 <View style={styles.graphView}>
+
                     <RadarChart steeps={dataToDisplay}/>
                 </View>
-            </View>
+            </TouchableOpacity>
 
 
         </View>

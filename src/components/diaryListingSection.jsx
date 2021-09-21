@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from "react-native";
-import {connect} from "react-redux";
 import DiaryListingItem from "./diaryListingItem";
 
 function DiaryListingSection(props) {
@@ -44,11 +43,5 @@ function DiaryListingSection(props) {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
-    const {Diary} = state;
 
-    return {
-        diary: Diary.diaryEntry
-    };
-};
-export default connect(mapStateToProps)(DiaryListingSection)
+export default DiaryListingSection

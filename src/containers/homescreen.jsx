@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {Animated, BackHandler, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import DiaryListingSection from "../components/diaryListingSection";
+import {connect} from "react-redux";
 
 function HomeScreen(props) {
 
@@ -259,7 +260,7 @@ backgroundColor: 'grey',
                     History
                 </Text>
                 <View style={{height: '80%', margin: 15,}}>
-                    <DiaryListingSection/>
+                    <DiaryListingSection diary={props.diary}/>
                 </View>
             </View>
 
@@ -267,4 +268,12 @@ backgroundColor: 'grey',
     )
 }
 
-export default HomeScreen
+const mapStateToProps = (state, ownProps) => {
+    const {Diary} = state;
+
+    return {
+        diary: Diary.diaryEntry
+    };
+};
+export default connect(mapStateToProps)(HomeScreen)
+

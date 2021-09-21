@@ -76,10 +76,11 @@ function HomeScreen(props) {
             margin: 15,
             fontWeight: 'bold'
         }, searchView: {
-backgroundColor: 'white',
+backgroundColor: 'grey',
             flexDirection: 'row',
-            justifyContent: "center",
-            alignItems: 'center',
+            justifyContent: "flex-start",
+            alignItems: 'flex-start',
+            borderRadius: 5
 
         },
         settingView:{
@@ -96,6 +97,7 @@ backgroundColor: 'white',
     const settingVisibility = useRef(new Animated.Value(0)).current
     const settingWidth = useRef(new Animated.Value(0)).current
 
+    const textInputWidth =  useRef(new Animated.Value(0)).current
     const searchSelected = () => {
 
         Animated.parallel([
@@ -116,15 +118,25 @@ backgroundColor: 'white',
                         useNativeDriver: false
                     }
                 )]),
-            Animated.timing(
-                searchAnimation,
-                {
-                    toValue: 100,
-                    duration: 400,
-                    useNativeDriver: false
-                }
-            )
+            Animated.sequence([
+                Animated.timing(
+                    searchAnimation,
+                    {
+                        toValue: 100,
+                        duration: 400,
+                        useNativeDriver: false
+                    }
+                ),    Animated.timing(
+                    textInputWidth,
+                    {
+                        toValue: 100,
+                        duration: 1,
+                        useNativeDriver: false
+                    }
+                )]),
+
         ]).start();
+
 
 
     }
@@ -132,14 +144,23 @@ backgroundColor: 'white',
         Animated.parallel([
             // after decay, in parallel:
 
-            Animated.timing(
-                searchAnimation,
+            Animated.sequence([   Animated.timing(
+                textInputWidth,
                 {
                     toValue: 0,
-                    duration: 400,
+                    duration: 1,
                     useNativeDriver: false
                 }
             ),
+                Animated.timing(
+                    searchAnimation,
+                    {
+                        toValue: 0,
+                        duration: 400,
+                        useNativeDriver: false
+                    }
+                )]),
+
             Animated.sequence([
                 Animated.timing(
                     settingWidth,
@@ -191,24 +212,18 @@ backgroundColor: 'white',
                 </Animated.View>
                 <Animated.View style={[styles.searchView, {width: searchAnimation.interpolate({
                         inputRange: [0, 100],
-                        outputRange: ['23%', '100%'],
+                        outputRange: ['12%', '100%'],
                     }),}]}>
-                    <Animated.View style={[{width: 45, height: 45, borderRadius: 5,  backgroundColor: 'grey'}, {  borderTopRightRadius: searchAnimation.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: [5, 0],
-                    }), borderBottomRightRadius: searchAnimation.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: [5, 0],
-                    }),}]}>
+                    <Animated.View style={[{width: 45, height: 45, alignSelf: 'flex-start'}]}>
 
                         <TouchableOpacity onPress={searchSelected} activeOpacity={1} style={{width: '100%', height: '100%'}}>
                             <Image style={{height: '100%', width: '100%'}} source={require('../img/search.png')}/>
                         </TouchableOpacity>
                     </Animated.View>
-                    <Animated.View style={[{backgroundColor: 'grey', borderRadius: 5,height: 45, borderTopLeftRadius: 0, borderBottomLeftRadius: 0},  {width: searchAnimation.interpolate({
+                    <Animated.View style={[{backgroundColor: 'grey', borderRadius: 5,height: 45}, {width: textInputWidth.interpolate({
                             inputRange: [0, 100],
                             outputRange: ['0%', '85%'],
-                        }),}]}>
+                        })}]}>
                         <TextInput style={{width: '100%'}}>
 
                         </TextInput>

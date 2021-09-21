@@ -181,7 +181,7 @@ function DiaryEntry(props) {
     const startInterval = () => {
 
 
-        console.log(props.Diary)
+
 
         setCurrenTime(countdownTimer)
 

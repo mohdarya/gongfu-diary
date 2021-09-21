@@ -20,7 +20,7 @@ function DiaryListingSection(props) {
     })
 
     const renderDiaryItem = ({item}) => {
-        console.log(item)
+
         return(
 
         <DiaryListingItem data={item}/>

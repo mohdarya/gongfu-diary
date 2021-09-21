@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Animated, BackHandler, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import DiaryListingSection from "../components/diaryListingSection";
@@ -100,6 +100,8 @@ backgroundColor: 'grey',
     const settingWidth = useRef(new Animated.Value(0)).current
 
     const textInputWidth =  useRef(new Animated.Value(0)).current
+
+    const [data, setData ] = useState(props.diary)
     const searchSelected = () => {
 
         Animated.parallel([
@@ -185,6 +187,8 @@ backgroundColor: 'grey',
                     }
                 )])
         ]).start();
+
+         
         }
 
         return true;
@@ -198,6 +202,19 @@ backgroundColor: 'grey',
     }, []);
     const goToDiary = () => {
         navigation.navigate('TeaName')
+    }
+
+    const searchForTeaName = (teaName) => {
+        let result = []
+        for(const [key, value] of Object.entries(props.diary)){
+                let current = value.teaName.toLowerCase()
+
+                if(current.includes(teaName.toLowerCase()))
+                {
+                    result.push(value)
+                }
+        }
+        setData(result)
     }
     return (
         <View style={styles.container}>
@@ -232,7 +249,11 @@ backgroundColor: 'grey',
                             inputRange: [0, 100],
                             outputRange: ['0%', '85%'],
                         })}]}>
-                        <TextInput style={{width: '100%'}}>
+                        <TextInput onSubmitEditing={(event) => {
+                            let text = event.nativeEvent.text
+                            searchForTeaName(text)
+
+                        }} style={{width: '100%'}}>
 
                         </TextInput>
                     </Animated.View>
@@ -260,7 +281,7 @@ backgroundColor: 'grey',
                     History
                 </Text>
                 <View style={{height: '80%', margin: 15,}}>
-                    <DiaryListingSection diary={props.diary}/>
+                    <DiaryListingSection diary={data}/>
                 </View>
             </View>
 

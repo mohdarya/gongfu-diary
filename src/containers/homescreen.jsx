@@ -188,7 +188,7 @@ backgroundColor: 'grey',
                 )])
         ]).start();
 
-         
+            setData(props.diary)
         }
 
         return true;

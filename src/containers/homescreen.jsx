@@ -95,6 +95,7 @@ backgroundColor: 'grey',
 
 
 
+    const [ searchValue, setSearchValue] =useState( '')
     const searchAnimation = useRef(new Animated.Value(0)).current
     const settingVisibility = useRef(new Animated.Value(0)).current
     const settingWidth = useRef(new Animated.Value(0)).current
@@ -189,6 +190,7 @@ backgroundColor: 'grey',
         ]).start();
 
             setData(props.diary)
+            setSearchValue('')
         }
 
         return true;
@@ -249,11 +251,14 @@ backgroundColor: 'grey',
                             inputRange: [0, 100],
                             outputRange: ['0%', '85%'],
                         })}]}>
-                        <TextInput onSubmitEditing={(event) => {
+                        <TextInput
+                            onChangeText={(text) => [
+                                setSearchValue(text)
+                            ]} onSubmitEditing={(event) => {
                             let text = event.nativeEvent.text
                             searchForTeaName(text)
 
-                        }} style={{width: '100%'}}>
+                        }} value={searchValue} style={{width: '100%'}}>
 
                         </TextInput>
                     </Animated.View>

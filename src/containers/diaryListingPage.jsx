@@ -26,7 +26,7 @@ function DiaryListingPage(props) {
             width: '100%',
             textAlign: 'center',
             textAlignVertical: 'center',
-            fontSize: 18,
+            fontSize: 15,
 
             color: 'black',
         },

@@ -103,6 +103,11 @@ backgroundColor: 'grey',
     const textInputWidth =  useRef(new Animated.Value(0)).current
 
     const [data, setData ] = useState(props.diary)
+
+    useEffect(()=> {
+            setData(props.diary)
+
+    }, [props.diary])
     const searchSelected = () => {
 
         Animated.parallel([

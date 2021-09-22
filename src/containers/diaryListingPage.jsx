@@ -127,7 +127,7 @@ function DiaryListingPage(props) {
     }
     const editSelected = () => {
         setEdit(!editActive)
-        if (editActive) {
+        if (!editActive) {
             Animated.timing(
                 deleteOpacity,
                 {
@@ -135,7 +135,7 @@ function DiaryListingPage(props) {
                     duration: 400,
                     useNativeDriver: true
                 }).start()
-        } else if (!editActive) {
+        } else if (editActive) {
             Animated.timing(
                 deleteOpacity,
                 {
@@ -157,7 +157,7 @@ function DiaryListingPage(props) {
                 <Animated.View style={[{
                     opacity: deleteOpacity.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [1, 0],
+                        outputRange: [0, 1],
                     })
                 }]}>
                     <TouchableOpacity onPress={editSelected} activeOpacity={1}

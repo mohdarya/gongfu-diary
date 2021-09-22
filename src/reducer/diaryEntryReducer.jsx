@@ -124,9 +124,10 @@ export function diaryEntryReducer(state = initialState, action) {
 
 
         case 'EDIT_ENTRY_STEEP':
+            console.log(action.newSteep)
             const teaSteepIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
             const newTeaSteepArray = state.diaryEntry
-            newTeaSteepArray[teaSteepIndex].steeps[action.steepIndex] = action.newSteep
+            newTeaSteepArray[teaSteepIndex].steeps[action.steepIndex] = [action.newSteep]
             return {
                 ...state,
                 diaryEntry: newTeaSteepArray

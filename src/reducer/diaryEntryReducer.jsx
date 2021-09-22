@@ -13,6 +13,9 @@ steeps:[[{
  */
 
 
+import diaryEntry from "../containers/diaryEntry";
+import {act} from "react-test-renderer";
+
 const initialState = {
 
     flavorNotes: [
@@ -113,10 +116,13 @@ export function diaryEntryReducer(state = initialState, action) {
         case 'EDIT_ENTRY_NAME':
             const  teaNameIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
             const newTeaNameArray = state.diaryEntry
+            let dateNumber =  parseInt(newTeaNameArray[teaNameIndex].sessionID.replace(newTeaNameArray[teaNameIndex].teaName, ''))
+            let newdate = action.newName + dateNumber
             newTeaNameArray[teaNameIndex].teaName = action.newName
+            newTeaNameArray[teaNameIndex].sessionID = newdate
             return {
                     ...state,
-                diaryEntry:newTeaNameArray
+                diaryEntry: newTeaNameArray
             }
 
 

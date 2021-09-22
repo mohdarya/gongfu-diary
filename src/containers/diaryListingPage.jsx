@@ -111,8 +111,7 @@ const navigation = useNavigation();
 
     const goToFlavorSelection = () => {
 
-        navigation.navigate('FlavorEntry', {
-            setSteepData,
+        navigation.navigate('FlavorDiaryEntry', {
             steepData: dataToDisplay
         })
     }

@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform, ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
-import {useHeaderHeight} from "@react-navigation/stack";
+import {FlatList, StyleSheet, View} from "react-native";
+import {useRoute} from "@react-navigation/core";
 import FlavorDiaryItem from "../components/flavorDiaryItem";
 
 
@@ -48,22 +39,22 @@ function FlavorDiary(props) {
 
     })
 
+
+    const route = useRoute();
+    const passedData = route.params.steepData;
+
+
+    const renderData = ({item}) => {
+
+        return (
+            <FlavorDiaryItem noteIndex={item} data={passedData[item]}/>
+        )
+    }
     return (
 
         <View style={styles.container}>
             <View style={styles.flavorList}>
-                <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                    <FlavorDiaryItem/>
-                </ScrollView>
+                <FlatList data={Object.keys(passedData)} renderItem={renderData} keyExtractor={item => item}/>
             </View>
 
 

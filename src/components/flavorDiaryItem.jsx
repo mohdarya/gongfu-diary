@@ -1,18 +1,12 @@
 import React, {useState} from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform, ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
-import Slider from '@react-native-community/slider';
+import {StyleSheet, Text, View} from "react-native";
+import {connect} from "react-redux";
 
 
 function FlavorDiaryItem(props) {
+
+
+    let level = toString
 
     const styles = StyleSheet.create({
         container: {
@@ -31,7 +25,7 @@ function FlavorDiaryItem(props) {
         },
         detailView: {
             height: '40%',
-            width: '30%',
+            width: '35%',
             top: '5%',
             borderRadius: 20,
             borderTopLeftRadius: 0,
@@ -56,9 +50,8 @@ function FlavorDiaryItem(props) {
             fontSize: 17,
 
         }, progressBar: {
-            borderBottomLeftRadius: 20,
-            borderTopLeftRadius: 20,
-            width: '50%',
+
+
             left: 0,
             height: '70%',
             position: 'absolute',
@@ -82,12 +75,20 @@ function FlavorDiaryItem(props) {
 
     })
 
-    const [value, setValue] = useState(0)
+
+    const [value, setValue] = useState(props.data.level)
+    const [detail, setDetail] = useState(() => {
+        if (props.data.detail !== undefined) {
+            return props.flavorNotes[props.noteIndex].detail[props.data.detail]
+        } else {
+            return 'detail'
+        }
+    })
     return (
         <View style={styles.container}>
             <View style={styles.sliderView}>
                 <Text style={styles.fieldTag}>
-                    fruity
+                    {props.flavorNotes[props.noteIndex].note}
                 </Text>
                 <View>
                     <View style={styles.valueTextView}>
@@ -99,7 +100,11 @@ function FlavorDiaryItem(props) {
                         <View style={styles.backgroundProgressBar}>
 
                         </View>
-                        <View style={styles.progressBar}/>
+                        <View
+                            style={[styles.progressBar, {width: props.data.level * 10 + '%',}, props.data.level  === 10 ? {borderRadius: 20,} : {
+                                borderBottomLeftRadius: 20,
+                                borderTopLeftRadius: 20,
+                            }]}/>
 
 
                     </View>
@@ -108,12 +113,21 @@ function FlavorDiaryItem(props) {
 
             <View style={styles.detailView}>
 
-                <Text style={{alignSelf: 'center', top: '10%', fontSize: 20,}}>
-                    cherry
+                <Text style={{alignSelf: 'center', height: '100%', textAlignVertical:"center", textAlign: 'center', fontSize: 14,}}>
+                    {detail}
                 </Text>
             </View>
         </View>
     )
 }
 
-export default FlavorDiaryItem
+
+const mapStateToProps = (state, ownProps) => {
+    const {Diary} = state;
+
+    return {
+        flavorNotes: Diary.flavorNotes
+    };
+};
+
+export default connect(mapStateToProps)(FlavorDiaryItem);

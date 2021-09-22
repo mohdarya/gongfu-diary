@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useRef, useState} from 'react';
+import {Image, Animated, StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native";
 import SteepSelector from "../components/steepSelector";
 import RadarChart from "../components/radarChart";
 import {useNavigation, useRoute} from "@react-navigation/core";
@@ -36,7 +36,7 @@ function DiaryListingPage(props) {
             width: '95%',
             justifyContent: 'center',
             alignSelf: 'center',
-
+            color: 'black',
 
         },
         teaFlavorView: {
@@ -93,20 +93,18 @@ function DiaryListingPage(props) {
     })
 
     const route = useRoute()
-const navigation = useNavigation();
-
+    const navigation = useNavigation();
 
 
     const [steepData, setSteepData] = useState(route.params.data.steeps)
+    const [editActive, setEdit] = useState(false)
 
-
-    const [dataToDisplay, setDataToDisplay] = useState(()=> {
-        if(steepData[0] === undefined)
-        {
+    const deleteOpacity = useRef(new Animated.Value(0)).current
+    const [dataToDisplay, setDataToDisplay] = useState(() => {
+        if (steepData[0] === undefined) {
             return null
-        }
-        else {
-            return  steepData[0][0]
+        } else {
+            return steepData[0][0]
         }
     })
 
@@ -121,15 +119,46 @@ const navigation = useNavigation();
         setDataToDisplay(steepData[index - 1][0])
     }
     const editSelected = () => {
-        
+        setEdit(!editActive)
+       if(editActive)
+       {
+           Animated.timing(
+               deleteOpacity,
+               {
+                   toValue: 1,
+                   duration: 400,
+                   useNativeDriver: true
+               }).start()
+       }
+       else if(!editActive)
+       {
+           Animated.timing(
+               deleteOpacity,
+               {
+                   toValue: 0,
+                   duration: 400,
+                   useNativeDriver: true
+               }).start()
+       }
     }
     return (
         <View style={styles.container}>
 
-            <View style={{width: '95%', alignItems: 'flex-end', marginTop: '5%',}}>
-            <TouchableOpacity onPress={editSelected} activeOpacity={1} style={{width: 40, height: 40, backgroundColor: 'grey', borderRadius: 5,}}>
-                <Image style={{height: '100%', width: '100%'}} source={require('../img/edit.png')}/>
-            </TouchableOpacity>
+            <View style={{width: '95%', alignItems: 'flex-end', marginTop: '5%', flexDirection: 'row-reverse'}}>
+                <TouchableOpacity onPress={editSelected} activeOpacity={1}
+                                  style={{width: 40, height: 40, backgroundColor: 'grey', borderRadius: 5,}}>
+                    <Image style={{height: '100%', width: '100%'}} source={require('../img/edit.png')}/>
+                </TouchableOpacity>
+
+                <Animated.View style={[{opacity: deleteOpacity.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, 1],
+                    })}]}>
+                      <TouchableOpacity onPress={editSelected} activeOpacity={1}
+                                                           style={{width: 40, height: 40, backgroundColor: 'grey', borderRadius: 5, marginRight: '5%'}}>
+                    <Image style={{height: '100%', width: '100%'}} source={require('../img/delete.png')}/>
+                </TouchableOpacity>
+                </Animated.View>
             </View>
 
             <View style={[{marginTop: '10%',}, styles.teaNameView]}>

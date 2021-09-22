@@ -105,9 +105,10 @@ backgroundColor: 'grey',
     const [data, setData ] = useState(props.diary)
 
     useEffect(()=> {
+        console.log('changed')
             setData(props.diary)
 
-    }, [props.diary])
+    }, [props.state])
     const searchSelected = () => {
 
         Animated.parallel([
@@ -303,7 +304,8 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary} = state;
 
     return {
-        diary: Diary.diaryEntry
+        diary: Diary.diaryEntry,
+        state
     };
 };
 export default connect(mapStateToProps)(HomeScreen)

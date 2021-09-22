@@ -27,3 +27,16 @@ export function removeEntry(sessionID)
 
     };
 }
+
+
+
+export function editEntryName(sessionID, newName)
+{
+    return {
+        type: 'EDIT_ENTRY_NAME',
+        sessionID,
+        newName
+
+
+    };
+}

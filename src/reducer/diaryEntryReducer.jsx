@@ -110,6 +110,14 @@ export function diaryEntryReducer(state = initialState, action) {
                 diaryEntry: state.diaryEntry.filter(item => item.sessionID !== action.sessionID)
 
             }
+        case 'EDIT_ENTRY_NAME':
+            const  teaNameIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
+            const newTeaNameArray = state.diaryEntry
+            newTeaNameArray[teaNameIndex].teaName = action.newName
+            return {
+                    ...state,
+                diaryEntry:newTeaNameArray
+            }
 
 
         default:

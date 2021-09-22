@@ -13,8 +13,7 @@ steeps:[[{
  */
 
 
-import diaryEntry from "../containers/diaryEntry";
-import {act} from "react-test-renderer";
+
 
 const initialState = {
 

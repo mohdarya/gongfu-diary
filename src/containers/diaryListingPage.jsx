@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import SteepSelector from "../components/steepSelector";
 import RadarChart from "../components/radarChart";
 import {useNavigation, useRoute} from "@react-navigation/core";
@@ -120,8 +120,18 @@ const navigation = useNavigation();
     const steepChanged = (index) => {
         setDataToDisplay(steepData[index - 1][0])
     }
+    const editSelected = () => {
+        
+    }
     return (
         <View style={styles.container}>
+
+            <View style={{width: '95%', alignItems: 'flex-end', marginTop: '5%',}}>
+            <TouchableOpacity onPress={editSelected} activeOpacity={1} style={{width: 40, height: 40, backgroundColor: 'grey', borderRadius: 5,}}>
+                <Image style={{height: '100%', width: '100%'}} source={require('../img/edit.png')}/>
+            </TouchableOpacity>
+            </View>
+
             <View style={[{marginTop: '10%',}, styles.teaNameView]}>
                 <View style={{justifyContent: 'center'}}>
                     <Text style={styles.teaTag}>

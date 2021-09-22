@@ -3,7 +3,7 @@ import {Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} fr
 import SteepSelector from "../components/steepSelector";
 import RadarChart from "../components/radarChart";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep, editEntryName} from "../action/diaryEntryAction";
+import {addEntry, addSteep, editEntryName, editEntrySteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
 
 
@@ -100,30 +100,48 @@ function DiaryListingPage(props) {
 
     const [steepData, setSteepData] = useState(route.params.data.steeps)
     const [editActive, setEdit] = useState(false)
-
+    const [currentSteepIndex, setSteepIndex] = useState(0)
     const deleteOpacity = useRef(new Animated.Value(0)).current
     const [dataToDisplay, setDataToDisplay] = useState(() => {
         if (steepData[0] === undefined) {
-            return null
+            return {}
         } else {
             return steepData[0][0]
         }
     })
 
+
+
     const goToFlavorSelection = () => {
 
-        navigation.navigate('FlavorDiaryEntry', {
-            steepData: dataToDisplay
-        })
+        if(editActive) {
+            navigation.navigate('FlavorEntry', {
+                setSteepData: changeSteepData,
+                steepData: dataToDisplay
+            })
+        }
+        else {
+            navigation.navigate('FlavorDiaryEntry', {
+                steepData: dataToDisplay
+            })
+        }
     }
 
     const steepChanged = (index) => {
+        setSteepIndex(index)
         setDataToDisplay(steepData[index - 1][0])
     }
 
     const editTeaName = (name) => {
 
         props.editName(route.params.data.sessionID, name)
+    }
+    const changeSteepData = (newSteepData) =>{
+
+
+        setDataToDisplay(newSteepData)
+
+        props.editSteep(route.params.data.sessionID,currentSteepIndex, newSteepData)
     }
     const editSelected = () => {
         setEdit(!editActive)
@@ -226,7 +244,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
 
         editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
-
+        editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep))
     };
 };
 

@@ -105,7 +105,6 @@ backgroundColor: 'grey',
     const [data, setData ] = useState(props.diary)
 
     useEffect(()=> {
-        console.log('changed')
             setData(props.diary)
 
     }, [props.state])

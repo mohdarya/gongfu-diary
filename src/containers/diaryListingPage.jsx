@@ -168,11 +168,15 @@ function DiaryListingPage(props) {
                     </Text>
                 </View>
 
-                <TouchableOpacity style={styles.teaNameTextView}>
+                {editActive ?  <View style={styles.teaNameTextView}>
                     <Text style={styles.teaName}>
                         {route.params.data.teaName}
                     </Text>
-                </TouchableOpacity>
+                </View> : <TextInput style={styles.teaNameTextView} textAlign={'center'}>
+
+                        {route.params.data.teaName}
+
+                </TextInput>}
             </View>
             <View style={styles.steepSelector}>
                 <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>

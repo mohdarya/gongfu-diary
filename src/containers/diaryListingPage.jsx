@@ -128,7 +128,7 @@ function DiaryListingPage(props) {
     }
 
     const steepChanged = (index) => {
-        setSteepIndex(index)
+        setSteepIndex(index - 1)
         setDataToDisplay(steepData[index - 1][0])
     }
 
@@ -139,9 +139,9 @@ function DiaryListingPage(props) {
     const changeSteepData = (newSteepData) =>{
 
 
-        setDataToDisplay(newSteepData)
 
         props.editSteep(route.params.data.sessionID,currentSteepIndex, newSteepData)
+        setDataToDisplay(newSteepData)
     }
     const editSelected = () => {
         setEdit(!editActive)

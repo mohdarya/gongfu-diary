@@ -1,8 +1,10 @@
 import React, {useRef, useState} from 'react';
-import {Image, Animated, StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native";
+import {Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import SteepSelector from "../components/steepSelector";
 import RadarChart from "../components/radarChart";
 import {useNavigation, useRoute} from "@react-navigation/core";
+import {addEntry, addSteep, editEntryName} from "../action/diaryEntryAction";
+import {connect} from "react-redux";
 
 
 function DiaryListingPage(props) {
@@ -118,28 +120,30 @@ function DiaryListingPage(props) {
     const steepChanged = (index) => {
         setDataToDisplay(steepData[index - 1][0])
     }
+
+    const editTeaName = (name) => {
+
+        props.editName(route.params.data.sessionID, name)
+    }
     const editSelected = () => {
         setEdit(!editActive)
-       if(editActive)
-       {
-           Animated.timing(
-               deleteOpacity,
-               {
-                   toValue: 1,
-                   duration: 400,
-                   useNativeDriver: true
-               }).start()
-       }
-       else if(!editActive)
-       {
-           Animated.timing(
-               deleteOpacity,
-               {
-                   toValue: 0,
-                   duration: 400,
-                   useNativeDriver: true
-               }).start()
-       }
+        if (editActive) {
+            Animated.timing(
+                deleteOpacity,
+                {
+                    toValue: 1,
+                    duration: 400,
+                    useNativeDriver: true
+                }).start()
+        } else if (!editActive) {
+            Animated.timing(
+                deleteOpacity,
+                {
+                    toValue: 0,
+                    duration: 400,
+                    useNativeDriver: true
+                }).start()
+        }
     }
     return (
         <View style={styles.container}>
@@ -150,14 +154,22 @@ function DiaryListingPage(props) {
                     <Image style={{height: '100%', width: '100%'}} source={require('../img/edit.png')}/>
                 </TouchableOpacity>
 
-                <Animated.View style={[{opacity: deleteOpacity.interpolate({
+                <Animated.View style={[{
+                    opacity: deleteOpacity.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [0, 1],
-                    })}]}>
-                      <TouchableOpacity onPress={editSelected} activeOpacity={1}
-                                                           style={{width: 40, height: 40, backgroundColor: 'grey', borderRadius: 5, marginRight: '5%'}}>
-                    <Image style={{height: '100%', width: '100%'}} source={require('../img/delete.png')}/>
-                </TouchableOpacity>
+                        outputRange: [1, 0],
+                    })
+                }]}>
+                    <TouchableOpacity onPress={editSelected} activeOpacity={1}
+                                      style={{
+                                          width: 40,
+                                          height: 40,
+                                          backgroundColor: 'grey',
+                                          borderRadius: 5,
+                                          marginRight: '5%'
+                                      }}>
+                        <Image style={{height: '100%', width: '100%'}} source={require('../img/delete.png')}/>
+                    </TouchableOpacity>
                 </Animated.View>
             </View>
 
@@ -168,15 +180,20 @@ function DiaryListingPage(props) {
                     </Text>
                 </View>
 
-                {editActive ?  <View style={styles.teaNameTextView}>
-                    <Text style={styles.teaName}>
-                        {route.params.data.teaName}
-                    </Text>
-                </View> : <TextInput style={styles.teaNameTextView} textAlign={'center'}>
+                {editActive ?  <TextInput onSubmitEditing={(event) => {
+                    let newName = event.nativeEvent.text
+                    editTeaName(newName)
+                }
+                } style={styles.teaNameTextView} textAlign={'center'}>
 
-                        {route.params.data.teaName}
+                    {route.params.data.teaName}
 
-                </TextInput>}
+                </TextInput> :
+                    <View style={styles.teaNameTextView}>
+                        <Text style={styles.teaName}>
+                            {route.params.data.teaName}
+                        </Text>
+                    </View> }
             </View>
             <View style={styles.steepSelector}>
                 <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>
@@ -203,4 +220,15 @@ function DiaryListingPage(props) {
     )
 }
 
-export default DiaryListingPage
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    return {
+
+        editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
+
+    };
+};
+
+export default connect(null, mapDispatchToProps)(DiaryListingPage);
+

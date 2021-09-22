@@ -58,8 +58,9 @@ function DiaryListingPage(props) {
 
         },
         teaNameView: {
-            height: 150,
-            width: 220,
+            height: 'auto',
+            width: 200,
+            paddingBottom: 10,
             flexDirection: 'column',
             marginBottom: 10,
             marginLeft: 20,

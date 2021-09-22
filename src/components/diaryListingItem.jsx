@@ -8,6 +8,7 @@ function DiaryListingItem(props){
             backgroundColor: 'white',
             width: '45%',
             height: 'auto',
+            padding: 10,
             margin: 8,
             borderTopLeftRadius: 15,
             alignItems: 'center',

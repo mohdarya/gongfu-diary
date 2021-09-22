@@ -3,7 +3,7 @@ import {Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} fr
 import SteepSelector from "../components/steepSelector";
 import RadarChart from "../components/radarChart";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep, editEntryName, editEntrySteep} from "../action/diaryEntryAction";
+import {addEntry, addSteep, editEntryName, editEntrySteep, removeEntry} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
 
 
@@ -127,6 +127,11 @@ function DiaryListingPage(props) {
         }
     }
 
+
+    const deleteTea = () => {
+        props.deleteEntry(route.params.data.sessionID)
+        navigation.goBack()
+    }
     const steepChanged = (index) => {
         setSteepIndex(index - 1)
         setDataToDisplay(steepData[index - 1][0])
@@ -178,7 +183,7 @@ function DiaryListingPage(props) {
                         outputRange: [0, 1],
                     })
                 }]}>
-                    <TouchableOpacity onPress={editSelected} activeOpacity={1}
+                    <TouchableOpacity onPress={deleteTea} activeOpacity={1}
                                       style={{
                                           width: 40,
                                           height: 40,
@@ -244,7 +249,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
 
         editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
-        editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep))
+        editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep)),
+        deleteEntry: (sessionid) => dispatch(removeEntry(sessionid))
     };
 };
 

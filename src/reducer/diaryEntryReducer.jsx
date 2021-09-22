@@ -13,8 +13,6 @@ steeps:[[{
  */
 
 
-
-
 const initialState = {
 
     flavorNotes: [
@@ -113,15 +111,25 @@ export function diaryEntryReducer(state = initialState, action) {
 
             }
         case 'EDIT_ENTRY_NAME':
-            const  teaNameIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
+            const teaNameIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
             const newTeaNameArray = state.diaryEntry
-            let dateNumber =  parseInt(newTeaNameArray[teaNameIndex].sessionID.replace(newTeaNameArray[teaNameIndex].teaName, ''))
+            let dateNumber = parseInt(newTeaNameArray[teaNameIndex].sessionID.replace(newTeaNameArray[teaNameIndex].teaName, ''))
             let newdate = action.newName + dateNumber
             newTeaNameArray[teaNameIndex].teaName = action.newName
             newTeaNameArray[teaNameIndex].sessionID = newdate
             return {
-                    ...state,
+                ...state,
                 diaryEntry: newTeaNameArray
+            }
+
+
+        case 'EDIT_ENTRY_STEEP':
+            const teaSteepIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
+            const newTeaSteepArray = state.diaryEntry
+            newTeaSteepArray[teaSteepIndex].steeps[action.steepIndex] = action.newSteep
+            return {
+                ...state,
+                diaryEntry: newTeaSteepArray
             }
 
 

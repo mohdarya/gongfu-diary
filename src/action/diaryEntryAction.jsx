@@ -40,3 +40,16 @@ export function editEntryName(sessionID, newName)
 
     };
 }
+
+
+export function editEntrySteep(sessionID, steepIndex, newSteep)
+{
+    return {
+        type: 'EDIT_ENTRY_STEEP',
+        sessionID,
+        steepIndex,
+        newSteep
+
+
+    };
+}

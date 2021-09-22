@@ -41,7 +41,7 @@ function FlavorDiary(props) {
 
 
     const route = useRoute();
-    const passedData = route.params.steepData;
+    const passedData = route.params.steepData === null ? {} : route.params.steepData
 
 
     const renderData = ({item}) => {

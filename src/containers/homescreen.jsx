@@ -156,7 +156,7 @@ function HomeScreen(props) {
     const searchAnimation = useRef(new Animated.Value(0)).current
     const settingVisibility = useRef(new Animated.Value(0)).current
     const settingWidth = useRef(new Animated.Value(0)).current
-
+    const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
 
     const [data, setData] = useState(props.diary)
@@ -282,18 +282,22 @@ function HomeScreen(props) {
                         }
                     }}>
                     <View style={styles.sessionActionMenu}>
-                        <View style={{
+                        <Animated.View style={{
                             height: 66,
-                            width: 110,
+
                             backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
+                            width: textInputWidth.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [110, 67]
+                            }),
 
                         }}>
 
 
                                 <Image  style={{width: 67, height: 67}}source={require('../img/add.png')}/>
 
-                        </View>
+                        </Animated.View>
                         <Animated.View
                             style={[
 
@@ -301,13 +305,31 @@ function HomeScreen(props) {
                                     height: 66,
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 250]
+                                        outputRange: [0, 300]
                                     }),
                                     backgroundColor: '#E9C46A',
+                                    justifyContent: 'space-around',
+                                    flexDirection: 'row',
 
 
                                 },
                             ]}>
+
+
+                            <AnimatedTouchable style={{backgroundColor: '#3C91E6', height: 48, width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 91]
+                                }), borderRadius: 15, alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                            <Text>
+                                Diary
+                            </Text></AnimatedTouchable>
+                            <AnimatedTouchable style={{backgroundColor: '#3C91E6', height: 48, width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 91]
+                                }), borderRadius: 15, alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                                <Text>
+                                    Timer
+                                </Text></AnimatedTouchable>
 
                         </Animated.View>
 

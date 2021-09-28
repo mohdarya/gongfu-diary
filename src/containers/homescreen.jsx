@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Animated, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
+import InventoryItem from "../components/inventoryItem";
+import HistoryItem from "../components/historyItem";
 
 function HomeScreen(props) {
 
@@ -61,8 +63,9 @@ function HomeScreen(props) {
             fontWeight: 'bold'
         },
         weekView: {
-            flex: 2,
+            flex: 1,
 
+            marginBottom: 30,
             marginLeft: 15,
             marginRight: 15,
 
@@ -74,20 +77,23 @@ function HomeScreen(props) {
             width: '98%',
             height: 90,
         }, inventoryContainer: {
-            flex: 3,
+            flex: 1.8,
             marginLeft: 15,
             marginRight: 15,
+            marginBottom: 30,
 
 
         },
         inventoryView: {
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
             marginTop: 23,
 
                 height: 125,
         },
         inventoryViewTextView: {
             width: '100%',
-            height: '15%',
+            height: '20%',
             flexDirection: 'row',
             alignItems: 'center'
         },
@@ -95,7 +101,11 @@ function HomeScreen(props) {
             flex: 3,
             marginLeft: 15,
             marginRight: 15,
-
+            marginBottom: 150,
+        },
+        historyView: {
+            marginLeft: 15,
+            marginRight: 15,
         }
 
 
@@ -133,7 +143,7 @@ function HomeScreen(props) {
             </View>
 
             <View style={{flex: 7}}>
-            <ScrollView  style={{flex: 1}} contentContainerStyle={{height: 900}}>
+            <ScrollView  style={{flex: 1}} contentContainerStyle={{height: 1100}}>
 
             <Text style={styles.welcomeText}>
                 Welcome
@@ -160,7 +170,9 @@ function HomeScreen(props) {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.inventoryView}>
-
+                        <InventoryItem/>
+                    <InventoryItem/>
+                    <InventoryItem/>
                 </View>
             </View>
                 <View style={styles.historyContainer}>
@@ -173,6 +185,14 @@ function HomeScreen(props) {
                                 More
                             </Text>
                         </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.historyView}>
+                        <HistoryItem/>
+                        <HistoryItem/>
+                        <HistoryItem/>
+                        <HistoryItem/>
+                        <HistoryItem/>
                     </View>
                 </View>
 

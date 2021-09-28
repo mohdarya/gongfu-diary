@@ -4,6 +4,7 @@ import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
 import InventoryItem from "../components/inventoryItem";
 import HistoryItem from "../components/historyItem";
+import {Directions, FlingGestureHandler, State} from 'react-native-gesture-handler';
 
 function HomeScreen(props) {
 
@@ -120,7 +121,6 @@ function HomeScreen(props) {
         navigationBar: {
 
 
-
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
@@ -137,13 +137,15 @@ function HomeScreen(props) {
         },
         sessionActionMenu: {
             height: 66,
-            width: 110,
+            width: 'auto',
             backgroundColor: '#E9C46A',
+            flexDirection: 'row',
+            borderRadius: 25,
+
             alignItems: "center",
             justifyContent: 'center',
             alignSelf: "flex-end",
-            borderTopLeftRadius: 25,
-            borderBottomLeftRadius: 25,
+
         }
 
 
@@ -159,12 +161,14 @@ function HomeScreen(props) {
 
     const [data, setData] = useState(props.diary)
 
+
     useEffect(() => {
         setData(props.diary)
 
     }, [props.state])
 
 
+    let beginX
     return (
         <View style={styles.container}>
 
@@ -252,11 +256,63 @@ function HomeScreen(props) {
             </View>
 
             <View style={styles.navigationGroup}>
-                <View style={styles.sessionActionMenu}>
-                    <TouchableOpacity activeOpacity={1} style={{width: 67, height: 67}}>
-                        <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
-                    </TouchableOpacity>
-                </View>
+
+                <FlingGestureHandler
+                    direction={Directions.RIGHT | Directions.LEFT}
+                    onHandlerStateChange={({nativeEvent}) => {
+                        if (nativeEvent.state === State.BEGAN) {
+                            beginX = nativeEvent.absoluteX;
+                        }
+                        if (nativeEvent.state === State.END) {
+                            console.log(nativeEvent.absoluteX - beginX)
+                            if (nativeEvent.absoluteX - beginX < -50) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 1,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+
+                            } else if (nativeEvent.absoluteX - beginX > 10) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 0,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                            }
+                        }
+                    }}>
+                    <View style={styles.sessionActionMenu}>
+                        <View style={{
+                            height: 66,
+                            width: 110,
+                            backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
+                            borderBottomLeftRadius: 25,
+
+                        }}>
+
+
+                                <Image  style={{width: 67, height: 67}}source={require('../img/add.png')}/>
+
+                        </View>
+                        <Animated.View
+                            style={[
+
+                                {
+                                    height: 66,
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 250]
+                                    }),
+                                    backgroundColor: '#E9C46A',
+
+
+                                },
+                            ]}>
+
+                        </Animated.View>
+
+                    </View>
+                </FlingGestureHandler>
                 <View style={styles.navigationBar}>
                     <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/settings.png')}/>

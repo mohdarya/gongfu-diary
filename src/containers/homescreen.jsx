@@ -106,6 +106,28 @@ function HomeScreen(props) {
         historyView: {
             marginLeft: 15,
             marginRight: 15,
+        },
+        navigationBar: {
+
+
+            borderTopRightRadius: 34,
+            height: 61, width: 331,
+            backgroundColor: '#E9C46A'
+        },
+        navigationGroup:{
+            position: 'absolute',
+            justifyContent: 'space-between',
+            bottom: 0,
+            width: '100%',
+            height: '20%'
+        },
+        sessionActionMenu: {
+            height: 66,
+            width: 110,
+            backgroundColor: '#E9C46A',
+            alignSelf: "flex-end",
+            borderTopLeftRadius: 25,
+            borderBottomLeftRadius: 25,
         }
 
 
@@ -198,6 +220,16 @@ function HomeScreen(props) {
 
             </ScrollView>
             </View>
+
+            <View style={styles.navigationGroup}>
+                <View style={styles.sessionActionMenu}>
+
+                </View>
+                <View style={styles.navigationBar}>
+
+                </View>
+            </View>
+
         </View>
     )
 }

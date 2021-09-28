@@ -10,7 +10,7 @@ function DiaryEntry(props) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: 'white',
+            backgroundColor: '#264653',
 
         },
         topPart: {

@@ -144,7 +144,13 @@ function TeaNameEntryPage(props) {
                 marginRight: '10%',
                 marginLeft: '10%',
             },
-            buttonPart: {},
+            buttonPart: {
+
+
+                width: '100%',
+                top: '15%',
+                height: 400,
+            },
 
 
         })
@@ -178,7 +184,7 @@ function TeaNameEntryPage(props) {
                         </View>
                     </View>
                     <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
-                        <Text style={{alignSelf: 'center', fontSize: 25}}>
+                        <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
                             Enter The Tea Detail
                         </Text>
                     </View>
@@ -204,7 +210,12 @@ function TeaNameEntryPage(props) {
                     </TextInput>
                 </View>
                 <View style={styles.buttonPart}>
-
+                    <TouchableOpacity activeOpacity={1} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>
+                        <Text style={{alignSelf: "center", marginLeft: 10,fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
+                            Let's Start Brewing
+                        </Text>
+                        <Image style={{height: 40, width: 40,top: '1%' ,alignSelf: "center",}} source={require('../img/nextArrow.png')}/>
+                    </TouchableOpacity>
                 </View>
             </View>
         </TouchableOpacity>

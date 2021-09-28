@@ -33,16 +33,16 @@ function DiaryEntry(props) {
         steepView: {
             alignSelf: 'center',
 
-            top: '130%',
-            height: '250%',
+            top: 300,
+            height: 500,
             width: '90%',
 
         },
         steepTag: {
             alignSelf: 'center',
             borderRadius: 15,
-            height: '10%',
-            marginBottom: '10%',
+            height: 40,
+            marginBottom: 10,
             width: '50%',
             backgroundColor: '#E9C46A',
         }, teaFlavorView: {
@@ -60,7 +60,31 @@ function DiaryEntry(props) {
             flex: 1,
             backgroundColor: 'white',
             borderRadius: 20,
+        }, notesView: {
+
+            alignSelf: 'center',
+
+
+            top: 350,
+            height: 400,
+            width: '90%',
         },
+        noteElement: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 380,
+
+
+            borderRadius: 20,
+        },
+        notesTag: {
+            alignSelf: 'center',
+            borderRadius: 15,
+            height: 40,
+            marginBottom: 10,
+            width: '50%',
+            backgroundColor: '#E9C46A',
+        }
 
 
     });
@@ -148,7 +172,7 @@ function DiaryEntry(props) {
 
 
         <View style={styles.container}>
-            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1250}}>
+            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1500}}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
                         <View style={{
@@ -216,33 +240,36 @@ function DiaryEntry(props) {
 
 
                     </View>
-                    <View style={styles.steepView}>
-                        <View style={styles.steepTag}>
-                            <Text style={{
-                                alignSelf: 'center',
-                                height: '100%',
-                                textAlignVertical: 'center',
-                                fontSize: 20,
-                                color: '#264653',
-                                fontWeight: 'bold',
-                                textAlign: 'center'
-                            }}>
-                                Flavor
-                            </Text>
-
-                        </View>
-                        <TouchableOpacity style={styles.graphView}
-                                          activeOpacity={1}
-                                          onPress={goToFlavorSelection}
-                        >
-
-                            <RadarChart steeps={{...steepData}}/>
-
-                        </TouchableOpacity>
-                    </View>
-
-
                 </View>
+                <View style={styles.steepView}>
+                    <View style={styles.steepTag}>
+                        <Text style={{
+                            alignSelf: 'center',
+                            height: '100%',
+                            textAlignVertical: 'center',
+                            fontSize: 20,
+                            color: '#264653',
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}>
+                            Flavor
+                        </Text>
+
+                    </View>
+                    <TouchableOpacity style={styles.graphView}
+                                      activeOpacity={1}
+                                      onPress={goToFlavorSelection}
+                    >
+
+                        <RadarChart steeps={{...steepData}}/>
+
+                    </TouchableOpacity>
+                </View>
+
+
+
+
+
             </ScrollView>
         </View>
 

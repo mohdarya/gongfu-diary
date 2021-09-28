@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Keyboard, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from "react-native";
+import {Image, Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 
 
@@ -139,7 +139,11 @@ function TeaNameEntryPage(props) {
                 borderBottomRightRadius: 93,
 
             },
-            infoPart: {},
+            infoPart: {
+                marginTop: '20%',
+                marginRight: '10%',
+                marginLeft: '10%',
+            },
             buttonPart: {},
 
 
@@ -173,7 +177,7 @@ function TeaNameEntryPage(props) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ top: 120,left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
+                    <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
                         <Text style={{alignSelf: 'center', fontSize: 25}}>
                             Enter The Tea Detail
                         </Text>
@@ -181,7 +185,23 @@ function TeaNameEntryPage(props) {
 
                 </View>
                 <View style={styles.infoPart}>
+                    <TouchableOpacity style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}>
+                        <Text style={{fontSize: 20, color:'white'}}>
+                            Tea
+                        </Text>
+                    </TouchableOpacity>
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'} keyboardType={'number-pad'}>
 
+                    </TextInput>
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Weight'} keyboardType={'number-pad'}>
+
+                    </TextInput>
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Temperature'} keyboardType={'number-pad'}>
+
+                    </TextInput>
+                    <TextInput style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Water Volume'} keyboardType={'number-pad'}>
+
+                    </TextInput>
                 </View>
                 <View style={styles.buttonPart}>
 

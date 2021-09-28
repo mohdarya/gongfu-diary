@@ -296,7 +296,8 @@ function HomeScreen(props) {
                         }}>
 
 
-                                <Image  style={{width: 67, height: 67, alignSelf: 'center'}}source={require('../img/add.png')}/>
+                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
+                                   source={require('../img/add.png')}/>
 
                         </Animated.View>
                         <Animated.View
@@ -317,17 +318,33 @@ function HomeScreen(props) {
                             ]}>
 
 
-                            <AnimatedTouchable style={{backgroundColor: '#3C91E6', height: 48, width: textInputWidth.interpolate({
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+                                width: textInputWidth.interpolate({
                                     inputRange: [0, 1],
                                     outputRange: [0, 91]
-                                }), borderRadius: 15, alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}>
-                            <Text>
-                                Diary
-                            </Text></AnimatedTouchable>
-                            <AnimatedTouchable style={{backgroundColor: '#3C91E6', height: 48, width: textInputWidth.interpolate({
+                                }),
+                                borderRadius: 15,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <Text>
+                                    Diary
+                                </Text></AnimatedTouchable>
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+                                width: textInputWidth.interpolate({
                                     inputRange: [0, 1],
                                     outputRange: [0, 91]
-                                }), borderRadius: 15, alignSelf: 'center', alignItems: 'center', justifyContent: 'center'}}>
+                                }),
+                                borderRadius: 15,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
                                 <Text>
                                     Timer
                                 </Text></AnimatedTouchable>

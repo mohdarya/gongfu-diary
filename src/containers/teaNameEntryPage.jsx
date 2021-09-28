@@ -210,7 +210,9 @@ function TeaNameEntryPage(props) {
                     </TextInput>
                 </View>
                 <View style={styles.buttonPart}>
-                    <TouchableOpacity activeOpacity={1} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => {
+                        navigation.navigate("DiaryEntry")
+                    }} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>
                         <Text style={{alignSelf: "center", marginLeft: 10,fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
                             Let's Start Brewing
                         </Text>

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Animated, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
 import InventoryItem from "../components/inventoryItem";
@@ -17,6 +17,9 @@ function HomeScreen(props) {
 
         },
         topBar: {
+            top: '5%',
+            position: 'absolute',
+            zIndex: 2,
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
@@ -60,12 +63,13 @@ function HomeScreen(props) {
             marginLeft: 20,
             marginBottom: 20,
             marginRight: 15,
+            marginTop: '25%',
             fontWeight: 'bold'
         },
         weekView: {
             flex: 1,
 
-            marginBottom: 30,
+            marginBottom: 50,
             marginLeft: 15,
             marginRight: 15,
 
@@ -80,7 +84,7 @@ function HomeScreen(props) {
             flex: 1.8,
             marginLeft: 15,
             marginRight: 15,
-            marginBottom: 30,
+            marginBottom: 50,
 
 
         },
@@ -89,19 +93,25 @@ function HomeScreen(props) {
             justifyContent: 'space-evenly',
             marginTop: 23,
 
-                height: 125,
+            height: 125,
         },
         inventoryViewTextView: {
             width: '100%',
-            height: '20%',
+            height: 50,
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
+        HistoryViewTextView: {
+            width: '100%',
+            height: 50,
             flexDirection: 'row',
             alignItems: 'center'
         },
         historyContainer: {
-            flex: 3,
+            flex: 5,
             marginLeft: 15,
             marginRight: 15,
-            marginBottom: 150,
+
         },
         historyView: {
             marginLeft: 15,
@@ -110,11 +120,15 @@ function HomeScreen(props) {
         navigationBar: {
 
 
+
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
             borderTopRightRadius: 34,
             height: 61, width: 331,
             backgroundColor: '#E9C46A'
         },
-        navigationGroup:{
+        navigationGroup: {
             position: 'absolute',
             justifyContent: 'space-between',
             bottom: 0,
@@ -125,6 +139,8 @@ function HomeScreen(props) {
             height: 66,
             width: 110,
             backgroundColor: '#E9C46A',
+            alignItems: "center",
+            justifyContent: 'center',
             alignSelf: "flex-end",
             borderTopLeftRadius: 25,
             borderBottomLeftRadius: 25,
@@ -164,69 +180,93 @@ function HomeScreen(props) {
 
             </View>
 
-            <View style={{flex: 7}}>
-            <ScrollView  style={{flex: 1}} contentContainerStyle={{height: 1100}}>
+            <View style={{flex: 7,}}>
 
-            <Text style={styles.welcomeText}>
-                Welcome
-            </Text>
-            <View style={styles.weekView}>
-                <Text style={{fontSize: 34, color: 'white', marginLeft: 10}}>
-                    Week
-                </Text>
+                <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1250}}>
 
-                <View style={styles.weekBar}>
 
-                </View>
-
-            </View>
-            <View style={styles.inventoryContainer}>
-                <View style={styles.inventoryViewTextView}>
-                <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
-                    Inventory
-                </Text>
-                    <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%', }}>
-                        <Text style={{fontSize: 18 , color: 'white',textAlign: 'right', textAlignVertical: 'center'}}>
-                            More
+                    <Text style={styles.welcomeText}>
+                        Welcome
+                    </Text>
+                    <View style={styles.weekView}>
+                        <Text style={{fontSize: 34, color: 'white', marginLeft: 10}}>
+                            Week
                         </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.inventoryView}>
-                        <InventoryItem/>
-                    <InventoryItem/>
-                    <InventoryItem/>
-                </View>
-            </View>
-                <View style={styles.historyContainer}>
-                    <View style={styles.inventoryViewTextView}>
-                        <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
-                            History
-                        </Text>
-                        <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%', }}>
-                            <Text style={{fontSize: 18 , color: 'white',textAlign: 'right', textAlignVertical: 'center'}}>
-                                More
+
+                        <View style={styles.weekBar}>
+
+                        </View>
+
+                    </View>
+                    <View style={styles.inventoryContainer}>
+                        <View style={styles.inventoryViewTextView}>
+                            <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
+                                Inventory
                             </Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%',}}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: 'white',
+                                    textAlign: 'right',
+                                    textAlignVertical: 'center'
+                                }}>
+                                    More
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.inventoryView}>
+                            <InventoryItem/>
+                            <InventoryItem/>
+                            <InventoryItem/>
+                        </View>
+                    </View>
+                    <View style={styles.historyContainer}>
+                        <View style={styles.HistoryViewTextView}>
+                            <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
+                                History
+                            </Text>
+                            <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%',}}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: 'white',
+                                    textAlign: 'right',
+                                    textAlignVertical: 'center'
+                                }}>
+                                    More
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.historyView}>
+                            <HistoryItem/>
+                            <HistoryItem/>
+                            <HistoryItem/>
+                            <HistoryItem/>
+                            <HistoryItem/>
+
+
+                        </View>
                     </View>
 
-                    <View style={styles.historyView}>
-                        <HistoryItem/>
-                        <HistoryItem/>
-                        <HistoryItem/>
-                        <HistoryItem/>
-                        <HistoryItem/>
-                    </View>
-                </View>
-
-            </ScrollView>
+                </ScrollView>
             </View>
 
             <View style={styles.navigationGroup}>
                 <View style={styles.sessionActionMenu}>
-
+                    <TouchableOpacity activeOpacity={1} style={{width: 67, height: 67}}>
+                        <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.navigationBar}>
-
+                    <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>
+                        <Image style={{height: '100%', width: '100%'}} source={require('../img/settings.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>
+                        <Image style={{height: '100%', width: '100%'}} source={require('../img/teaStorage.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>
+                        <Image style={{height: '100%', width: '100%'}} source={require('../img/shuffle.png')}/>
+                    </TouchableOpacity>
                 </View>
             </View>
 

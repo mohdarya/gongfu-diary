@@ -355,7 +355,7 @@ function DiaryEntry(props) {
 
 
                             <Image style={{width: 67, height: 67, alignSelf: 'center'}}
-                                   source={require('../img/add.png')}/>
+                                   source={require('../img/pausePlay.png')}/>
 
                         </Animated.View>
                         <Animated.View
@@ -384,7 +384,7 @@ function DiaryEntry(props) {
                                     inputRange: [0, 1],
                                     outputRange: [0, 50]
                                 }),
-                                borderRadius: 100,
+                                borderRadius: 20,
                                 alignSelf: 'center',
                                 alignItems: 'center',
                                 justifyContent: 'center'
@@ -406,7 +406,7 @@ function DiaryEntry(props) {
                                     inputRange: [0, 1],
                                     outputRange: [0, 50]
                                 }),
-                                borderRadius: 100,
+                                borderRadius: 20,
                                 alignSelf: 'center',
                                 alignItems: 'center',
                                 justifyContent: 'center'

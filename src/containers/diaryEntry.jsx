@@ -267,7 +267,32 @@ function DiaryEntry(props) {
                 </View>
 
 
+                <View style={styles.notesView}>
+                    <View style={styles.notesTag}>
+                        <Text style={{
+                            alignSelf: 'center',
+                            height: '100%',
+                            textAlignVertical: 'center',
+                            fontSize: 20,
+                            color: '#264653',
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}>
+                            Notes
+                        </Text>
 
+                    </View>
+                    <TouchableOpacity style={styles.noteElement}
+                                      activeOpacity={1}
+                                      onPress={goToFlavorSelection}
+                    >
+
+                        <Text style={{textAlignVertical: 'top', height: '100%', color: 'white', fontSize: 20, textAlign: 'center'}}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                        </Text>
+
+                    </TouchableOpacity>
+                </View>
 
 
             </ScrollView>

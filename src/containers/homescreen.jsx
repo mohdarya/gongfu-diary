@@ -329,6 +329,8 @@ function HomeScreen(props) {
                                 alignSelf: 'center',
                                 alignItems: 'center',
                                 justifyContent: 'center'
+                            }} onPress={() => {
+                                navigation.navigate("TeaName")
                             }}>
                                 <Text>
                                     Diary

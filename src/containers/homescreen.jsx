@@ -285,6 +285,7 @@ function HomeScreen(props) {
                         <Animated.View style={{
                             height: 66,
 
+
                             backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
@@ -295,7 +296,7 @@ function HomeScreen(props) {
                         }}>
 
 
-                                <Image  style={{width: 67, height: 67}}source={require('../img/add.png')}/>
+                                <Image  style={{width: 67, height: 67, alignSelf: 'center'}}source={require('../img/add.png')}/>
 
                         </Animated.View>
                         <Animated.View

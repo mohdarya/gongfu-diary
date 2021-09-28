@@ -8,7 +8,7 @@ function RadarChart(props) {
 
     const [viewHeight, setViewHeight] = useState(0)
     const [viewWidth, setViewWidth] = useState(0)
-    let radius =  viewWidth / 2.4 * 0.25 * 3;
+    let radius =  viewWidth / 2.7 * 0.25 * 3;
 
     let centerX = viewWidth * 0.5;
     let centerY = viewHeight * 0.5

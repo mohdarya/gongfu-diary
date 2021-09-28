@@ -152,10 +152,7 @@ function HomeScreen(props) {
     });
 
 
-    const [searchValue, setSearchValue] = useState('')
-    const searchAnimation = useRef(new Animated.Value(0)).current
-    const settingVisibility = useRef(new Animated.Value(0)).current
-    const settingWidth = useRef(new Animated.Value(0)).current
+
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
 

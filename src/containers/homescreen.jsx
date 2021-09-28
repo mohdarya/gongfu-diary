@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, BackHandler, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Animated, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
-import DiaryListingSection from "../components/diaryListingSection";
 import {connect} from "react-redux";
 
 function HomeScreen(props) {
@@ -11,37 +10,22 @@ function HomeScreen(props) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: 'white',
+            backgroundColor: '#264653',
+
 
         },
         topBar: {
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
             flex: 1,
-            margin: 10,
-            marginTop: 0,
+            marginLeft: 15,
+            marginRight: 15,
 
 
         },
-        buttonsView: {
-            alignItems: 'center',
 
-            marginLeft: 10,
-            marginRight: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            flex: 2,
-        },
-        buttons: {
 
-            backgroundColor: 'grey',
-            borderRadius: 10,
-            height: '55%',
-            width: '45%',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
         buttonText: {
 
             textAlign: 'center',
@@ -49,43 +33,68 @@ function HomeScreen(props) {
             fontSize: 45,
         },
 
-        list: {
-            backgroundColor: 'grey',
-            margin: 20,
-            flex: 7,
-            borderTopRightRadius: 20,
-            borderBottomLeftRadius: 20,
-        },
-        settingButton: {
-
-            backgroundColor: 'grey',
-            borderRadius: 5,
-
-            width: '100%',
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        settingButtonText: {
-
-            textAlign: 'center',
-            bottom: '5%',
-            fontSize: 23,
-        }, listText: {
-            fontSize: 20,
-            marginTop: 10,
-            margin: 15,
-            fontWeight: 'bold'
-        }, searchView: {
-backgroundColor: 'grey',
+        searchView: {
+            alignSelf: 'center',
+            backgroundColor: '#E9C46A',
             flexDirection: 'row',
-            justifyContent: "flex-start",
-            alignItems: 'flex-start',
-            borderRadius: 5
+
+
+            borderRadius: 15,
+            width: '98%',
+            height: 42
 
         },
-        settingView:{
+        settingView: {
             height: '45%',
+
+        },
+        searchTextInput: {
+            marginLeft: 15,
+            color: 'black'
+        },
+        welcomeText: {
+            fontSize: 44,
+            color: 'white',
+            marginLeft: 20,
+            marginBottom: 20,
+            marginRight: 15,
+            fontWeight: 'bold'
+        },
+        weekView: {
+            flex: 2,
+
+            marginLeft: 15,
+            marginRight: 15,
+
+        },
+        weekBar: {
+            alignSelf: 'center',
+            borderRadius: 16,
+            backgroundColor: '#2A9D8F',
+            width: '98%',
+            height: 90,
+        }, inventoryContainer: {
+            flex: 3,
+            marginLeft: 15,
+            marginRight: 15,
+
+
+        },
+        inventoryView: {
+            marginTop: 23,
+
+                height: 125,
+        },
+        inventoryViewTextView: {
+            width: '100%',
+            height: '15%',
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
+        historyContainer: {
+            flex: 3,
+            marginLeft: 15,
+            marginRight: 15,
 
         }
 
@@ -93,208 +102,82 @@ backgroundColor: 'grey',
     });
 
 
-
-
-    const [ searchValue, setSearchValue] =useState( '')
+    const [searchValue, setSearchValue] = useState('')
     const searchAnimation = useRef(new Animated.Value(0)).current
     const settingVisibility = useRef(new Animated.Value(0)).current
     const settingWidth = useRef(new Animated.Value(0)).current
 
-    const textInputWidth =  useRef(new Animated.Value(0)).current
+    const textInputWidth = useRef(new Animated.Value(0)).current
 
-    const [data, setData ] = useState(props.diary)
-
-    useEffect(()=> {
-            setData(props.diary)
-
-    }, [props.state])
-    const searchSelected = () => {
-
-        Animated.parallel([
-            // after decay, in parallel:
-            Animated.sequence([
-                 Animated.timing(
-                    settingVisibility,
-                    {
-                        toValue: 100,
-                        duration: 400,
-                        useNativeDriver: false
-                    }
-                ),  Animated.timing(
-                    settingWidth,
-                    {
-                        toValue: 100,
-                        duration: 1,
-                        useNativeDriver: false
-                    }
-                )]),
-            Animated.sequence([
-                Animated.timing(
-                    searchAnimation,
-                    {
-                        toValue: 100,
-                        duration: 400,
-                        useNativeDriver: false
-                    }
-                ),    Animated.timing(
-                    textInputWidth,
-                    {
-                        toValue: 100,
-                        duration: 1,
-                        useNativeDriver: false
-                    }
-                )]),
-
-        ]).start();
-
-
-
-    }
-    function handleBackButtonClick() {
-        if(navigation.canGoBack())
-        {
-            navigation.goBack()
-        }
-        else {
-        Animated.parallel([
-            // after decay, in parallel:
-
-            Animated.sequence([   Animated.timing(
-                textInputWidth,
-                {
-                    toValue: 0,
-                    duration: 1,
-                    useNativeDriver: false
-                }
-            ),
-                Animated.timing(
-                    searchAnimation,
-                    {
-                        toValue: 0,
-                        duration: 400,
-                        useNativeDriver: false
-                    }
-                )]),
-
-            Animated.sequence([
-                Animated.timing(
-                    settingWidth,
-                    {
-                        toValue: 0,
-                        duration: 1,
-                        useNativeDriver: false
-                    }
-                ),  Animated.timing(
-                    settingVisibility,
-                    {
-                        toValue: 0,
-                        duration: 400,
-                        useNativeDriver: false
-                    }
-                )])
-        ]).start();
-
-            setData(props.diary)
-            setSearchValue('')
-        }
-
-        return true;
-    }
+    const [data, setData] = useState(props.diary)
 
     useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
-        return () => {
-            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
-        };
-    }, []);
-    const goToDiary = () => {
-        navigation.navigate('TeaName')
-    }
+        setData(props.diary)
 
-    const searchForTeaName = (teaName) => {
-        let result = []
-        for(const [key, value] of Object.entries(props.diary)){
-                let current = value.teaName.toLowerCase()
+    }, [props.state])
 
-                if(current.includes(teaName.toLowerCase()))
-                {
-                    result.push(value)
-                }
-        }
-        setData(result)
-    }
+
     return (
         <View style={styles.container}>
 
             <View style={styles.topBar}>
 
+                <View style={styles.searchView}>
+                    <TextInput
+                        style={styles.searchTextInput}
+                        placeholder={'Search For a Tea'}
+                        placeholderTextColor={'#585858'}/>
+                </View>
 
-                <Animated.View style={[styles.settingView, {translateX: settingVisibility.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: [0, -100],
-                    }), width: settingVisibility.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: ['25%', '0%'],
-                    })} ]}>
-          <TouchableOpacity style={styles.settingButton}>
-                    <Text style={styles.settingButtonText}>
-                        setting
-                    </Text>
-                </TouchableOpacity>
-                </Animated.View>
-                <Animated.View style={[styles.searchView, {width: searchAnimation.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: ['12%', '100%'],
-                    }),}]}>
-                    <Animated.View style={[{width: 45, height: 45, alignSelf: 'flex-start'}]}>
 
-                        <TouchableOpacity onPress={searchSelected} activeOpacity={1} style={{width: '100%', height: '100%'}}>
-                            <Image style={{height: '100%', width: '100%'}} source={require('../img/search.png')}/>
-                        </TouchableOpacity>
-                    </Animated.View>
-                    <Animated.View style={[{backgroundColor: 'grey', borderRadius: 5,height: 45}, {width: textInputWidth.interpolate({
-                            inputRange: [0, 100],
-                            outputRange: ['0%', '85%'],
-                        })}]}>
-                        <TextInput
-                            onChangeText={(text) => [
-                                setSearchValue(text)
-                            ]} onSubmitEditing={(event) => {
-                            let text = event.nativeEvent.text
-                            searchForTeaName(text)
-
-                        }} placeholder={'What Tea Are You Looking For?'} value={searchValue} style={{width: '100%'}}>
-
-                        </TextInput>
-                    </Animated.View>
-                </Animated.View>
             </View>
-            <View style={styles.buttonsView}>
-                <TouchableOpacity style={styles.buttons} activeOpacity={1} onPress={() => {
-                    navigation.navigate("TimerTeaName")
-                }}>
-                    <Text style={styles.buttonText}>
-                        Timer
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttons}
-                                  activeOpacity={1}
-                                  onPress={goToDiary}
-                >
-                    <Text style={styles.buttonText}>
-                        Diary
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.list}>
-                <Text style={styles.listText}>
-                    History
+
+            <View style={{flex: 7}}>
+            <ScrollView  style={{flex: 1}} contentContainerStyle={{height: 900}}>
+
+            <Text style={styles.welcomeText}>
+                Welcome
+            </Text>
+            <View style={styles.weekView}>
+                <Text style={{fontSize: 34, color: 'white', marginLeft: 10}}>
+                    Week
                 </Text>
-                <View style={{height: '80%', margin: 15,}}>
-                    <DiaryListingSection diary={data}/>
+
+                <View style={styles.weekBar}>
+
+                </View>
+
+            </View>
+            <View style={styles.inventoryContainer}>
+                <View style={styles.inventoryViewTextView}>
+                <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
+                    Inventory
+                </Text>
+                    <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%', }}>
+                        <Text style={{fontSize: 18 , color: 'white',textAlign: 'right', textAlignVertical: 'center'}}>
+                            More
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.inventoryView}>
+
                 </View>
             </View>
+                <View style={styles.historyContainer}>
+                    <View style={styles.inventoryViewTextView}>
+                        <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
+                            History
+                        </Text>
+                        <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%', }}>
+                            <Text style={{fontSize: 18 , color: 'white',textAlign: 'right', textAlignVertical: 'center'}}>
+                                More
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
 
+            </ScrollView>
+            </View>
         </View>
     )
 }

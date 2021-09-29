@@ -322,7 +322,7 @@ function DiaryEntry(props) {
                             beginX = nativeEvent.absoluteX;
                         }
                         if (nativeEvent.state === State.END) {
-                            console.log(nativeEvent.absoluteX - beginX)
+
                             if (nativeEvent.absoluteX - beginX < -50) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 1,

@@ -5,6 +5,7 @@ import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+import Slider from "@react-native-community/slider";
 
 function DiaryEntry(props) {
 
@@ -36,7 +37,7 @@ function DiaryEntry(props) {
 
 
             top: '13%',
-            height: 400,
+            height: 500,
             width: '90%',
 
         },
@@ -98,7 +99,25 @@ function DiaryEntry(props) {
             justifyContent: 'center',
             alignSelf: "flex-end",
 
-        }
+        },
+        sliderView: {
+            height: 'auto',
+            width: '100%',
+            marginTop: 20,
+            borderTopLeftRadius: 0,
+            borderBottomRightRadius: 0,
+
+        }, valueTextView: {
+            height: 'auto',
+            width: '100%',
+            alignItems: 'center',
+        },
+        valueText: {
+            top: '40%',
+            fontSize: 30,
+            color: 'white'
+
+        },
 
 
     });
@@ -108,15 +127,18 @@ function DiaryEntry(props) {
     let teaName = 'red Tiger'
     let startingTime = 20
     let beginX
+
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(false)
+    const [value, setValue] = useState(0)
     const [increment, setIncrement] = useState(5);
     const [steepData, setSteepData] = useState({})
     const [sessionID, setSessionID] = useState(() => {
+
         return teaName + Date.now()
     })
     useEffect(() => {
@@ -276,6 +298,30 @@ function DiaryEntry(props) {
                         <RadarChart steeps={{...steepData}}/>
 
                     </TouchableOpacity>
+                    <View style={styles.sliderView}>
+
+                        <View style={styles.valueTextView}>
+                            <Text style={styles.valueText}>
+                                {value}
+                            </Text>
+                        </View>
+                        <Slider
+                            value={value}
+                            style={{width: '100%', height: 100}}
+                            minimumValue={0}
+                            maximumValue={10}
+                            step={1}
+                            onValueChange={(value => {
+
+                                setValue(value)
+                            })}
+
+                            thumbTintColor={'#E9C46A'}
+                            minimumTrackTintColor="#FFFFFF"
+                            maximumTrackTintColor="#000000"
+                        />
+
+                    </View>
                 </View>
 
 

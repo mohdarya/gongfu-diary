@@ -59,7 +59,7 @@ function DiaryEntry(props) {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-            backgroundColor: 'white',
+
             borderRadius: 20,
         }, notesView: {
 

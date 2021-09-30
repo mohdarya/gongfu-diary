@@ -1,258 +1,471 @@
-import React, {useRef, useState} from 'react';
-import {Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import SteepSelector from "../components/steepSelector";
-import RadarChart from "../components/radarChart";
+import React, {useEffect, useRef, useState} from 'react';
+import {Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep, editEntryName, editEntrySteep, removeEntry} from "../action/diaryEntryAction";
-import {connect} from "react-redux";
+import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {connect} from 'react-redux';
+import RadarChart from "../components/radarChart";
+import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 
+function DiaryEntry(props) {
 
-function DiaryListingPage(props) {
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: 'white',
-
+            backgroundColor: '#264653',
 
         },
-        teaNameTag: {
-            textAlign: 'left',
-            fontSize: 15,
-            margin: 5,
-            marginTop: 1,
-        },
-        teaName: {
-
-
+        topPart: {
+            height: 170,
             width: '100%',
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            fontSize: 15,
 
-            color: 'black',
+
         },
-        teaNameTextView: {
+        topPartBar: {
+            height: 200,
+            width: '100%',
 
+            alignItems: 'center',
+            backgroundColor: '#2A9D8F',
+            borderBottomLeftRadius: 93,
+            borderBottomRightRadius: 93,
 
-            width: '95%',
-            justifyContent: 'center',
+        },
+        steepView: {
             alignSelf: 'center',
-            color: 'black',
+
+
+            top: '13%',
+            height: 400,
+            width: '90%',
 
         },
-        teaFlavorView: {
+        steepTag: {
+            alignSelf: 'center',
+            borderRadius: 15,
+            height: 40,
+            marginBottom: 10,
+            width: '50%',
+            backgroundColor: '#E9C46A',
+        }, teaFlavorView: {
             backgroundColor: 'grey',
-            flex: 4,
-
+            flex: 5,
             marginLeft: 20,
             marginRight: 20,
-            marginBottom: 20,
             borderRadius: 20,
+            flexDirection: 'column',
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-        },
-        graphView: {
+        }, graphView: {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
 
-
-        },
-        teaNameView: {
-            height: 'auto',
-            width: 200,
-            paddingBottom: 10,
-            flexDirection: 'column',
-            marginBottom: 10,
-            marginLeft: 20,
-            marginRight: 20,
-            alignSelf: 'center',
-            backgroundColor: 'grey',
             borderRadius: 20,
-            borderTopLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            justifyContent: 'center',
-        },
-        steepSelector: {
+        }, notesView: {
+
+            alignSelf: 'center',
+
+
+            top: '14%',
+            height: 400,
             width: '90%',
-            height: '10%',
-
-            marginLeft: 20,
-            marginTop: 40,
-
-
         },
-        teaTag: {
-            textAlign: 'center',
-            fontSize: 16,
-            margin: 5,
-            fontWeight: 'bold',
-            marginTop: 1,
+        noteElement: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 380,
+
+
+            borderRadius: 20,
+        },
+        notesTag: {
+            alignSelf: 'center',
+            borderRadius: 15,
+            height: 40,
+            marginBottom: 10,
+            width: '50%',
+            backgroundColor: '#E9C46A',
+        },
+        sessionActionMenu: {
+            height: 66,
+            width: 'auto',
+            backgroundColor: '#E9C46A',
+            flexDirection: 'row',
+            borderRadius: 25,
+
+            alignItems: "center",
+            justifyContent: 'center',
+            alignSelf: "flex-end",
+
         }
 
 
-    })
+    });
 
+    const navigation = useNavigation()
     const route = useRoute()
-    const navigation = useNavigation();
-
-
-    const [steepData, setSteepData] = useState(route.params.data.steeps)
-    const [editActive, setEdit] = useState(false)
-    const [currentSteepIndex, setSteepIndex] = useState(0)
-    const deleteOpacity = useRef(new Animated.Value(0)).current
-    const [dataToDisplay, setDataToDisplay] = useState(() => {
-        if (steepData[0] === undefined) {
-            return {}
-        } else {
-            return steepData[0][0]
-        }
+    let teaName = 'red Tiger'
+    let startingTime = 20
+    let beginX
+    const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+    const textInputWidth = useRef(new Animated.Value(0)).current
+    const [first, setFirst] = useState(true)
+    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
+    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
+    const [startTimer, setStartTimer] = useState(false)
+    const [increment, setIncrement] = useState(5);
+    const [steepData, setSteepData] = useState({})
+    const [sessionID, setSessionID] = useState(() => {
+        return teaName + Date.now()
     })
+    useEffect(() => {
+        props.createEntry({
+            teaName: teaName,
+            sessionID: sessionID,
+            steeps: []
+        })
+    }, [])
+    const endButtonAction = () => {
+        setStartTimer(false)
+        navigation.navigate("HomeScreen")
+    }
 
 
+    const startInterval = () => {
 
+
+        setCurrenTime(countdownTimer)
+
+
+        if (first) {
+            setCountdownTimer((t) => t - 1)
+        } else {
+
+            props.addSteep(sessionID, steepData)
+            setCountdownTimer((t) => t + increment)
+        }
+
+        setStartTimer(true)
+
+    }
+
+
+    useEffect(() => {
+
+            if (startTimer) {
+                setTimeout(() => {
+                        if (countdownTimer <= 0) {
+                            setStartTimer(false)
+                            if (first) {
+                                setCountdownTimer(parseInt(currentTime))
+                                setFirst(false)
+                            } else {
+                                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+                            }
+
+
+                        } else {
+                            setCountdownTimer((t) => t - 1)
+                        }
+                    }, 1000
+                )
+            }
+        }
+
+
+        ,
+        [countdownTimer]
+    )
     const goToFlavorSelection = () => {
-
-        if(editActive) {
-            navigation.navigate('FlavorEntry', {
-                setSteepData: changeSteepData,
-                steepData: dataToDisplay
-            })
-        }
-        else {
-            navigation.navigate('FlavorDiaryEntry', {
-                steepData: dataToDisplay
-            })
-        }
+        navigation.navigate('FlavorEntry', {
+            setSteepData,
+            steepData
+        })
     }
 
 
-    const deleteTea = () => {
-        props.deleteEntry(route.params.data.sessionID)
-        navigation.goBack()
-    }
-    const steepChanged = (index) => {
-        setSteepIndex(index - 1)
-        setDataToDisplay(steepData[index - 1][0])
-    }
-
-    const editTeaName = (name) => {
-
-        props.editName(route.params.data.sessionID, name)
-    }
-    const changeSteepData = (newSteepData) =>{
-
-
-
-        props.editSteep(route.params.data.sessionID,currentSteepIndex, newSteepData)
-        setDataToDisplay(newSteepData)
-    }
-    const editSelected = () => {
-        setEdit(!editActive)
-        if (!editActive) {
-            Animated.timing(
-                deleteOpacity,
-                {
-                    toValue: 1,
-                    duration: 400,
-                    useNativeDriver: true
-                }).start()
-        } else if (editActive) {
-            Animated.timing(
-                deleteOpacity,
-                {
-                    toValue: 0,
-                    duration: 400,
-                    useNativeDriver: true
-                }).start()
-        }
-    }
     return (
+
+
         <View style={styles.container}>
+            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1500}}>
+                <View style={styles.topPart}>
+                    <View style={styles.topPartBar}>
 
-            <View style={{width: '95%', alignItems: 'flex-end', marginTop: '5%', flexDirection: 'row-reverse'}}>
-                <TouchableOpacity onPress={editSelected} activeOpacity={1}
-                                  style={{width: 40, height: 40, backgroundColor: 'grey', borderRadius: 5,}}>
-                    <Image style={{height: '100%', width: '100%'}} source={require('../img/edit.png')}/>
-                </TouchableOpacity>
+                    </View>
+                    <View style={{
+                        top: '80%',
+                        left: '20%',
+                        width: '60%',
+                        height: 130,
+                        backgroundColor: '#E9C46A',
+                        borderRadius: 40,
+                        position: "absolute",
+                        alignContent: 'center',
+                        justifyContent: 'flex-start'
+                    }}>
 
-                <Animated.View style={[{
-                    opacity: deleteOpacity.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 1],
-                    })
-                }]}>
-                    <TouchableOpacity onPress={deleteTea} activeOpacity={1}
-                                      style={{
-                                          width: 40,
-                                          height: 40,
-                                          backgroundColor: 'grey',
-                                          borderRadius: 5,
-                                          marginRight: '5%'
-                                      }}>
-                        <Image style={{height: '100%', width: '100%'}} source={require('../img/delete.png')}/>
-                    </TouchableOpacity>
-                </Animated.View>
-            </View>
-
-            <View style={[{marginTop: '10%',}, styles.teaNameView]}>
-                <View style={{justifyContent: 'center'}}>
-                    <Text style={styles.teaTag}>
-                        Tea
-                    </Text>
-                </View>
-
-                {editActive ?  <TextInput onSubmitEditing={(event) => {
-                    let newName = event.nativeEvent.text
-                    editTeaName(newName)
-                }
-                } style={styles.teaNameTextView} textAlign={'center'}>
-
-                    {route.params.data.teaName}
-
-                </TextInput> :
-                    <View style={styles.teaNameTextView}>
-                        <Text style={styles.teaName}>
-                            {route.params.data.teaName}
+                        <Text style={{
+                            alignSelf: 'center',
+                            marginTop: 15,
+                            fontSize: 15,
+                            color: '#264653',
+                            width: '90%',
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}>
+                            Feng Qing Ye Sheng Hong Cha Wild Tree Purple Black Tea
                         </Text>
-                    </View> }
-            </View>
-            <View style={styles.steepSelector}>
-                <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>
-            </View>
 
-            <TouchableOpacity style={styles.teaFlavorView}
-                              activeOpacity={1}
-                              onPress={goToFlavorSelection}
-            >
+                        <Text style={{
+                            alignSelf: 'center',
+                            marginTop: 15,
+                            fontSize: 15,
+                            color: '#264653',
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}>
+                            12/12/2021
+                        </Text>
 
-                <View>
-                    <Text style={styles.teaNameTag}>
-                        Flavor
-                    </Text>
+                    </View>
                 </View>
-                <View style={styles.graphView}>
 
-                    <RadarChart steeps={dataToDisplay}/>
+                <View style={{flexDirection: 'row', height: 'auto', width: '90%', top: '35%', marginRight: 20, marginLeft: 20,justifyContent: 'space-around'}}>
+
+                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+
+
+                    </View>
+                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+
+
+                    </View>
+                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+
+
+                    </View>
+                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+
+
+                    </View>
+
+
                 </View>
-            </TouchableOpacity>
+                <View style={styles.steepView}>
+                    <View style={styles.steepTag}>
+                        <Text style={{
+                            alignSelf: 'center',
+                            height: '100%',
+                            textAlignVertical: 'center',
+                            fontSize: 20,
+                            color: '#264653',
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}>
+                            Flavor
+                        </Text>
+
+                    </View>
+                    <TouchableOpacity style={styles.graphView}
+                                      activeOpacity={1}
+                                      onPress={goToFlavorSelection}
+                    >
+
+                        <RadarChart steeps={{...steepData}}/>
+
+                    </TouchableOpacity>
+                </View>
 
 
+                <View style={styles.notesView}>
+                    <View style={styles.notesTag}>
+                        <Text style={{
+                            alignSelf: 'center',
+                            height: '100%',
+                            textAlignVertical: 'center',
+                            fontSize: 20,
+                            color: '#264653',
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}>
+                            Notes
+                        </Text>
+
+                    </View>
+                    <TouchableOpacity style={styles.noteElement}
+                                      activeOpacity={1}
+                                      onPress={goToFlavorSelection}
+                    >
+
+                        <Text style={{
+                            textAlignVertical: 'top',
+                            height: '100%',
+                            color: 'white',
+                            fontSize: 20,
+                            textAlign: 'center'
+                        }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis
+                            nibh. Pellentesque sit amet dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh.
+                            Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                        </Text>
+
+                    </TouchableOpacity>
+                </View>
+
+
+            </ScrollView>
+
+            <View style={{
+                position: "absolute",
+                bottom: '10%',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flexDirection: 'row'
+            }}>
+
+                <FlingGestureHandler
+                    direction={Directions.RIGHT | Directions.LEFT}
+                    onHandlerStateChange={({nativeEvent}) => {
+                        if (nativeEvent.state === State.BEGAN) {
+                            beginX = nativeEvent.absoluteX;
+                        }
+                        if (nativeEvent.state === State.END) {
+
+                            if (nativeEvent.absoluteX - beginX < -50) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 1,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+
+                            } else if (nativeEvent.absoluteX - beginX > 10) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 0,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                            }
+                        }
+                    }}>
+                    <View style={styles.sessionActionMenu}>
+                        <Animated.View style={{
+                            height: 66,
+                            justifyContent: 'center',
+
+                            backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
+                            borderBottomLeftRadius: 25,
+                            width: textInputWidth.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [110, 67]
+                            }),
+
+                        }}>
+
+
+                            <Image style={{width: 50, height: 50, alignSelf: 'center'}}
+                                   source={require('../img/edit.png')}/>
+
+                        </Animated.View>
+                        <Animated.View
+                            style={[
+
+                                {
+                                    height: 66,
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 200]
+                                    }),
+                                    backgroundColor: '#E9C46A',
+                                    justifyContent: 'space-around',
+                                    flexDirection: 'row',
+
+
+                                },
+                            ]}>
+
+
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable activeOpacity={1} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}} source={require('../img/edit.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable activeOpacity={1} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}}
+                                           source={require('../img/delete.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+
+                        </Animated.View>
+
+                    </View>
+                </FlingGestureHandler>
+
+            </View>
         </View>
+
+
     )
 }
 
 
+const mapStateToProps = (state, ownProps) => {
+    const {Diary} = state;
+
+    return {
+        Diary: Diary.diaryEntry
+    };
+};
 const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
 
-        editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
-        editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep)),
-        deleteEntry: (sessionid) => dispatch(removeEntry(sessionid))
+        createEntry: (data) => dispatch(addEntry(data)),
+        addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
     };
 };
 
-export default connect(null, mapDispatchToProps)(DiaryListingPage);
-
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryEntry);

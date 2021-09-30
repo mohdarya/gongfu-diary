@@ -1,5 +1,15 @@
 import React, {useState} from 'react';
-import {FlatList, Modal, SafeAreaView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from "react-native";
+import {
+    FlatList,
+    Image,
+    Modal,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    ToastAndroid,
+    TouchableOpacity,
+    View
+} from "react-native";
 import Slider from "@react-native-community/slider";
 import {useNavigation, useRoute} from "@react-navigation/core";
 
@@ -81,17 +91,59 @@ function FlavorEntry(props) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: 'white',
+            backgroundColor: '#264653',
+            justifyContent: 'flex-start',
+
+
+        },
+        teaNameTag: {
+            fontSize: 15,
+            margin: 10,
+            marginTop: 10,
+        },
+        teaName: {
+
+            textAlign: 'center',
+            textAlignVertical: 'top',
+            fontSize: 15,
+            borderTopRightRadius: 20,
+            color: 'black',
+        },
+        teaNameTextView: {
+            height: '70%',
+            width: '90%',
+
+            marginBottom: '3%',
+            justifyContent: 'flex-start',
+            alignSelf: 'center',
+
+
+        },
+
+
+        teaNameView: {
+
+
+            height: 70,
+            flexDirection: 'column',
+            marginBottom: '5%',
+            marginLeft: 20,
+            marginRight: 20,
+            marginTop: '20%',
+            backgroundColor: 'grey',
+            borderRadius: 20,
+            borderTopLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            justifyContent: 'space-around',
         },
         doneButtonView: {
-            flex: 10,
+            flex: 1,
             justifyContent: 'center',
             alignContent: 'center',
             alignItems: 'center',
         },
         doneButton: {
-
-            backgroundColor: 'grey',
+            backgroundColor: '#E9C46A',
             width: 200,
             height: 50,
             borderRadius: 10,
@@ -101,10 +153,84 @@ function FlavorEntry(props) {
         doneButtonText: {
             textAlign: 'center',
             bottom: '5%',
-            fontSize: 25,
-        }, flavorList: {
-            flex: 8,
-            top: 50,
+            fontWeight: 'bold',
+            fontSize: 30,
+            color: '#264653',
+        }, timeView: {
+            height: 150,
+            flexDirection: 'row',
+            marginBottom: '30%',
+            marginLeft: 20,
+            marginRight: 20,
+
+
+            borderTopLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            justifyContent: 'space-around',
+        },
+        timerTag: {
+            backgroundColor: 'grey',
+            height: 80,
+            width: 130,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 15,
+        },
+        startingTime: {
+            fontSize: 40,
+            textAlign: 'center',
+            color: 'black',
+        },
+        startingTimeView: {
+            backgroundColor: 'grey',
+            height: 80,
+            width: 130,
+            borderRadius: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        timerTagText: {
+            fontSize: 20,
+            top: 4,
+            textAlign: 'center',
+        },
+        incrementView: {
+            alignSelf: 'center',
+            backgroundColor: 'grey',
+            borderRadius: 20,
+
+            borderTopLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            justifyContent: 'space-between',
+            height: 110,
+            width: 170,
+        }, topPart: {
+            height: 170,
+            width: '100%',
+
+
+        },
+        topPartBar: {
+            height: 170,
+            width: '100%',
+
+            alignItems: 'center',
+            backgroundColor: '#2A9D8F',
+            borderBottomLeftRadius: 93,
+            borderBottomRightRadius: 93,
+
+        },
+        infoPart: {
+            marginTop: '20%',
+            marginRight: '10%',
+            marginLeft: '10%',
+        },
+        buttonPart: {
+
+
+            width: '100%',
+            top: '15%',
+            height: 400,
 
         }, flavorNote: {
             backgroundColor: 'grey',
@@ -128,20 +254,22 @@ function FlavorEntry(props) {
 
             flexDirection: 'column',
         }, valueTextView: {
+            height: 'auto',
             width: '100%',
             alignItems: 'center',
         },
         valueText: {
             top: '40%',
-            fontSize: 17,
+            fontSize: 30,
+            color: 'white'
 
         }, sliderView: {
-            height: '52%',
+            height: 'auto',
             width: '100%',
-            borderRadius: 20,
+            marginTop: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            backgroundColor: 'grey',
+
         },
         detailView: {
             width: 150,
@@ -207,8 +335,8 @@ function FlavorEntry(props) {
             marginBottom: 20,
         }
 
-
     })
+
 
     const route = useRoute()
     const setSteepData = route.params.setSteepData
@@ -216,9 +344,9 @@ function FlavorEntry(props) {
     const [value, setValue] = useState(0)
     const [flavorNoteModalVisible, setFlavorNoteModalVisible] = useState(false)
     const [flavorDetailModalVisible, setFlavorDetailModalVisible] = useState(false)
-    const [chosenNote, setChosenNote] = useState('Flavor Note')
+    const [chosenNote, setChosenNote] = useState('')
     const [chosenNoteIndex, setChosenNoteIndex] = useState(0)
-    const [chosenDetail, setChosenDetail] = useState('Detail')
+    const [chosenDetail, setChosenDetail] = useState('')
 
     const navigation = useNavigation()
     const [steepData, setCurrentSteepData] = useState(() => {
@@ -252,12 +380,12 @@ function FlavorEntry(props) {
                 if (steepData[indexOfNote].hasOwnProperty('detail')) {
                     setChosenDetail(flavorNotes[indexOfNote].detail[steepData[indexOfNote].detail])
                 } else {
-                    setChosenDetail('Detail')
+                    setChosenDetail('')
                 }
 
             } else {
                 setValue(0)
-                setChosenDetail('Detail')
+                setChosenDetail('')
             }
             setChosenNote(item.note)
             setChosenNoteIndex(indexOfNote)
@@ -272,6 +400,7 @@ function FlavorEntry(props) {
 
 
     const renderFlavorDetailItem = ({item}) => {
+
 
 
         let indexOfDetail = flavorNotes[chosenNoteIndex].detail.indexOf(item)
@@ -314,8 +443,20 @@ function FlavorEntry(props) {
     }
     return (
 
-        <View style={styles.container}>
 
+
+            <View style={styles.container}>
+                <View style={styles.topPart}>
+                    <View style={styles.topPartBar}>
+
+                    </View>
+                    <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
+                        <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
+                            Enter the flavours
+                        </Text>
+                    </View>
+
+                </View>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -393,12 +534,43 @@ function FlavorEntry(props) {
                 </View>
 
             </Modal>
-            <View style={styles.flavorList}>
+            <View style={styles.infoPart}>
 
-                <View style={styles.flavorContainer}>
 
+
+
+                    <TouchableOpacity style={{fontSize: 20,height: 60, borderBottomWidth: 2, borderColor: 'white'}}
+                                      activeOpacity={1}
+                                      onPress={() => {
+                                          setFlavorNoteModalVisible(true)
+                                      }}>
+                        <Text style={{fontSize: 15, color:'white'}}>
+                            Flavor Note
+                        </Text>
+                        <Text style={{fontSize: 20, color:'white'}}>
+                            {chosenNote}
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{fontSize: 20, height: 70,borderBottomWidth: 2,marginTop: 30,borderColor: 'white'}}
+                                      activeOpacity={1}
+                                      onPress={() => {
+                                          if (chosenNote !== '') {
+                                              setFlavorDetailModalVisible(true)
+                                          } else {
+                                              ToastAndroid.show("Please Select A Flavor Note", ToastAndroid.LONG)
+                                          }
+                                      }}
+                    >
+                        <Text style={{fontSize: 15, color:'white'}}>
+                            Detail
+                        </Text>
+                        <Text style={{fontSize: 20, textAlignVertical: 'bottom',color:'white'}}>
+                            {chosenDetail}
+                        </Text>
+
+                    </TouchableOpacity>
                     <View style={styles.sliderView}>
-                        <View>
+
                             <View style={styles.valueTextView}>
                                 <Text style={styles.valueText}>
                                     {value}
@@ -406,7 +578,7 @@ function FlavorEntry(props) {
                             </View>
                             <Slider
                                 value={value}
-                                style={{width: '100%', height: 40}}
+                                style={{width: '100%', height: 100}}
                                 minimumValue={0}
                                 maximumValue={10}
                                 step={1}
@@ -423,40 +595,19 @@ function FlavorEntry(props) {
                                     }
                                     setValue(value)
                                 })}
+
+                                thumbTintColor={'#E9C46A'}
                                 minimumTrackTintColor="#FFFFFF"
                                 maximumTrackTintColor="#000000"
                             />
-                        </View>
-                    </View>
-                    <View style={styles.flavorView}>
-                        <TouchableOpacity style={styles.flavorNote}
-                                          activeOpacity={1}
-                                          onPress={() => {
-                                              setFlavorNoteModalVisible(true)
-                                          }}>
-                            <Text style={styles.fieldTag}>
-                                {chosenNote}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.detailView}
-                                          activeOpacity={1}
-                                          onPress={() => {
-                                              if (chosenNote !== 'Flavor Note') {
-                                                  setFlavorDetailModalVisible(true)
-                                              } else {
-                                                  ToastAndroid.show("Please Select A Flavor Note", ToastAndroid.LONG)
-                                              }
-                                          }}
-                        >
-                            <Text style={styles.fieldTag}>
-                                {chosenDetail}
-                            </Text>
-
-                        </TouchableOpacity>
 
                     </View>
 
-                </View>
+
+
+
+
+
             </View>
 
 

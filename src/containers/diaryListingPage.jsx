@@ -211,7 +211,7 @@ function DiaryEntry(props) {
 
 
         <View style={styles.container}>
-            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1500}}>
+            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1580}}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
 
@@ -256,21 +256,37 @@ function DiaryEntry(props) {
 
                 <View style={{flexDirection: 'row', height: 'auto', width: '90%', top: '35%', marginRight: 20, marginLeft: 20,justifyContent: 'space-around'}}>
 
-                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+                    <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
-
+                        <Image style={{width: 40, height: 40, alignSelf: 'center'}}
+                               source={require('../img/temperature.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                            29
+                        </Text>
                     </View>
-                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+                    <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
-
+                        <Image style={{width: 40, height: 40, alignSelf: 'center'}}
+                               source={require('../img/water.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                            100ml
+                        </Text>
                     </View>
-                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+                    <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
-
+                        <Image style={{width: 40, height: 40, alignSelf: 'center'}}
+                               source={require('../img/clock.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                            1:12
+                        </Text>
                     </View>
-                    <View style={{height: 80, width: 60, backgroundColor: '#2A9D8F', borderRadius: 25,}}>
+                    <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
-
+                        <Image style={{width: 40, height: 40, alignSelf: 'center'}}
+                               source={require('../img/scale.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                            5g
+                        </Text>
                     </View>
 
 

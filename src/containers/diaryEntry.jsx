@@ -300,7 +300,9 @@ function DiaryEntry(props) {
                     </View>
                     <TouchableOpacity style={styles.noteElement}
                                       activeOpacity={1}
-                                      onPress={goToFlavorSelection}
+                                      onPress={() => {
+                                          navigation.navigate('NoteEntry')
+                                      }}
                     >
 
                         <Text style={{textAlignVertical: 'top', height: '100%', color: 'white', fontSize: 20, textAlign: 'center'}}>

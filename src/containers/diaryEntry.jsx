@@ -33,9 +33,9 @@ function DiaryEntry(props) {
         },
         steepView: {
             alignSelf: 'center',
-
+            
             top: 300,
-            height: 500,
+            height: 400,
             width: '90%',
 
         },

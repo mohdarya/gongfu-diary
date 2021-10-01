@@ -356,7 +356,9 @@ function HomeScreen(props) {
                     <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/settings.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => {
+                        navigation.navigate('TeaInventory')
+                    }} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/teaStorage.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={1} style={{width: 35, height: 32}}>

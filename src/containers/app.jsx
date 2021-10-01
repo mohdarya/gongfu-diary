@@ -13,6 +13,8 @@ import TeaNameEntryPage from "./teaNameEntryPage";
 import TimerPage from "./timerPage";
 import teaNameEntryPageTimer from "./teaNameEntryPageTimer";
 import {LogBox} from "react-native";
+import NoteEntry from "./noteEntryPage";
+import TeaInventory from "./inventoryPage";
 
 function App(props) {
     LogBox.ignoreLogs([
@@ -42,6 +44,8 @@ function App(props) {
                         <Stack.Screen name="TeaName" component={TeaNameEntryPage}/>
                         <Stack.Screen name="TimerTeaName" component={teaNameEntryPageTimer}/>
                         <Stack.Screen name="TimerPage" component={TimerPage}/>
+                        <Stack.Screen name="NoteEntry" component={NoteEntry}/>
+                        <Stack.Screen name="TeaInventory" component={TeaInventory}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </PersistGate>

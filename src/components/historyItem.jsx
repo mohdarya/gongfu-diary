@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, View} from "react-native";
 
 function HistoryItem(props) {
 
@@ -13,6 +13,7 @@ function HistoryItem(props) {
 
 
         }, iconView: {
+            justifyContent: 'center',
                 height: 56,
             width: 63,
             borderRadius: 16,
@@ -34,7 +35,7 @@ function HistoryItem(props) {
     return (
         <View style={styles.container}>
             <View style={styles.iconView}>
-
+                <Image style={{height: 45, width: 45, alignSelf: 'center'}} source={require('../img/teaLeaf.png')}/>
             </View>
             <View style={styles.teaNameView}>
                 <Text style={{color: 'white'}}>

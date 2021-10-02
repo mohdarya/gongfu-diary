@@ -13,6 +13,7 @@ import {
 import Slider from "@react-native-community/slider";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import InventoryItem from "../components/inventoryItem";
+import {connect} from "react-redux";
 
 
 function TeaSelection(props) {
@@ -281,21 +282,40 @@ function TeaSelection(props) {
 
 
 
-
     const renderItems = ({item}) => {
-        return(
 
-            <InventoryItem/>
+        let toShow
+
+        console.log(item)
+        if(item === 'Add')
+        {
+            toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
+                navigation.navigate('TeaInventoryData')}
+            } style={{ height: 110,
+                width: 110,
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 32,
+                backgroundColor: '#3C91E6',}}>
+
+
+                <Image style={{height: 60, width: 60}} source={require('../img/add.png')}/>
+
+
+            </TouchableOpacity>
+        }
+        else {
+            toShow = <InventoryItem data={{...item}}/>
+        }
+        return(
+            <View>
+                {toShow}
+            </View>
 
         )
     }
-    const doneButtonAction = () => {
 
-
-
-
-        navigation.goBack()
-    }
     return (
 
 
@@ -316,9 +336,9 @@ function TeaSelection(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={[1,2,3,4,5,6,7,8,9,10]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
-                        numColumns={3}
-                        keyExtractor={item => item}/>
+              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', alignItems: 'center', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
+                        numColumns={2}
+                        keyExtractor={item => item.teaID}/>
 
 
 
@@ -338,6 +358,14 @@ function TeaSelection(props) {
 
     )
 }
+const mapStateToProps = (state, ownProps) => {
+    const {TeaAvailable} = state;
 
-export default TeaSelection
+    return {
+        teaAvailable: TeaAvailable.teaAvailable
+    };
+};
+
+
+export default connect(mapStateToProps)(TeaSelection);
 

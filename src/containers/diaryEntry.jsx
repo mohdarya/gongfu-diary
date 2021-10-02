@@ -33,7 +33,7 @@ function DiaryEntry(props) {
         },
         steepView: {
             alignSelf: 'center',
-            
+
             top: 300,
             height: 400,
             width: '90%',
@@ -102,13 +102,13 @@ function DiaryEntry(props) {
 
     });
 
-    const navigation = useNavigation()
-    const route = useRoute()
-    let teaName = 'red Tiger'
-    let startingTime = 20
+
     let beginX
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
+    const navigation = useNavigation()
+    const route = useRoute()
+    const {teaName, startingTime} = route.params.teaData
     const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
@@ -217,7 +217,7 @@ function DiaryEntry(props) {
                         justifyContent: 'flex-start'
                     }}>
                         <Text style={{alignSelf: 'center', fontSize: 60, color: '#264653', fontWeight: 'bold'}}>
-                            16:40
+                            {startingTime}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                             Timer
@@ -237,7 +237,7 @@ function DiaryEntry(props) {
                                 color: '#264653',
                                 fontWeight: 'bold'
                             }}>
-                            500
+                            {increment}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                             Increment
@@ -251,7 +251,7 @@ function DiaryEntry(props) {
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            Feng Qing Ye Sheng Hong Cha Wild Tree Purple Black Tea
+                            {teaName}
                         </Text>
 
 

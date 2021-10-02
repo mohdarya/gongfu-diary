@@ -20,7 +20,7 @@ export function currentTeaReducer(state = initialState, action) {
          case 'ADD_TEA':
             return {
                 ...state,
-                teaAvailable: [...state.teaAvailable, ...action.newEntry]
+                teaAvailable: [...state.teaAvailable,  {...action.newEntry}]
 
             }
         case 'REMOVE_TEA':

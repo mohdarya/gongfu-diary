@@ -20,13 +20,14 @@ import {useNavigation} from "@react-navigation/core";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
+import {addTea} from "../action/currentTeaAction";
 
 
 function TeaInventoryEntry(props) {
 
-    let startingTime = 20;
-    let teaName = ''
-    const navigation = useNavigation()
+
+
+
     const
         styles = StyleSheet.create({
             container: {
@@ -222,8 +223,17 @@ function TeaInventoryEntry(props) {
         })
 
 
+   const [teaData, setTeaData] = useState({
+        teaID: '',
+        teaName: null,
+        type: null,
+        weight: null,
+        link: '',
+    })
+    const navigation = useNavigation()
     const [typeModal, setTypeModal] = useState(false)
     const textInputWidth = useRef(new Animated.Value(0)).current
+    const [teaType, setTeaType] = useState('Type')
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     let beginX
     return (
@@ -270,9 +280,8 @@ function TeaInventoryEntry(props) {
                                       renderItem={({item})=> {
                                           return(
                                               <TouchableOpacity style={[styles.FlavorNoteItem]} activeOpacity={1} onPress={() => {
-
-
-
+                                                  setTeaType(item)
+                                                  setTeaData({...teaData, type: item})
                                                   setTypeModal(!typeModal)
                                               }}>
                                                   <Text style={styles.flavorNoteText}>
@@ -301,26 +310,38 @@ function TeaInventoryEntry(props) {
                 </View>
                 <View style={styles.infoPart}>
 
-                    <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
+                    <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
+                        setTeaData({...teaData, teaName: text})
+                    }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
 
                     </TextInput>
                     <TouchableOpacity  activeOpacity={1} onPress={() => {
                        setTypeModal(true)
                     }} style={{fontSize: 20, height: 45, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, color:'white'}}>
-                            Type
+                            {teaType}
                         </Text>
                     </TouchableOpacity>
-                    <TextInput style={{fontSize: 20,marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Weight'} keyboardType={'number-pad'}>
+                    <TextInput style={{fontSize: 20,marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  onChangeText={(text) => {
+                        let amount
+                       if(text === '')
+                       {
+                           amount = null
+                       }
+                       else {
+                           amount = parseFloat(text)
+                       }
+                        setTeaData({...teaData, weight: amount})
+                    }} placeholderTextColor={'white'}  placeholder={'Weight'} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Link'} keyboardType={'default'}>
+                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} nChangeText={(text) => {
+                        setTeaData({...teaData, link: text})
+                    }} placeholderTextColor={'white'}  placeholder={'Link'} keyboardType={'default'}>
 
                     </TextInput>
                 </View>
-                <View style={styles.buttonPart}>
 
-                </View>
             </View>
 
 
@@ -408,7 +429,19 @@ function TeaInventoryEntry(props) {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <AnimatedTouchable activeOpacity={1} style={{
+                    <AnimatedTouchable onPress={() => {
+                        if(teaData.teaName !== null && teaData.type !== null && teaData.weight !== null)
+                        {
+                            let d = new Date()
+                            setTeaData({...teaData, teaID: teaData.teaName + d.getTime().toString()})
+                            props.addTea(teaData)
+                            navigation.goBack()
+                        }
+                        else {
+                            ToastAndroid.show("Please fill all fields", ToastAndroid.LONG)
+                        }
+
+                    }} activeOpacity={1} style={{
                         width: textInputWidth.interpolate({
                             inputRange: [0, 1],
                             outputRange: [0, 40]
@@ -432,7 +465,9 @@ function TeaInventoryEntry(props) {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <AnimatedTouchable activeOpacity={1} style={{
+                    <AnimatedTouchable activeOpacity={1} onPress={() => {
+                        navigation.goBack()
+                    }} style={{
                         width: textInputWidth.interpolate({
                             inputRange: [0, 1],
                             outputRange: [0, 40]
@@ -463,7 +498,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
 
-        createEntry: (data) => dispatch(addEntry(data)),
+        addTea: (data) => dispatch(addTea(data)),
         addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
     };
 };

@@ -288,6 +288,7 @@ function TeaInventory(props) {
 
         let toShow
 
+        console.log(item)
         if(item === 'Add')
         {
             toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
@@ -306,7 +307,7 @@ function TeaInventory(props) {
             </TouchableOpacity>
         }
         else {
-            toShow = <InventoryItem/>
+            toShow = <InventoryItem data={{...item}}/>
         }
         return(
             <View>
@@ -336,7 +337,7 @@ function TeaInventory(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={['Add',props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
+              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={3}
                         keyExtractor={item => item}/>
 
@@ -363,7 +364,7 @@ const mapStateToProps = (state, ownProps) => {
     const {TeaAvailable} = state;
 
     return {
-        TeaAvailable: TeaAvailable.TeaAvailable
+        teaAvailable: TeaAvailable.teaAvailable
     };
 };
 

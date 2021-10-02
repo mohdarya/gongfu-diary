@@ -32,7 +32,7 @@ function App(props) {
             <PersistGate loading={null} persistor={persistor}>
                 <NavigationContainer>
 
-                    <Stack.Navigator initialRouteName="TeaInventoryData"
+                    <Stack.Navigator initialRouteName="HomeScreen"
                                      screenOptions={{
                                          headerShown: false,
                                          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS

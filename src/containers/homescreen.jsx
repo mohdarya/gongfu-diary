@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Animated, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
 import InventoryItem from "../components/inventoryItem";
@@ -94,7 +94,7 @@ function HomeScreen(props) {
             justifyContent: 'space-evenly',
             marginTop: 23,
 
-            height: 125,
+            height: 175,
         },
         inventoryViewTextView: {
             width: '100%',
@@ -164,6 +164,16 @@ function HomeScreen(props) {
 
     }, [props.state])
 
+    const renderItems = ({item}) => {
+
+
+        return(
+            <View style={{marginRight: 10, marginLeft: 10 ,}}>
+                <InventoryItem data={{...item}}/>
+            </View>
+
+        )
+    }
 
     let beginX
     return (
@@ -218,9 +228,10 @@ function HomeScreen(props) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.inventoryView}>
-                            <InventoryItem/>
-                            <InventoryItem/>
-                            <InventoryItem/>
+                            <FlatList data={props.teaAvailable} style={{height: '100%',}} renderItem={renderItems} horizontal={true}
+
+
+                                      keyExtractor={item => item.teaID}/>
                         </View>
                     </View>
                     <View style={styles.historyContainer}>
@@ -374,11 +385,11 @@ function HomeScreen(props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const {Diary} = state;
+    const {Diary, TeaAvailable} = state;
 
     return {
         diary: Diary.diaryEntry,
-        state
+        teaAvailable: TeaAvailable.teaAvailable
     };
 };
 export default connect(mapStateToProps)(HomeScreen)

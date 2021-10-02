@@ -34,20 +34,21 @@ function InventoryItem(props) {
 
 
     })
+    console.log(props.data)
     return (
 
         <View style={styles.container}>
 
                <View style={styles.circleView}>
                   <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>
-                        78G
+                      {props.data.weight + ' G'}
                     </Text>
                 </View>
 
 
             <View style={styles.nameContainer}>
-                <Text style={{textAlignVertical: 'top', height: '100%', color: 'white', fontSize: 13, textAlign: 'center',}}>
-                    Feng Qing Ye Sheng Hong ...
+                <Text style={{textAlignVertical: 'center',height: '50%', color: 'white', fontSize: 13, textAlign: 'center',}}>
+                    {props.data.teaName}
                 </Text>
             </View>
         </View>

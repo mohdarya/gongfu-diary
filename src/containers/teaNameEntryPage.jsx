@@ -8,7 +8,7 @@ function TeaNameEntryPage(props) {
 
 
     const [teaData, setTeaData] = useState({
-        teaName: null,
+        teaName: 'Tea',
         teaID: null,
         weight: null,
         temp: null,
@@ -169,7 +169,7 @@ function TeaNameEntryPage(props) {
         setTeaData({...teaData, ...teaNameAndID})
     }
     function goToDiaryEntry() {
-        if (teaData.teaName !== null && teaData.temp !== null && teaData.weight !== null && teaData.waterVolume !== null && teaData.startingTime !== null) {
+        if (teaData.teaName !== 'Tea' && teaData.temp !== null && teaData.weight !== null && teaData.waterVolume !== null && teaData.startingTime !== null) {
             navigation.navigate("DiaryEntry", {
                 teaData
             })
@@ -209,7 +209,7 @@ function TeaNameEntryPage(props) {
                         })
                     }} style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, color:'white'}}>
-                            Tea
+                            {teaData.teaName}
                         </Text>
                     </TouchableOpacity>
                     <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'}  onChangeText={(text) => {

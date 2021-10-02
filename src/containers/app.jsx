@@ -16,6 +16,7 @@ import {LogBox} from "react-native";
 import NoteEntry from "./noteEntryPage";
 import TeaInventory from "./inventoryPage";
 import TeaSelection from "./teaSelection";
+import TeaInventoryEntry from "./teaInventoyDataEntry";
 
 function App(props) {
     LogBox.ignoreLogs([
@@ -31,7 +32,7 @@ function App(props) {
             <PersistGate loading={null} persistor={persistor}>
                 <NavigationContainer>
 
-                    <Stack.Navigator initialRouteName="HomeScreen"
+                    <Stack.Navigator initialRouteName="TeaInventoryData"
                                      screenOptions={{
                                          headerShown: false,
                                          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
@@ -48,6 +49,7 @@ function App(props) {
                         <Stack.Screen name="NoteEntry" component={NoteEntry}/>
                         <Stack.Screen name="TeaInventory" component={TeaInventory}/>
                         <Stack.Screen name="TeaSelection" component={TeaSelection}/>
+                        <Stack.Screen name="TeaInventoryData" component={TeaInventoryEntry}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </PersistGate>

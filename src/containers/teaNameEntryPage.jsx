@@ -169,10 +169,9 @@ function TeaNameEntryPage(props) {
         setTeaData({...teaData, ...teaNameAndID})
     }
     function goToDiaryEntry() {
-        if (teaName !== '') {
+        if (teaData.teaName !== null && teaData.temp !== null && teaData.weight !== null && teaData.waterVolume !== null && teaData.startingTime !== null) {
             navigation.navigate("DiaryEntry", {
-                teaName,
-                startingTime
+                teaData
             })
         } else {
             ToastAndroid.show("Please Enter a Tea Name", ToastAndroid.LONG)
@@ -213,23 +212,61 @@ function TeaNameEntryPage(props) {
                             Tea
                         </Text>
                     </TouchableOpacity>
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'} keyboardType={'number-pad'}>
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'}  onChangeText={(text) => {
+                        let amount
+                        if(text === '')
+                        {
+                            amount = null
+                        }
+                        else {
+                            amount = parseInt(text)
+                        }
+                        setTeaData({...teaData, startingTime: amount})
+                    }} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Weight'} keyboardType={'number-pad'}>
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Weight'}  onChangeText={(text) => {
+                        let amount
+                        if(text === '')
+                        {
+                            amount = null
+                        }
+                        else {
+                            amount = parseFloat(text)
+                        }
+                        setTeaData({...teaData, weight: amount})
+                    }} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Temperature'} keyboardType={'number-pad'}>
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Temperature'}  onChangeText={(text) => {
+                        let amount
+                        if(text === '')
+                        {
+                            amount = null
+                        }
+                        else {
+                            amount = parseInt(text)
+                        }
+                        setTeaData({...teaData, temp: amount})
+                    }} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Water Volume'} keyboardType={'number-pad'}>
+                    <TextInput style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Water Volume'}  onChangeText={(text) => {
+                        let amount
+                        if(text === '')
+                        {
+                            amount = null
+                        }
+                        else {
+                            amount = parseInt(text)
+                        }
+                        setTeaData({...teaData, waterVolume: amount})
+                    }} keyboardType={'number-pad'}>
 
                     </TextInput>
                 </View>
                 <View style={styles.buttonPart}>
-                    <TouchableOpacity activeOpacity={1} onPress={() => {
-                        navigation.navigate("DiaryEntry")
-                    }} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>
+                    <TouchableOpacity activeOpacity={1} onPress={goToDiaryEntry} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>
                         <Text style={{alignSelf: "center", marginLeft: 10,fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
                             Let's Start Brewing
                         </Text>

@@ -18,6 +18,8 @@ import {
 } from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {connect} from "react-redux";
 
 
 function TeaInventoryEntry(props) {
@@ -220,7 +222,7 @@ function TeaInventoryEntry(props) {
         })
 
 
-    const [typeModal, setTypeModal] = useState(true)
+    const [typeModal, setTypeModal] = useState(false)
     const textInputWidth = useRef(new Animated.Value(0)).current
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     let beginX
@@ -456,4 +458,14 @@ function TeaInventoryEntry(props) {
     )
 }
 
-export default TeaInventoryEntry
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    return {
+
+        createEntry: (data) => dispatch(addEntry(data)),
+        addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(TeaInventoryEntry);

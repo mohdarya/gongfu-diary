@@ -204,7 +204,9 @@ function HomeScreen(props) {
                             <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
                                 Inventory
                             </Text>
-                            <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%',}}>
+                            <TouchableOpacity  onPress={() => {
+                                navigation.navigate('TeaInventory')
+                            }} activeOpacity={1} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,
                                     color: 'white',

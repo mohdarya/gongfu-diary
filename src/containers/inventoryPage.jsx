@@ -13,6 +13,8 @@ import {
 import Slider from "@react-native-community/slider";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import InventoryItem from "../components/inventoryItem";
+import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {connect} from "react-redux";
 
 
 function TeaInventory(props) {
@@ -283,9 +285,33 @@ function TeaInventory(props) {
 
 
     const renderItems = ({item}) => {
-        return(
 
-            <InventoryItem/>
+        let toShow
+
+        if(item === 'Add')
+        {
+            toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
+            navigation.navigate('TeaInventoryData')}
+            } style={{ height: 120,
+                width: 90,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 32,
+                backgroundColor: '#3C91E6',}}>
+
+
+                <Image style={{height: 60, width: 60}} source={require('../img/add.png')}/>
+
+
+            </TouchableOpacity>
+        }
+        else {
+            toShow = <InventoryItem/>
+        }
+        return(
+            <View>
+            {toShow}
+            </View>
 
         )
     }
@@ -310,7 +336,7 @@ function TeaInventory(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={[1,2,3,4,5,6,7,8,9,10]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
+              <FlatList data={['Add',props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={3}
                         keyExtractor={item => item}/>
 
@@ -333,5 +359,14 @@ function TeaInventory(props) {
     )
 }
 
-export default TeaInventory
+const mapStateToProps = (state, ownProps) => {
+    const {TeaAvailable} = state;
+
+    return {
+        TeaAvailable: TeaAvailable.TeaAvailable
+    };
+};
+
+
+export default connect(mapStateToProps)(TeaInventory);
 

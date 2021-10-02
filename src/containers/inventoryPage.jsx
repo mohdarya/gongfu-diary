@@ -289,13 +289,7 @@ function TeaInventory(props) {
 
         )
     }
-    const doneButtonAction = () => {
 
-
-
-
-        navigation.goBack()
-    }
     return (
 
 

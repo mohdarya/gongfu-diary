@@ -239,11 +239,8 @@ function TeaInventoryEntry(props) {
     return (
 <View style={{flex: 1}}>
 
-        <TouchableOpacity style={{flex: 1}} onPress={() => {
-            Keyboard.dismiss();
 
-        }
-        } activeOpacity={1}>
+
             <View style={styles.container}>
 
                 <Modal
@@ -311,7 +308,10 @@ function TeaInventoryEntry(props) {
                 <View style={styles.infoPart}>
 
                     <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
-                        setTeaData({...teaData, teaName: text})
+                        let d = new Date()
+                        setTeaData({...teaData, teaName: text, teaID: text + d.getTime().toString()})
+
+
                     }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
 
                     </TextInput>
@@ -345,7 +345,7 @@ function TeaInventoryEntry(props) {
             </View>
 
 
-        </TouchableOpacity>
+
 
     <View style={{
         position: "absolute",
@@ -432,8 +432,7 @@ function TeaInventoryEntry(props) {
                     <AnimatedTouchable onPress={() => {
                         if(teaData.teaName !== null && teaData.type !== null && teaData.weight !== null)
                         {
-                            let d = new Date()
-                            setTeaData({...teaData, teaID: teaData.teaName + d.getTime().toString()})
+
                             props.addTea(teaData)
                             navigation.goBack()
                         }

@@ -309,7 +309,7 @@ function TeaSelection(props) {
             toShow = <InventoryItem data={{...item}}/>
         }
         return(
-            <TouchableOpacity onPress={ () => {
+            <TouchableOpacity activeOpacity={1} onPress={ () => {
                 route.params.setTeaName({teaName: item.teaName, teaID: item.teaID})
                 navigation.goBack()
             }}>

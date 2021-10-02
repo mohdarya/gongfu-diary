@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from "react-native";
 
 function InventoryItem(props) {
@@ -35,6 +35,17 @@ function InventoryItem(props) {
 
     })
     console.log(props.data)
+    let name = ''
+
+
+        if(props.data.teaName.length <= 20)
+        {
+            name = props.data.teaName
+        }
+        else {
+            name = props.data.teaName.substring(0, 20) + ' ...'
+        }
+  
     return (
 
         <View style={styles.container}>
@@ -48,7 +59,7 @@ function InventoryItem(props) {
 
             <View style={styles.nameContainer}>
                 <Text style={{textAlignVertical: 'center',height: '50%', color: 'white', fontSize: 13, textAlign: 'center',}}>
-                    {props.data.teaName}
+                    {name}
                 </Text>
             </View>
         </View>

@@ -285,9 +285,13 @@ function TeaInventoryEntry(props) {
                     <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Type'} keyboardType={'number-pad'}>
-
-                    </TextInput>
+                    <TouchableOpacity  activeOpacity={1} onPress={() => {
+                       setTypeModal(true)
+                    }} style={{fontSize: 20, height: 50, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
+                        <Text style={{fontSize: 20, color:'white'}}>
+                            Type
+                        </Text>
+                    </TouchableOpacity>
                     <TextInput style={{fontSize: 20,marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'white'}  placeholder={'Weight'} keyboardType={'number-pad'}>
 
                     </TextInput>

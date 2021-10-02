@@ -338,9 +338,9 @@ function TeaInventory(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, alignItems: 'center', marginRight:15, marginLeft: 15} } horizontal={false}
-                        numColumns={3}
-                        keyExtractor={item => item}/>
+              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 30, alignItems: 'center', marginRight:15, marginLeft: 15} } horizontal={false}
+                        numColumns={2}
+                        keyExtractor={item => item.teaID}/>
 
 
 

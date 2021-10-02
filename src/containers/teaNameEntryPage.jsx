@@ -191,7 +191,9 @@ function TeaNameEntryPage(props) {
 
                 </View>
                 <View style={styles.infoPart}>
-                    <TouchableOpacity style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}>
+                    <TouchableOpacity  activeOpacity={1} onPress={() => {
+                        navigation.navigate('TeaSelection')
+                    }} style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, color:'white'}}>
                             Tea
                         </Text>

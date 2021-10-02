@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
+import teaNameEntryPageTimer from "./teaNameEntryPageTimer";
 
 
 function TeaNameEntryPage(props) {
 
-    let startingTime = 20;
-    let teaName = ''
+
+    const [teaData, setTeaData] = useState({
+        teaName: null,
+        teaID: null,
+        weight: null,
+        temp: null,
+        waterVolume: null,
+        startingTime: null
+
+    })
     const navigation = useNavigation()
     const
         styles = StyleSheet.create({
@@ -156,6 +165,9 @@ function TeaNameEntryPage(props) {
         })
 
 
+    const setTeaName = (teaNameAndID) => {
+        setTeaData({...teaData, ...teaNameAndID})
+    }
     function goToDiaryEntry() {
         if (teaName !== '') {
             navigation.navigate("DiaryEntry", {
@@ -166,6 +178,7 @@ function TeaNameEntryPage(props) {
             ToastAndroid.show("Please Enter a Tea Name", ToastAndroid.LONG)
         }
     }
+
 
     return (
 
@@ -192,7 +205,9 @@ function TeaNameEntryPage(props) {
                 </View>
                 <View style={styles.infoPart}>
                     <TouchableOpacity  activeOpacity={1} onPress={() => {
-                        navigation.navigate('TeaSelection')
+                        navigation.navigate('TeaSelection', {
+                            setTeaName
+                        })
                     }} style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, color:'white'}}>
                             Tea

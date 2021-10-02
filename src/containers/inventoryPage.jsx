@@ -293,8 +293,9 @@ function TeaInventory(props) {
         {
             toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
             navigation.navigate('TeaInventoryData')}
-            } style={{ height: 120,
-                width: 90,
+            } style={{ height: 110,
+                width: 110,
+                alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 32,
@@ -337,7 +338,7 @@ function TeaInventory(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
+              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 15, alignItems: 'center', marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={3}
                         keyExtractor={item => item}/>
 

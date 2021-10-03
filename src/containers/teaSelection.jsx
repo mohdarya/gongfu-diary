@@ -286,7 +286,7 @@ function TeaSelection(props) {
 
         let toShow
 
-        console.log(item)
+
         if(item === 'Add')
         {
             toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {

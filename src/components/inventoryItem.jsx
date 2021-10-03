@@ -34,7 +34,7 @@ function InventoryItem(props) {
 
 
     })
-    console.log(props.data)
+
     let name = ''
 
 
@@ -45,7 +45,7 @@ function InventoryItem(props) {
         else {
             name = props.data.teaName.substring(0, 20) + ' ...'
         }
-  
+
     return (
 
         <View style={styles.container}>

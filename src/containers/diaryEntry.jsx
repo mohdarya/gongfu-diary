@@ -4,6 +4,7 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
+import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 
 function DiaryEntry(props) {
@@ -115,11 +116,12 @@ function DiaryEntry(props) {
     const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
-    const [startTimer, setStartTimer] = useState(false)
+    const [startTimer, setStartTimer] = useState(true)
     const [increment, setIncrement] = useState(5);
     const [steepData, setSteepData] = useState({})
     const [note, setNote] = useState('');
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
+    const [buttonText, setButtonText] = useState('Stop')
 
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
@@ -137,51 +139,85 @@ function DiaryEntry(props) {
     }
 
 
+
+    useEffect(() => {
+        if(!startTimer)
+        {
+
+
+            if (first) {
+
+
+                setFirst(false)
+                setCountdownTimer( parseInt(currentTime))
+
+            } else {
+                 setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+            }
+            BackgroundTimer.stopBackgroundTimer()
+            setButtonText('Close')
+        }
+    }, [startTimer])
     const startInterval = () => {
+
+
+
+
 
 
         setCurrenTime(countdownTimer)
 
 
-        if (first) {
-            setCountdownTimer((t) => t - 1)
-        } else {
+        if (!first) {
+
 
             props.addSteep(sessionID, steepData)
             setCountdownTimer((t) => t + increment)
         }
 
+
+
+        BackgroundTimer.runBackgroundTimer(() => {
+
+
+            setCountdownTimer(secs => {
+                if (secs > 0) {
+                   return secs -1
+
+
+                } else {
+
+                    setStartTimer(false)
+                return  0
+
+
+                }
+            })
+
+            },
+            1000);
         setStartTimer(true)
+
 
     }
 
 
-    useEffect(() => {
 
-            if (startTimer) {
-                setTimeout(() => {
-                        if (countdownTimer <= 0) {
-                            setStartTimer(false)
-                            if (first) {
-                                setCountdownTimer(parseInt(currentTime))
-                                setFirst(false)
-                            } else {
-                                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
-                            }
+    const clockiFy = () => {
+        let mins = Math.floor((countdownTimer / 60) % 60)
+        let seconds = Math.floor(countdownTimer % 60)
 
+        let displayMins = mins < 10 ?  `0${mins}` : mins
+        let displaySecs = seconds < 10 ?  `0${seconds}` : seconds
 
-                        } else {
-                            setCountdownTimer((t) => t - 1)
-                        }
-                    }, 1000
-                )
-            }
+        return{
+            displayMins,
+            displaySecs
         }
 
+    }
 
-        ,
-        [countdownTimer]
-    )
+
     const goToFlavorSelection = () => {
         navigation.navigate('FlavorEntry', {
             setSteepData,
@@ -221,7 +257,7 @@ function DiaryEntry(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                15:12
+                                {clockiFy().displayMins  + ':' + clockiFy().displaySecs}
                             </Text>
                         </View>
                         <View style={ {
@@ -232,6 +268,7 @@ function DiaryEntry(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={()=> {
+                                    setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={ {
                                 backgroundColor: '#E53B3B',
@@ -248,7 +285,7 @@ function DiaryEntry(props) {
                                     fontSize: 30,
                                     color: '#000000',
                                 }}>
-                                    Stop
+                                    {buttonText}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -463,6 +500,8 @@ function DiaryEntry(props) {
                                 justifyContent: 'center'
                             }}>
                                 <AnimatedTouchable activeOpacity={1}   onPress={()=> {
+                                    setButtonText('Stop')
+                                    startInterval()
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={{width: textInputWidth.interpolate({
                                         inputRange: [0, 1],

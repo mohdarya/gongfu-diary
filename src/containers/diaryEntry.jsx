@@ -34,12 +34,14 @@ function DiaryEntry(props) {
         steepView: {
             alignSelf: 'center',
 
+
             top: 300,
             height: 400,
             width: '90%',
 
         },
         steepTag: {
+
             alignSelf: 'center',
             borderRadius: 15,
             height: 40,
@@ -59,7 +61,8 @@ function DiaryEntry(props) {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-
+            backgroundColor: 'white',
+            marginTop: 20,
             borderRadius: 20,
         }, notesView: {
 

@@ -159,6 +159,15 @@ function HomeScreen(props) {
     const [data, setData] = useState(props.diary)
 
 
+    const generateHistoryItems = () => {
+        let items = []
+
+        for (let i = 0; i < 5; i++)
+        {
+            items.push(<HistoryItem key={`historyItem${i}`}data={props.diary[props.diary.length - i]}/>)
+        }
+        return items
+    }
     useEffect(() => {
         setData(props.diary)
 
@@ -252,11 +261,7 @@ function HomeScreen(props) {
                         </View>
 
                         <View style={styles.historyView}>
-                            <HistoryItem/>
-                            <HistoryItem/>
-                            <HistoryItem/>
-                            <HistoryItem/>
-                            <HistoryItem/>
+                            {generateHistoryItems()}
 
 
                         </View>

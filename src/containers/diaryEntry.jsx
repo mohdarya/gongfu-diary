@@ -335,16 +335,24 @@ function DiaryEntry(props) {
                             height: 2,
                             backgroundColor: '#2A9D8F'
                         }}/>
-                        <Text
+                        <TextInput
+                            selectTextOnFocus={true}
+                            keyboardType={"number-pad"}
+                            onChangeText={(text) => {
+                                if(text !== '' ){setIncrement(parseInt(text))}
+                            else {
+                                setIncrement(0)
+                                }}}
                             style={{
                                 alignSelf: 'center',
                                 marginTop: 5,
                                 fontSize: 25,
                                 color: '#264653',
                                 fontWeight: 'bold'
-                            }}>
-                            {increment}
-                        </Text>
+                            }}
+                        value={increment.toString()}>
+
+                        </TextInput>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                             Increment
                         </Text>

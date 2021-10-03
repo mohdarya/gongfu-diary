@@ -379,9 +379,12 @@ function NoteEntry(props) {
 
                 <TextInput multiline={true}
                 maxLength={456}
+                           onChangeText={(text) => {
+                               route.params.setNote(text)
+                           }}
                            placeholder={'Enter your Note for the Tea'}
                 style={{height: 350, width: '80%',alignSelf: 'center', textAlignVertical: 'top', textAlign: 'center', fontSize: 17}}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    {route.params.note}
                 </TextInput>
 
 

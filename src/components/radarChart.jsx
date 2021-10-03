@@ -131,6 +131,7 @@ function RadarChart(props) {
                 key={'polygon'}
                 points={findPoints()}
                 fill="#2A9D8F"
+                opacity={0.9}
                 strokeLinejoin="round"
                 stroke="#2A9D8F"
                 strokeWidth="10"

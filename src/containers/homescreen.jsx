@@ -155,12 +155,19 @@ function HomeScreen(props) {
 
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
-
+    const [historyItems, setHistoryItems] = useState([])
     const [data, setData] = useState(props.diary)
 
 
-    const generateHistoryItems = () => {
-        let items = []
+
+    useEffect(() => {
+        setData(props.diary)
+
+
+    }, [props.state])
+
+    useEffect(()=> { let items = []
+        console.log(data)
         let loopNumber = props.diary.length
 
         if(loopNumber > 5) {
@@ -168,15 +175,9 @@ function HomeScreen(props) {
         }
         for (let i = 0; i < loopNumber; i++)
         {
-            items.push(<HistoryItem key={`historyItem${i}`}data={props.diary[props.diary.length - i]}/>)
+            items.push(<HistoryItem key={`historyItem${i}`}data={props.diary[props.diary.length -1 - i]}/>)
         }
-        return items
-    }
-    useEffect(() => {
-        setData(props.diary)
-
-    }, [props.state])
-
+        setHistoryItems( items)}, [props.diary])
     const renderItems = ({item}) => {
 
 
@@ -187,6 +188,7 @@ function HomeScreen(props) {
 
         )
     }
+
 
     let beginX
     return (
@@ -265,7 +267,7 @@ function HomeScreen(props) {
                         </View>
 
                         <View style={styles.historyView}>
-                            {generateHistoryItems()}
+                            {historyItems}
 
 
                         </View>

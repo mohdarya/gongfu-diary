@@ -161,8 +161,12 @@ function HomeScreen(props) {
 
     const generateHistoryItems = () => {
         let items = []
+        let loopNumber = props.diary.length
 
-        for (let i = 0; i < 5; i++)
+        if(loopNumber > 5) {
+            loopNumber = 5
+        }
+        for (let i = 0; i < loopNumber; i++)
         {
             items.push(<HistoryItem key={`historyItem${i}`}data={props.diary[props.diary.length - i]}/>)
         }

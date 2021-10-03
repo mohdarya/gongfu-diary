@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Animated, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
@@ -119,6 +119,8 @@ function DiaryEntry(props) {
     const [increment, setIncrement] = useState(5);
     const [steepData, setSteepData] = useState({})
     const [note, setNote] = useState('');
+    const [timerViewVisibility, setTimerViewVisibility] = useState(false)
+
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
     })
@@ -192,6 +194,69 @@ function DiaryEntry(props) {
 
 
         <View style={styles.container}>
+
+
+            <Modal    animationType="slide"
+                      transparent={true}
+                      visible={timerViewVisibility}
+                      onRequestClose={() => {
+
+                          setTimerViewVisibility(!timerViewVisibility)
+                      }}>
+                <View style={{height: '100%', width: '100%', justifyContent: 'flex-end'}}>
+                    <View style={{height: '80%', width: '100%', backgroundColor: '#13242A', borderTopLeftRadius: 100, borderTopRightRadius:100}}>
+
+
+                        <View style={ {
+                            marginTop: '15%',
+                            marginBottom: 5,
+                            alignSelf: 'center',
+                            borderRadius: 300,
+                            backgroundColor: '#264653',
+                            borderWidth: 10,
+                            borderColor: '#2A9D8F',
+                            height: '50%',
+                            width: '75%',
+                            justifyContent: 'center',
+
+                        }}>
+                            <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
+                                15:12
+                            </Text>
+                        </View>
+                        <View style={ {
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <TouchableOpacity
+                                onPress={()=> {
+                                    setTimerViewVisibility(!timerViewVisibility)
+                                }} style={ {
+                                backgroundColor: '#E53B3B',
+                                width: 200,
+                                height: 50,
+                                borderRadius: 10,
+                                justifyContent: 'center',
+                                alignContent: 'center',
+                            }}  activeOpacity={1}>
+                                <Text style={{
+                                    textAlign: 'center',
+                                    bottom: '5%',
+                                    fontWeight: 'bold',
+                                    fontSize: 30,
+                                    color: '#000000',
+                                }}>
+                                    Stop
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </View>
+
+            </Modal>
             <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1500}}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
@@ -397,7 +462,9 @@ function DiaryEntry(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} style={{width: textInputWidth.interpolate({
+                                <AnimatedTouchable activeOpacity={1}   onPress={()=> {
+                                    setTimerViewVisibility(!timerViewVisibility)
+                                }} style={{width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]
                                     }), height: textInputWidth.interpolate({

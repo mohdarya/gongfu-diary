@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Animated, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
@@ -118,6 +118,7 @@ function DiaryEntry(props) {
     const [startTimer, setStartTimer] = useState(false)
     const [increment, setIncrement] = useState(5);
     const [steepData, setSteepData] = useState({})
+    const [note, setNote] = useState('');
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
     })
@@ -304,12 +305,14 @@ function DiaryEntry(props) {
                     <TouchableOpacity style={styles.noteElement}
                                       activeOpacity={1}
                                       onPress={() => {
-                                          navigation.navigate('NoteEntry')
+                                          navigation.navigate('NoteEntry', {
+                                              note, setNote
+                                          })
                                       }}
                     >
 
                         <Text style={{textAlignVertical: 'top', height: '100%', color: 'white', fontSize: 20, textAlign: 'center'}}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                            {note}
                         </Text>
 
                     </TouchableOpacity>

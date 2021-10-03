@@ -1,6 +1,7 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from "react-native";
 import DiaryListingItem from "./diaryListingItem";
+import HistoryItem from "./historyItem";
 
 function DiaryListingSection(props) {
 
@@ -23,7 +24,7 @@ function DiaryListingSection(props) {
 
         return(
 
-        <DiaryListingItem data={item}/>
+        <HistoryItem data={item}/>
             )
     }
     return (

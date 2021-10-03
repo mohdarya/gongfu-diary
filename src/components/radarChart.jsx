@@ -130,9 +130,9 @@ function RadarChart(props) {
         data.push(<Polygon
                 key={'polygon'}
                 points={findPoints()}
-                fill="#98D4B0"
+                fill="#2A9D8F"
                 strokeLinejoin="round"
-                stroke="#98D4B0"
+                stroke="#2A9D8F"
                 strokeWidth="10"
             />
         )

@@ -407,10 +407,11 @@ function FlavorEntry(props) {
         let styleToUse = {
             backgroundColor: 'white',
         }
-        if(steepData[chosenNoteIndex].detail === indexOfDetail)
-        {
-            styleToUse = {
-                backgroundColor: 'grey',
+        if(steepData[chosenNoteIndex !== undefined]) {
+            if (steepData[chosenNoteIndex].detail === indexOfDetail) {
+                styleToUse = {
+                    backgroundColor: 'grey',
+                }
             }
         }
 

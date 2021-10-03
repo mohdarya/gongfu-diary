@@ -50,7 +50,7 @@ function RadarChart(props) {
                     cx={centerX}
                     cy={centerY}
                     r={radius - ((radius * i) / 5)}
-                    stroke="white"
+                    stroke="black"
                     strokeOpacity="1"
                     strokeWidth="5"
                     fill="transparent"
@@ -70,7 +70,7 @@ function RadarChart(props) {
                         y1={calculateEdgePoint(degree)[1]}
                         x2={calculateEdgePoint(degree + 180)[0]}
                         y2={calculateEdgePoint(degree + 180)[1]}
-                        stroke="white"
+                        stroke="black"
                         strokeOpacity="1"
                         strokeWidth="5"
                         fill="transparent"
@@ -112,7 +112,7 @@ function RadarChart(props) {
                     key={`text_outline_${sortable[x]}`} fill="white"
                     x={calculateEdgePointText(degree)[0]}
                     y={calculateEdgePointText(degree + 180)[1]}
-                    stroke="white"
+                    stroke="black"
                     fontSize="10"
                     textAnchor="middle">
                     {props.flavors[sortable[x][0]].note}

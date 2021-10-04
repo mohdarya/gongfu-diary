@@ -360,11 +360,7 @@ function DiaryListingPage(props) {
                             fontSize: 20,
                             textAlign: 'center'
                         }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis
-                            nibh. Pellentesque sit amet dictum purus. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Aenean eu tempus est, in convallis nibh. Pellentesque sit amet dictum purus.Lorem
-                            ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu tempus est, in convallis nibh.
-                            Pellentesque sit amet dictum purus.Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                            {route.params.data.note}
                         </Text>
 
                     </TouchableOpacity>

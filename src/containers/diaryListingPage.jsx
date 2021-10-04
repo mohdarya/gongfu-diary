@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {addEntry, addSteep, editEntryName, editEntrySteep, removeEntry} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
@@ -200,6 +200,26 @@ function DiaryListingPage(props) {
 
     }
 
+
+
+
+    const clockiFy = (durationTime) => {
+
+
+
+        durationTime = durationTime / 1000
+        let mins = Math.floor((durationTime / 60))
+        let seconds = Math.floor(durationTime % 60)
+
+        let displayMins = mins < 10 ? `0${mins}` : mins
+        let displaySecs = seconds < 10 ? `0${seconds}` : seconds
+
+        return {
+            displayMins,
+            displaySecs
+        }
+
+    }
     return (
 
 
@@ -270,7 +290,7 @@ function DiaryListingPage(props) {
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
                                source={require('../img/clock.png')}/>
                         <Text style={{textAlign: 'center', marginTop: 7}}>
-                            1:12
+                            {clockiFy(route.params.data.duration).displayMins + ':' + clockiFy(route.params.data.duration).displaySecs}
                         </Text>
                     </View>
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
@@ -460,7 +480,7 @@ function DiaryListingPage(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} style={{
+                                <AnimatedTouchable activeOpacity={1} onPress={deleteTea} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]

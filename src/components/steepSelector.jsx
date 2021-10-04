@@ -14,7 +14,7 @@ function SteepSelector(props) {
             justifyContent: 'space-between',
 
         }, sliderView: {
-            height: '52%',
+            height: '100%',
             width: '100%',
             borderRadius: 20,
             borderTopLeftRadius: 0,

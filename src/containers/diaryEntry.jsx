@@ -126,6 +126,8 @@ function DiaryEntry(props) {
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
     })
+
+    // TODO: add teaID and other details 
     useEffect(() => {
         props.createEntry({
             teaName: teaName,

@@ -196,7 +196,7 @@ function DiaryListingPage(props) {
     }
     const editSelected = () => {
         setEdit(!editActive)
-       
+
     }
 
     return (
@@ -303,7 +303,7 @@ function DiaryListingPage(props) {
                                       onPress={goToFlavorSelection}
                     >
 
-                        <RadarChart steeps={{...steepData}}/>
+                        <RadarChart steeps={{...dataToDisplay}}/>
 
                     </TouchableOpacity>
                     <View style={styles.steepSelector}>

@@ -167,7 +167,7 @@ function HomeScreen(props) {
     }, [props.state])
 
     useEffect(()=> { let items = []
-      
+
         let loopNumber = props.diary.length
 
         if(loopNumber > 5) {
@@ -177,7 +177,7 @@ function HomeScreen(props) {
         {
             items.push(<HistoryItem key={`historyItem${i}`}data={props.diary[props.diary.length -1 - i]}/>)
         }
-        setHistoryItems( items)}, [props.diary])
+        setHistoryItems( items)}, [props.wholeDiary])
     const renderItems = ({item}) => {
 
 
@@ -399,6 +399,7 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary, TeaAvailable} = state;
 
     return {
+        wholeDiary: Diary,
         diary: Diary.diaryEntry,
         teaAvailable: TeaAvailable.teaAvailable
     };

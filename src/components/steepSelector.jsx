@@ -7,7 +7,8 @@ function SteepSelector(props) {
 
     const styles = StyleSheet.create({
         container: {
-            height: 120,
+            marginTop: 5,
+            height: '100%',
 
             width: 'auto',
             justifyContent: 'space-between',
@@ -18,7 +19,7 @@ function SteepSelector(props) {
             borderRadius: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            backgroundColor: 'grey',
+
         },
         detailView: {
             height: '38%',
@@ -27,11 +28,12 @@ function SteepSelector(props) {
             borderRadius: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            backgroundColor: 'grey',
+
             alignSelf: 'flex-end',
             flexDirection: 'column',
         },
         fieldTag: {
+            fontWeight: 'bold',
             fontSize: 15,
             marginTop: 3,
             margin: 15,
@@ -42,7 +44,12 @@ function SteepSelector(props) {
             alignItems: 'center',
         },
         valueText: {
-            top: '40%',
+            fontWeight: 'bold',
+
+            marginTop: 3,
+            margin: 15,
+            marginBottom: 0,
+
             fontSize: 17,
 
         },

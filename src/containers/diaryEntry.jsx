@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {addDuration, addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import BackgroundTimer from 'react-native-background-timer';
@@ -123,22 +123,27 @@ function DiaryEntry(props) {
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
 
+
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
     })
 
-    
+
     useEffect(() => {
         props.createEntry({
-            teaID, waterVolume, weight,
+            teaID, waterVolume, weight,  temp,
             teaName: teaName,
             sessionID: sessionID,
             steeps: [],
-            temp: [temp]
+
         })
     }, [])
     const endButtonAction = () => {
-        setStartTimer(false)
+
+        let duration = Date.now() -  parseInt(sessionID.replace(teaName, ''))
+        console.log(duration)
+        props.addDuration(sessionID, parseInt(duration))
+
         navigation.navigate("HomeScreen")
     }
 
@@ -553,7 +558,7 @@ function DiaryEntry(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} style={{
+                                <AnimatedTouchable activeOpacity={1} onPress={endButtonAction} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]
@@ -591,6 +596,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
         createEntry: (data) => dispatch(addEntry(data)),
         addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
+        addDuration: (sessionID, duration) => dispatch(addDuration(sessionID, duration)),
     };
 };
 

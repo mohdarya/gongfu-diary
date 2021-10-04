@@ -53,3 +53,15 @@ export function editEntrySteep(sessionID, steepIndex, newSteep)
 
     };
 }
+
+
+export function addDuration(sessionID, duration)
+{
+    return {
+        type: 'ADD_DURATION',
+        sessionID,
+       duration,
+
+
+    };
+}

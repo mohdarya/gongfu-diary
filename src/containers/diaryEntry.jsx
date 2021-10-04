@@ -139,7 +139,6 @@ function DiaryEntry(props) {
     })
 
 
-
     const setSteepArrayMiddleFunc = () => {
 
        setSteepArray( [...steepArray, [steepData]])
@@ -150,6 +149,8 @@ function DiaryEntry(props) {
     const createEntry = () => {
 
 
+
+        if(!first){
 
         let duration = Date.now() -  parseInt(sessionID.replace(teaName, ''))
 
@@ -163,6 +164,7 @@ function DiaryEntry(props) {
 
 
         })
+        }
     }
     const endButtonAction = () => {
 

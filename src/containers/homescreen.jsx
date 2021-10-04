@@ -167,7 +167,7 @@ function HomeScreen(props) {
     }, [props.state])
 
     useEffect(()=> { let items = []
-        console.log(data)
+      
         let loopNumber = props.diary.length
 
         if(loopNumber > 5) {

@@ -45,6 +45,24 @@ function HistoryItem(props) {
         })
     }
 
+
+    const clockiFy = (durationTime) => {
+
+
+
+        durationTime = durationTime / 1000
+        let mins = Math.floor((durationTime / 60))
+        let seconds = Math.floor(durationTime % 60)
+
+        let displayMins = mins < 10 ? `0${mins}` : mins
+        let displaySecs = seconds < 10 ? `0${seconds}` : seconds
+
+        return {
+            displayMins,
+            displaySecs
+        }
+
+    }
     return (
         <TouchableOpacity activeOpacity={1} onPress={goToTeaPage} style={styles.container}>
             <View style={styles.iconView}>
@@ -57,7 +75,7 @@ function HistoryItem(props) {
             </View>
             <View style={styles.detailView}>
                 <Text style={{textAlign: 'right', color: 'white'}}>
-                    1:12
+                    {clockiFy(props.data.duration).displayMins + ':' + clockiFy(props.data.duration).displaySecs}
                 </Text>
                 <Text style={{textAlign: 'right', color: 'white'}}>
                     {date}

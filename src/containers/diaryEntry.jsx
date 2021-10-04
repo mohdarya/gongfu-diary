@@ -112,7 +112,7 @@ function DiaryEntry(props) {
     const textInputWidth = useRef(new Animated.Value(0)).current
     const navigation = useNavigation()
     const route = useRoute()
-    const {teaName, startingTime} = route.params.teaData
+    const {teaName, startingTime, teaID, temp, waterVolume, weight} = route.params.teaData
     const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
@@ -127,12 +127,14 @@ function DiaryEntry(props) {
         return teaName + Date.now()
     })
 
-    // TODO: add teaID and other details 
+    
     useEffect(() => {
         props.createEntry({
+            teaID, waterVolume, weight,
             teaName: teaName,
             sessionID: sessionID,
-            steeps: []
+            steeps: [],
+            temp: [temp]
         })
     }, [])
     const endButtonAction = () => {
@@ -141,30 +143,24 @@ function DiaryEntry(props) {
     }
 
 
-
     useEffect(() => {
-        if(!startTimer)
-        {
+        if (!startTimer) {
 
 
             if (first) {
 
 
                 setFirst(false)
-                setCountdownTimer( parseInt(currentTime))
+                setCountdownTimer(parseInt(currentTime))
 
             } else {
-                 setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
             }
             BackgroundTimer.stopBackgroundTimer()
             setButtonText('Close')
         }
     }, [startTimer])
     const startInterval = () => {
-
-
-
-
 
 
         setCurrenTime(countdownTimer)
@@ -178,23 +174,22 @@ function DiaryEntry(props) {
         }
 
 
-
         BackgroundTimer.runBackgroundTimer(() => {
 
 
-            setCountdownTimer(secs => {
-                if (secs > 0) {
-                   return secs -1
+                setCountdownTimer(secs => {
+                    if (secs > 0) {
+                        return secs - 1
 
 
-                } else {
+                    } else {
 
-                    setStartTimer(false)
-                return  0
+                        setStartTimer(false)
+                        return 0
 
 
-                }
-            })
+                    }
+                })
 
             },
             1000);
@@ -204,15 +199,14 @@ function DiaryEntry(props) {
     }
 
 
-
     const clockiFy = () => {
         let mins = Math.floor((countdownTimer / 60) % 60)
         let seconds = Math.floor(countdownTimer % 60)
 
-        let displayMins = mins < 10 ?  `0${mins}` : mins
-        let displaySecs = seconds < 10 ?  `0${seconds}` : seconds
+        let displayMins = mins < 10 ? `0${mins}` : mins
+        let displaySecs = seconds < 10 ? `0${seconds}` : seconds
 
-        return{
+        return {
             displayMins,
             displaySecs
         }
@@ -234,18 +228,24 @@ function DiaryEntry(props) {
         <View style={styles.container}>
 
 
-            <Modal    animationType="slide"
-                      transparent={true}
-                      visible={timerViewVisibility}
-                      onRequestClose={() => {
+            <Modal animationType="slide"
+                   transparent={true}
+                   visible={timerViewVisibility}
+                   onRequestClose={() => {
 
-                          setTimerViewVisibility(!timerViewVisibility)
-                      }}>
+                       setTimerViewVisibility(!timerViewVisibility)
+                   }}>
                 <View style={{height: '100%', width: '100%', justifyContent: 'flex-end'}}>
-                    <View style={{height: '80%', width: '100%', backgroundColor: '#13242A', borderTopLeftRadius: 100, borderTopRightRadius:100}}>
+                    <View style={{
+                        height: '80%',
+                        width: '100%',
+                        backgroundColor: '#13242A',
+                        borderTopLeftRadius: 100,
+                        borderTopRightRadius: 100
+                    }}>
 
 
-                        <View style={ {
+                        <View style={{
                             marginTop: '15%',
                             marginBottom: 5,
                             alignSelf: 'center',
@@ -259,27 +259,27 @@ function DiaryEntry(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                {clockiFy().displayMins  + ':' + clockiFy().displaySecs}
+                                {clockiFy().displayMins + ':' + clockiFy().displaySecs}
                             </Text>
                         </View>
-                        <View style={ {
+                        <View style={{
                             flex: 1,
                             justifyContent: 'center',
                             alignContent: 'center',
                             alignItems: 'center',
                         }}>
                             <TouchableOpacity
-                                onPress={()=> {
+                                onPress={() => {
                                     setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
-                                }} style={ {
+                                }} style={{
                                 backgroundColor: '#E53B3B',
                                 width: 200,
                                 height: 50,
                                 borderRadius: 10,
                                 justifyContent: 'center',
                                 alignContent: 'center',
-                            }}  activeOpacity={1}>
+                            }} activeOpacity={1}>
                                 <Text style={{
                                     textAlign: 'center',
                                     bottom: '5%',
@@ -341,10 +341,12 @@ function DiaryEntry(props) {
                             selectTextOnFocus={true}
                             keyboardType={"number-pad"}
                             onChangeText={(text) => {
-                                if(text !== '' ){setIncrement(parseInt(text))}
-                            else {
-                                setIncrement(0)
-                                }}}
+                                if (text !== '') {
+                                    setIncrement(parseInt(text))
+                                } else {
+                                    setIncrement(0)
+                                }
+                            }}
                             style={{
                                 alignSelf: 'center',
                                 marginTop: 5,
@@ -352,7 +354,7 @@ function DiaryEntry(props) {
                                 color: '#264653',
                                 fontWeight: 'bold'
                             }}
-                        value={increment.toString()}>
+                            value={increment.toString()}>
 
                         </TextInput>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
@@ -423,7 +425,13 @@ function DiaryEntry(props) {
                                       }}
                     >
 
-                        <Text style={{textAlignVertical: 'top', height: '100%', color: 'white', fontSize: 20, textAlign: 'center'}}>
+                        <Text style={{
+                            textAlignVertical: 'top',
+                            height: '100%',
+                            color: 'white',
+                            fontSize: 20,
+                            textAlign: 'center'
+                        }}>
                             {note}
                         </Text>
 
@@ -433,7 +441,14 @@ function DiaryEntry(props) {
 
             </ScrollView>
 
-            <View style={{position: "absolute", bottom:'10%', width: '100%',justifyContent: 'flex-end', alignItems: 'flex-end', flexDirection: 'row'}}>
+            <View style={{
+                position: "absolute",
+                bottom: '10%',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flexDirection: 'row'
+            }}>
 
                 <FlingGestureHandler
                     direction={Directions.RIGHT | Directions.LEFT}
@@ -509,18 +524,21 @@ function DiaryEntry(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1}   onPress={()=> {
+                                <AnimatedTouchable activeOpacity={1} onPress={() => {
                                     setButtonText('Stop')
                                     startInterval()
                                     setTimerViewVisibility(!timerViewVisibility)
-                                }} style={{width: textInputWidth.interpolate({
+                                }} style={{
+                                    width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]
                                     }), height: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]
-                                    }),}}>
-                                    <Image style={{height: '100%', width: '100%'}} source={require('../img/start.png')}/>
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}}
+                                           source={require('../img/start.png')}/>
                                 </AnimatedTouchable></AnimatedTouchable>
                             <AnimatedTouchable activeOpacity={1} style={{
                                 backgroundColor: '#3C91E6',
@@ -535,13 +553,15 @@ function DiaryEntry(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} style={{width: textInputWidth.interpolate({
+                                <AnimatedTouchable activeOpacity={1} style={{
+                                    width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]
                                     }), height: textInputWidth.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [0, 40]
-                                }),}}>
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
                                     <Image style={{height: '100%', width: '100%'}} source={require('../img/stop.png')}/>
                                 </AnimatedTouchable></AnimatedTouchable>
 

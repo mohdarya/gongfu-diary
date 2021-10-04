@@ -79,7 +79,7 @@ function SteepSelector(props) {
                             setValue(value)
                             props.processChange(value)
                         })}
-                        minimumTrackTintColor="#FFFFFF"
+                        minimumTrackTintColor="#E9C46A"
                         maximumTrackTintColor="#000000"
                     />
                 </View>

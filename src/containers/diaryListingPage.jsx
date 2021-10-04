@@ -6,8 +6,9 @@ import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
+import SteepSelector from "../components/steepSelector";
 
-function DiaryEntry(props) {
+function DiaryListingPage(props) {
 
 
     const styles = StyleSheet.create({
@@ -58,6 +59,8 @@ function DiaryEntry(props) {
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
         }, graphView: {
+            marginTop: 20,
+            backgroundColor: 'white',
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
@@ -118,94 +121,83 @@ function DiaryEntry(props) {
             color: 'white'
 
         },
+        steepSelector: {
+            width: '100%',
+            height: 80,
+
+            borderRadius: 10,
+            backgroundColor: 'white',
+
+            marginTop: 30,
+
+
+        },
 
 
     });
 
     const navigation = useNavigation()
     const route = useRoute()
-    let teaName = 'red Tiger'
-    let startingTime = 20
+
     let beginX
 
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
-    const [first, setFirst] = useState(true)
-    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
-    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
-    const [startTimer, setStartTimer] = useState(false)
-    const [value, setValue] = useState(0)
-    const [increment, setIncrement] = useState(5);
-    const [steepData, setSteepData] = useState({})
-    const [sessionID, setSessionID] = useState(() => {
-
-        return teaName + Date.now()
-    })
-    useEffect(() => {
-        props.createEntry({
-            teaName: teaName,
-            sessionID: sessionID,
-            steeps: []
-        })
-    }, [])
-    const endButtonAction = () => {
-        setStartTimer(false)
-        navigation.navigate("HomeScreen")
-    }
-
-
-    const startInterval = () => {
-
-
-        setCurrenTime(countdownTimer)
-
-
-        if (first) {
-            setCountdownTimer((t) => t - 1)
+    const [steepData, setSteepData] = useState(route.params.data.steeps)
+    const [editActive, setEdit] = useState(false)
+    const [currentSteepIndex, setSteepIndex] = useState(0)
+    const [dataToDisplay, setDataToDisplay] = useState(() => {
+        if (steepData[0] === undefined) {
+            return {}
         } else {
-
-            props.addSteep(sessionID, steepData)
-            setCountdownTimer((t) => t + increment)
+            return steepData[0][0]
         }
-
-        setStartTimer(true)
-
-    }
+    })
 
 
-    useEffect(() => {
-
-            if (startTimer) {
-                setTimeout(() => {
-                        if (countdownTimer <= 0) {
-                            setStartTimer(false)
-                            if (first) {
-                                setCountdownTimer(parseInt(currentTime))
-                                setFirst(false)
-                            } else {
-                                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
-                            }
 
 
-                        } else {
-                            setCountdownTimer((t) => t - 1)
-                        }
-                    }, 1000
-                )
-            }
-        }
 
 
-        ,
-        [countdownTimer]
-    )
+
     const goToFlavorSelection = () => {
-        navigation.navigate('FlavorEntry', {
-            setSteepData,
-            steepData
-        })
+
+        if(editActive) {
+            navigation.navigate('FlavorEntry', {
+                setSteepData: changeSteepData,
+                steepData: dataToDisplay
+            })
+        }
+        else {
+            navigation.navigate('FlavorDiaryEntry', {
+                steepData: dataToDisplay
+            })
+        }
+    }
+    const deleteTea = () => {
+        props.deleteEntry(route.params.data.sessionID)
+        navigation.goBack()
+    }
+    const steepChanged = (index) => {
+        setSteepIndex(index - 1)
+        setDataToDisplay(steepData[index - 1][0])
     }
 
+    const editTeaName = (name) => {
+
+        props.editName(route.params.data.sessionID, name)
+    }
+    const changeSteepData = (newSteepData) =>{
+
+
+
+        props.editSteep(route.params.data.sessionID,currentSteepIndex, newSteepData)
+        setDataToDisplay(newSteepData)
+    }
+    const editSelected = () => {
+        setEdit(!editActive)
+       
+    }
 
     return (
 
@@ -225,7 +217,7 @@ function DiaryEntry(props) {
                         borderRadius: 40,
                         position: "absolute",
                         alignContent: 'center',
-                        justifyContent: 'flex-start'
+                        justifyContent: 'space-around'
                     }}>
 
                         <Text style={{
@@ -237,7 +229,7 @@ function DiaryEntry(props) {
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            Feng Qing Ye Sheng Hong Cha Wild Tree Purple Black Tea
+                            {route.params.data.teaName}
                         </Text>
 
                         <Text style={{
@@ -248,7 +240,7 @@ function DiaryEntry(props) {
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            12/12/2021
+                            {route.params.date}
                         </Text>
 
                     </View>
@@ -314,29 +306,8 @@ function DiaryEntry(props) {
                         <RadarChart steeps={{...steepData}}/>
 
                     </TouchableOpacity>
-                    <View style={styles.sliderView}>
-
-                        <View style={styles.valueTextView}>
-                            <Text style={styles.valueText}>
-                                {value}
-                            </Text>
-                        </View>
-                        <Slider
-                            value={value}
-                            style={{width: '100%', height: 100}}
-                            minimumValue={0}
-                            maximumValue={10}
-                            step={1}
-                            onValueChange={(value => {
-
-                                setValue(value)
-                            })}
-
-                            thumbTintColor={'#E9C46A'}
-                            minimumTrackTintColor="#FFFFFF"
-                            maximumTrackTintColor="#000000"
-                        />
-
+                    <View style={styles.steepSelector}>
+                        <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>
                     </View>
                 </View>
 
@@ -514,20 +485,14 @@ function DiaryEntry(props) {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
-    const {Diary} = state;
-
-    return {
-        Diary: Diary.diaryEntry
-    };
-};
 const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
 
-        createEntry: (data) => dispatch(addEntry(data)),
-        addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
+        editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
+        editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep)),
+        deleteEntry: (sessionid) => dispatch(removeEntry(sessionid))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiaryEntry);
+export default connect(null, mapDispatchToProps)(DiaryListingPage);

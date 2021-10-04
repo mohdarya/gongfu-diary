@@ -1,5 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    Animated,
+    BackHandler,
+    Image,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import {addDuration, addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
@@ -122,31 +133,61 @@ function DiaryEntry(props) {
     const [note, setNote] = useState('');
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
-
-
+    const [steepArray, setSteepArray] = useState([])
     const [sessionID, setSessionID] = useState(() => {
         return teaName + Date.now()
     })
 
 
-    useEffect(() => {
-        props.createEntry({
-            teaID, waterVolume, weight,  temp,
-            teaName: teaName,
-            sessionID: sessionID,
-            steeps: [],
 
-        })
-    }, [])
-    const endButtonAction = () => {
+    const setSteepArrayMiddleFunc = () => {
+
+       setSteepArray( [...steepArray, [steepData]])
+
+    }
+
+
+    const createEntry = () => {
+
+
 
         let duration = Date.now() -  parseInt(sessionID.replace(teaName, ''))
 
-        props.addDuration(sessionID, parseInt(duration))
 
+
+        props.createEntry({
+            teaID, waterVolume, weight,  temp,     duration,
+            teaName: teaName,
+            sessionID: sessionID,
+            steeps:  [...steepArray, [steepData]],
+
+
+        })
+    }
+    const endButtonAction = () => {
+
+        createEntry()
         navigation.navigate("HomeScreen")
     }
 
+    function handleBackButtonClick() {
+        if(navigation.canGoBack())
+        {
+            createEntry()
+          navigation.goBack()
+        }
+        else{
+
+        }
+
+        return true;
+    }
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, []);
 
     useEffect(() => {
         if (!startTimer) {
@@ -173,8 +214,7 @@ function DiaryEntry(props) {
 
         if (!first) {
 
-
-            props.addSteep(sessionID, steepData)
+            setSteepArrayMiddleFunc()
             setCountdownTimer((t) => t + increment)
         }
 

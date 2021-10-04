@@ -141,6 +141,7 @@ function DiaryListingPage(props) {
 
     let beginX
 
+    const {data} = route.params
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [steepData, setSteepData] = useState(route.params.data.steeps)
@@ -253,7 +254,7 @@ function DiaryListingPage(props) {
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
                                source={require('../img/temperature.png')}/>
                         <Text style={{textAlign: 'center', marginTop: 7}}>
-                            29
+                            {data.temp + '°C'}
                         </Text>
                     </View>
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
@@ -261,7 +262,7 @@ function DiaryListingPage(props) {
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
                                source={require('../img/water.png')}/>
                         <Text style={{textAlign: 'center', marginTop: 7}}>
-                            100ml
+                            {data.waterVolume + 'ml'}
                         </Text>
                     </View>
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
@@ -277,7 +278,7 @@ function DiaryListingPage(props) {
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
                                source={require('../img/scale.png')}/>
                         <Text style={{textAlign: 'center', marginTop: 7}}>
-                            5g
+                            {data.weight + 'G'}
                         </Text>
                     </View>
 

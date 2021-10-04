@@ -137,9 +137,9 @@ export function diaryEntryReducer(state = initialState, action) {
 
             const Index = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
             const Array = state.diaryEntry
-            console.log(Array[Index])
+
             Array[Index] = { ...Array[Index], duration: action.duration}
-            console.log(Array[Index])
+
             return {
                 ...state,
                 diaryEntry: Array

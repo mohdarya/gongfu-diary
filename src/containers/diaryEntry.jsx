@@ -141,7 +141,7 @@ function DiaryEntry(props) {
     const endButtonAction = () => {
 
         let duration = Date.now() -  parseInt(sessionID.replace(teaName, ''))
-        console.log(duration)
+
         props.addDuration(sessionID, parseInt(duration))
 
         navigation.navigate("HomeScreen")

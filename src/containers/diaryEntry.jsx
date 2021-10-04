@@ -205,7 +205,7 @@ function DiaryEntry(props) {
 
 
     const clockiFy = () => {
-        let mins = Math.floor((countdownTimer / 60) % 60)
+        let mins = Math.floor((countdownTimer / 60) )
         let seconds = Math.floor(countdownTimer % 60)
 
         let displayMins = mins < 10 ? `0${mins}` : mins

@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useNavigation, useRoute} from "@react-navigation/core";
 
 function HistoryItem(props) {
 
@@ -31,15 +32,27 @@ function HistoryItem(props) {
         }
 
     })
+    const navigation = useNavigation()
+    let date = 0;
+
+    let dateNumber =  parseInt(props.data.sessionID.replace(props.data.teaName, ''))
+    date = new Date(dateNumber).toLocaleDateString()
+
+    const goToTeaPage = () => {
+        navigation.navigate('DiaryListing', {
+            data: props.data,
+            date
+        })
+    }
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity activeOpacity={1} onPress={goToTeaPage} style={styles.container}>
             <View style={styles.iconView}>
                 <Image style={{height: 45, width: 45, alignSelf: 'center'}} source={require('../img/teaLeaf.png')}/>
             </View>
             <View style={styles.teaNameView}>
                 <Text style={{color: 'white'}}>
-                    Red Tiger
+                    {props.data.teaName}
                 </Text>
             </View>
             <View style={styles.detailView}>
@@ -47,10 +60,10 @@ function HistoryItem(props) {
                     1:12
                 </Text>
                 <Text style={{textAlign: 'right', color: 'white'}}>
-                    12/12/2021
+                    {date}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 
 

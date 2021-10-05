@@ -15,6 +15,7 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 
 import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+import Sound from "react-native-sound";
 
 function TimerPage(props) {
 
@@ -117,6 +118,7 @@ function TimerPage(props) {
 
 
     let beginX
+    let timerEndingSound
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const navigation = useNavigation()
@@ -131,7 +133,14 @@ function TimerPage(props) {
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
 
-
+    useEffect(() => {
+        timerEndingSound = new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
+            if (error) {
+                console.log('failed to load the sound', error);
+                return;
+            }
+        })
+    } , [] )
 
     const endButtonAction = () => {
 
@@ -142,7 +151,7 @@ function TimerPage(props) {
     function handleBackButtonClick() {
         if(navigation.canGoBack())
         {
-          
+
             setStartTimer(false)
             navigation.goBack()
         }
@@ -199,6 +208,12 @@ function TimerPage(props) {
                     } else {
 
                         setStartTimer(false)
+
+                        timerEndingSound.play((success) => {
+                            if (!success) {
+                                console.log('Sound did not play')
+                            }
+                        })
                         return 0
 
 

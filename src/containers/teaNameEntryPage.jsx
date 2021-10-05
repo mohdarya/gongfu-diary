@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
-import teaNameEntryPageTimer from "./teaNameEntryPageTimer";
+
 
 
 function TeaNameEntryPage(props) {

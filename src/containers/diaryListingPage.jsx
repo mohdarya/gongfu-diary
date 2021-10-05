@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep, editEntryName, editEntrySteep, removeEntry} from "../action/diaryEntryAction";
+import {addEntry, addSteep, editEntryName, editEntrySteep, editNote, removeEntry} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
@@ -146,6 +146,7 @@ function DiaryListingPage(props) {
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [steepData, setSteepData] = useState(route.params.data.steeps)
     const [editActive, setEdit] = useState(false)
+    const [note, setNote] = useState(route.params.data.note)
     const [currentSteepIndex, setSteepIndex] = useState(0)
     const [dataToDisplay, setDataToDisplay] = useState(() => {
         if (steepData[0] === undefined) {
@@ -212,11 +213,23 @@ function DiaryListingPage(props) {
             setEditBackground({ backgroundColor: '#E53B3B'})
         }
         else {
+         
+            props.editNote(data.sessionID, note)
             setEditBackground({ backgroundColor: '#E9C46A'})
         }
     }, [editActive])
 
 
+    const gotToNoteSection = () => {
+
+        if(editActive){
+
+                navigation.navigate('NoteEntry', {
+                    note, setNote
+                })
+
+        }
+    }
 
     const clockiFy = (durationTime) => {
 
@@ -365,7 +378,7 @@ function DiaryListingPage(props) {
                     </View>
                     <TouchableOpacity style={styles.noteElement}
                                       activeOpacity={1}
-                                      onPress={goToFlavorSelection}
+                                      onPress={gotToNoteSection}
                     >
 
                         <Text style={{
@@ -375,7 +388,7 @@ function DiaryListingPage(props) {
                             fontSize: 20,
                             textAlign: 'center'
                         }}>
-                            {route.params.data.note}
+                            {note}
                         </Text>
 
                     </TouchableOpacity>
@@ -523,6 +536,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
 
         editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
+        editNote: (sessionid, newNote) => dispatch(editNote(sessionid, newNote)),
         editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep)),
         deleteEntry: (sessionid) => dispatch(removeEntry(sessionid))
     };

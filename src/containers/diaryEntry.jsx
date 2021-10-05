@@ -203,6 +203,7 @@ function DiaryEntry(props) {
 
             } else {
                 setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+                setCurrenTime(parseInt(currentTime) + parseInt(increment))
             }
             BackgroundTimer.stopBackgroundTimer()
             setButtonText('Close')
@@ -211,7 +212,7 @@ function DiaryEntry(props) {
     const startInterval = () => {
 
 
-        setCurrenTime(countdownTimer)
+
 
 
         if (!first) {
@@ -372,7 +373,7 @@ function DiaryEntry(props) {
                         justifyContent: 'flex-start'
                     }}>
                         <Text style={{alignSelf: 'center', fontSize: 60, color: '#264653', fontWeight: 'bold'}}>
-                            {startingTime}
+                            {currentTime}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                             Timer

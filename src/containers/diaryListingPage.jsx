@@ -7,6 +7,7 @@ import RadarChart from "../components/radarChart";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
 import SteepSelector from "../components/steepSelector";
+import {addWeight, deductWeight} from "../action/currentTeaAction";
 
 function DiaryListingPage(props) {
 
@@ -186,8 +187,14 @@ function DiaryListingPage(props) {
         setDataToDisplay(steepData[index - 1][0])
     }
     const setTeaName = (teaNameAndID) => {
+
+    props.deductWeight(teaNameAndID.teaID, data.weight)
+        props.addWeight(data.teaID, data.weight)
         props.editName(data.sessionID, {...teaNameAndID})
+
         setName(teaNameAndID.teaName)
+
+
     }
     const editTeaName = () => {
 
@@ -550,7 +557,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         editName: (sessionid, newName) => dispatch(editEntryName(sessionid, newName)),
         editNote: (sessionid, newNote) => dispatch(editNote(sessionid, newNote)),
         editSteep: (sessionid, steepIndex, newSteep) => dispatch(editEntrySteep(sessionid,steepIndex,newSteep)),
-        deleteEntry: (sessionid) => dispatch(removeEntry(sessionid))
+        deleteEntry: (sessionid) => dispatch(removeEntry(sessionid)),
+        deductWeight: (teaId, newData) => dispatch(deductWeight(teaId, newData)),
+        addWeight: (teaId, newData) => dispatch(addWeight(teaId, newData))
     };
 };
 

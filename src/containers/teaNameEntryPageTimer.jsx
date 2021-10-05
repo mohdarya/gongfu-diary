@@ -1,38 +1,59 @@
-import React from 'react';
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform, ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
-import {useHeaderHeight} from "@react-navigation/stack";
+import React, {useState} from 'react';
+import {Image, Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 
 
-function TeaNameEntryPage(props) {
 
-    let startingTime = 20;
-    let teaName
+
+function teaNameEntryPageTimer(props) {
+
+
+    const [startingTime, setStartingTime] = useState(null)
     const navigation = useNavigation()
     const
         styles = StyleSheet.create({
             container: {
                 flex: 1,
-                backgroundColor: 'white',
-                justifyContent: 'center',
+                backgroundColor: '#264653',
+                justifyContent: 'flex-start',
+
+
             },
+            teaNameTag: {
+                fontSize: 15,
+                margin: 10,
+                marginTop: 10,
+            },
+            teaName: {
+
+                textAlign: 'center',
+                textAlignVertical: 'top',
+                fontSize: 15,
+                borderTopRightRadius: 20,
+                color: 'black',
+            },
+            teaNameTextView: {
+                height: '70%',
+                width: '90%',
+
+                marginBottom: '3%',
+                justifyContent: 'flex-start',
+                alignSelf: 'center',
+
+
+            },
+
+
             teaNameView: {
+
+
                 height: 70,
                 flexDirection: 'column',
                 marginBottom: '5%',
                 marginLeft: 20,
                 marginRight: 20,
                 marginTop: '20%',
-
+                backgroundColor: 'grey',
                 borderRadius: 20,
                 borderTopLeftRadius: 0,
                 borderBottomRightRadius: 0,
@@ -56,14 +77,39 @@ function TeaNameEntryPage(props) {
                 textAlign: 'center',
                 bottom: '5%',
                 fontSize: 25,
-            },
+            }, timeView: {
+                height: 150,
+                flexDirection: 'row',
+                marginBottom: '30%',
+                marginLeft: 20,
+                marginRight: 20,
 
+
+                borderTopLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                justifyContent: 'space-around',
+            },
+            timerTag: {
+                backgroundColor: 'grey',
+                height: 80,
+                width: 130,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 15,
+            },
             startingTime: {
                 fontSize: 40,
                 textAlign: 'center',
                 color: 'black',
             },
-
+            startingTimeView: {
+                backgroundColor: 'grey',
+                height: 80,
+                width: 130,
+                borderRadius: 15,
+                justifyContent: 'center',
+                alignItems: 'center',
+            },
             timerTagText: {
                 fontSize: 20,
                 top: 4,
@@ -77,25 +123,52 @@ function TeaNameEntryPage(props) {
                 borderTopLeftRadius: 0,
                 borderBottomRightRadius: 0,
                 justifyContent: 'space-between',
-                height: 120,
-                width: 200,
+                height: 110,
+                width: 170,
+            }, topPart: {
+                height: 170,
+                width: '100%',
+
+
             },
-            incrementNumberView: {
-                justifyContent: 'flex-end',
-                height: '100%',
-                marginRight: 20,
-                marginBottom: 20,
+            topPartBar: {
+                height: 170,
+                width: '100%',
+
+                alignItems: 'center',
+                backgroundColor: '#2A9D8F',
+                borderBottomLeftRadius: 93,
+                borderBottomRightRadius: 93,
+
+            },
+            infoPart: {
+                marginTop: '20%',
+                marginRight: '10%',
+                marginLeft: '10%',
+            },
+            buttonPart: {
+
+
+                width: '100%',
+                top: '15%',
+                height: 400,
             },
 
 
         })
+
 
 
     function goToDiaryEntry() {
-        navigation.navigate("TimerPage", {
-            startingTime
-        })
+        if (startingTime !== null) {
+            navigation.navigate("TimerPage", {
+                startingTime
+            })
+        } else {
+            ToastAndroid.show("Please Enter a Starting Time", ToastAndroid.LONG)
+        }
     }
+
 
     return (
 
@@ -105,38 +178,44 @@ function TeaNameEntryPage(props) {
         }
         } activeOpacity={1}>
             <View style={styles.container}>
-
-                <View style={styles.teaNameView}>
-
-                </View>
-
-                <View style={styles.incrementView}>
-                    <View>
-                        <Text style={styles.timerTagText}>
-                            Starting Time
+                <View style={styles.topPart}>
+                    <View style={styles.topPartBar}>
+                        <View style={{ top: 20,width: 80, height: 80, backgroundColor: '#E9C46A', borderRadius:100, justifyContent: 'center', alignItems: 'center'}}>
+                            <TouchableOpacity activeOpacity={1} style={{width: 70, height: 70}}>
+                                <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
+                        <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
+                            Enter Starting Time
                         </Text>
                     </View>
 
-                    <View>
-                        <TextInput style={styles.startingTime}
-                                   selectTextOnFocus={true}
-                                   keyboardType={"number-pad"}
-                                   onChangeText={(text) => {
-                                       startingTime = text
-                                   }}
-                        >
-                            {startingTime}
-                        </TextInput>
-
-                    </View>
                 </View>
+                <View style={styles.infoPart}>
 
-                <View style={styles.doneButtonView}>
-                    <TouchableOpacity style={styles.doneButton}
-                                      onPress={goToDiaryEntry} activeOpacity={1}>
-                        <Text style={styles.doneButtonText}>
-                            Done
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'}  onChangeText={(text) => {
+                        let amount
+                        if(text === '')
+                        {
+                            amount = null
+                        }
+                        else {
+                            amount = parseInt(text)
+                        }
+                        setStartingTime(amount)
+                    }} keyboardType={'number-pad'}>
+
+                    </TextInput>
+
+                </View>
+                <View style={styles.buttonPart}>
+                    <TouchableOpacity activeOpacity={1} onPress={goToDiaryEntry} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>
+                        <Text style={{alignSelf: "center", marginLeft: 10,fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
+                            Let's Start Brewing
                         </Text>
+                        <Image style={{height: 40, width: 40,top: '1%' ,alignSelf: "center",}} source={require('../img/nextArrow.png')}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -145,4 +224,4 @@ function TeaNameEntryPage(props) {
     )
 }
 
-export default TeaNameEntryPage
+export default teaNameEntryPageTimer

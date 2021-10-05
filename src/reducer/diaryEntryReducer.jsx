@@ -114,9 +114,10 @@ export function diaryEntryReducer(state = initialState, action) {
             const teaNameIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
             const newTeaNameArray = state.diaryEntry
             let dateNumber = parseInt(newTeaNameArray[teaNameIndex].sessionID.replace(newTeaNameArray[teaNameIndex].teaName, ''))
-            let newdate = action.newName + dateNumber
-            newTeaNameArray[teaNameIndex].teaName = action.newName
+            let newdate = action.newName.teaName + dateNumber
+            newTeaNameArray[teaNameIndex].teaName = action.newName.teaName
             newTeaNameArray[teaNameIndex].sessionID = newdate
+            newTeaNameArray[teaNameIndex].teaID = action.newName.teaID
             return {
                 ...state,
                 diaryEntry: newTeaNameArray

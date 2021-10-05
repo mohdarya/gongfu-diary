@@ -169,6 +169,7 @@ function DiaryEntry(props) {
     const endButtonAction = () => {
 
         createEntry()
+        setStartTimer(false)
         navigation.navigate("HomeScreen")
     }
 
@@ -176,6 +177,7 @@ function DiaryEntry(props) {
         if(navigation.canGoBack())
         {
             createEntry()
+            setStartTimer(false)
           navigation.goBack()
         }
         else{

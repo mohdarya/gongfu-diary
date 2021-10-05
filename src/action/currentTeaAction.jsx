@@ -39,4 +39,14 @@ export function deductWeight(sessionID, weight)
 
     };
 }
+export function addWeight(sessionID, weight)
+{
+    return {
+        type: 'ADD_WEIGHT',
+        sessionID,
+        weight
+
+
+    };
+}
 

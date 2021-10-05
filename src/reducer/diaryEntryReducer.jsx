@@ -145,6 +145,18 @@ export function diaryEntryReducer(state = initialState, action) {
                 diaryEntry: Array
             }
 
+        case 'EDIT_NOTE':
+
+            const noteIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
+            const noteArray = state.diaryEntry
+
+            noteArray[noteIndex] = { ...noteArray[noteIndex], note: action.note}
+
+            return {
+                ...state,
+                diaryEntry: noteArray
+            }
+
 
         default:
             return state;

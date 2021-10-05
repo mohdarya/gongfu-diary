@@ -65,3 +65,14 @@ export function addDuration(sessionID, duration)
 
     };
 }
+
+export function editNote(sessionID, note)
+{
+    return {
+        type: 'EDIT_NOTE',
+        sessionID,
+        note,
+
+
+    };
+}

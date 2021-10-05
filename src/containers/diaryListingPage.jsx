@@ -147,6 +147,7 @@ function DiaryListingPage(props) {
     const [steepData, setSteepData] = useState(route.params.data.steeps)
     const [editActive, setEdit] = useState(false)
     const [note, setNote] = useState(route.params.data.note)
+    const [teaName, setName] = useState(data.teaName)
     const [currentSteepIndex, setSteepIndex] = useState(0)
     const [dataToDisplay, setDataToDisplay] = useState(() => {
         if (steepData[0] === undefined) {
@@ -184,11 +185,22 @@ function DiaryListingPage(props) {
         setSteepIndex(index - 1)
         setDataToDisplay(steepData[index - 1][0])
     }
-
-    const editTeaName = (name) => {
-
-        props.editName(route.params.data.sessionID, name)
+    const setTeaName = (teaNameAndID) => {
+        props.editName(data.sessionID, {...teaNameAndID})
+        setName(teaNameAndID.teaName)
     }
+    const editTeaName = () => {
+
+        if(editActive)
+        {
+            navigation.navigate('TeaSelection', {
+                setTeaName
+            })
+            }
+
+    }
+
+
     const changeSteepData = (newSteepData) =>{
 
 
@@ -213,7 +225,7 @@ function DiaryListingPage(props) {
             setEditBackground({ backgroundColor: '#E53B3B'})
         }
         else {
-         
+
             props.editNote(data.sessionID, note)
             setEditBackground({ backgroundColor: '#E9C46A'})
         }
@@ -257,7 +269,7 @@ function DiaryListingPage(props) {
                     <View style={styles.topPartBar}>
 
                     </View>
-                    <View style={{
+                    <TouchableOpacity onPress={editTeaName} activeOpacity={1} style={{
                         top: '80%',
                         left: '20%',
                         width: '60%',
@@ -278,7 +290,7 @@ function DiaryListingPage(props) {
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            {route.params.data.teaName}
+                            {teaName}
                         </Text>
 
                         <Text style={{
@@ -292,7 +304,7 @@ function DiaryListingPage(props) {
                             {route.params.date}
                         </Text>
 
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{flexDirection: 'row', height: 'auto', width: '90%', top: '35%', marginRight: 20, marginLeft: 20,justifyContent: 'space-around'}}>

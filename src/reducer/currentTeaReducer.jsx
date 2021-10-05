@@ -9,6 +9,8 @@ Link:
 }
  */
 
+import {act} from "react-test-renderer";
+
 const initialState = {
 
     teaAvailable: [],
@@ -48,6 +50,17 @@ export function currentTeaReducer(state = initialState, action) {
             return {
                 ...state,
                 teaAvailable: newArrayWeight
+
+            }
+        case 'ADD_WEIGHT':
+            console.log(action.teaID)
+            const indexWeightAdd = state.teaAvailable.findIndex(item => item.teaID !== action.teaID)
+            const newArrayWeightAdd = [...state.teaAvailable]
+            newArrayWeightAdd[indexWeightAdd].weight = parseFloat(newArrayWeightAdd[indexWeightAdd].weight ) + parseFloat(action.weight)
+
+            return {
+                ...state,
+                teaAvailable: newArrayWeightAdd
 
             }
         default:

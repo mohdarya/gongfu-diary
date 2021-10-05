@@ -18,6 +18,8 @@ import RadarChart from "../components/radarChart";
 import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import {deductWeight, editTea} from "../action/currentTeaAction";
+import Sound from "react-native-sound";
+import {activateKeepAwake, deactivateKeepAwake} from "expo-keep-awake";
 
 function DiaryEntry(props) {
 
@@ -210,6 +212,7 @@ function DiaryEntry(props) {
             }
             BackgroundTimer.stopBackgroundTimer()
             setButtonText('Close')
+            deactivateKeepAwake();
         }
     }, [startTimer])
     const startInterval = () => {
@@ -218,6 +221,7 @@ function DiaryEntry(props) {
 
 
 
+        activateKeepAwake();
         if (!first) {
 
             setSteepArrayMiddleFunc()

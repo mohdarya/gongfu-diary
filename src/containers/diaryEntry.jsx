@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+import {deductWeight, editTea} from "../action/currentTeaAction";
 
 function DiaryEntry(props) {
 
@@ -155,7 +156,7 @@ function DiaryEntry(props) {
         let duration = Date.now() -  parseInt(sessionID.replace(teaName, ''))
 
 
-
+            props.deductWeight(teaID, weight)
         props.createEntry({
             teaID, waterVolume, weight,  temp,     duration, note,
             teaName: teaName,
@@ -629,9 +630,10 @@ function DiaryEntry(props) {
 
 
 const mapStateToProps = (state, ownProps) => {
-    const {Diary} = state;
+    const {Diary, TeaAvailable} = state;
 
     return {
+        teas: TeaAvailable.teaAvailable,
         Diary: Diary.diaryEntry
     };
 };
@@ -641,7 +643,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
         createEntry: (data) => dispatch(addEntry(data)),
         addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
-        addDuration: (sessionID, duration) => dispatch(addDuration(sessionID, duration)),
+        deductWeight: (teaId, newData) => dispatch(deductWeight(teaId, newData))
     };
 };
 

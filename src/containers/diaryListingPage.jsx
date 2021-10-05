@@ -94,7 +94,6 @@ function DiaryListingPage(props) {
         sessionActionMenu: {
             height: 66,
             width: 'auto',
-            backgroundColor: '#E9C46A',
             flexDirection: 'row',
             borderRadius: 25,
 
@@ -141,6 +140,7 @@ function DiaryListingPage(props) {
 
     let beginX
 
+    const [editBackground, setEditBackground] = useState({  backgroundColor: '#E9C46A',})
     const {data} = route.params
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
@@ -200,6 +200,21 @@ function DiaryListingPage(props) {
 
     }
 
+
+    useEffect(() => {
+
+            Animated.timing(textInputWidth, {
+                toValue: 0,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+        if(editActive){
+            setEditBackground({ backgroundColor: '#E53B3B'})
+        }
+        else {
+            setEditBackground({ backgroundColor: '#E9C46A'})
+        }
+    }, [editActive])
 
 
 
@@ -403,18 +418,17 @@ function DiaryListingPage(props) {
                         }
                     }}>
                     <View style={styles.sessionActionMenu}>
-                        <Animated.View style={{
+                        <Animated.View style={[{
                             height: 66,
                             justifyContent: 'center',
-
-                            backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
+                            borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [110, 67]
                             }),
 
-                        }}>
+                        }, editBackground]}>
 
 
                             <Image style={{width: 50, height: 50, alignSelf: 'center'}}
@@ -452,7 +466,9 @@ function DiaryListingPage(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} style={{
+                                <AnimatedTouchable activeOpacity={1} onPress={()=> {
+                                    setEdit(!editActive)
+                                }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]

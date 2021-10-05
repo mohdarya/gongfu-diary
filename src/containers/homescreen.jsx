@@ -152,12 +152,10 @@ function HomeScreen(props) {
     });
 
 
-
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [historyItems, setHistoryItems] = useState([])
     const [data, setData] = useState(props.diary)
-
 
 
     useEffect(() => {
@@ -166,23 +164,24 @@ function HomeScreen(props) {
 
     }, [props.state])
 
-    useEffect(()=> { let items = []
+    useEffect(() => {
+        let items = []
 
         let loopNumber = props.diary.length
 
-        if(loopNumber > 5) {
+        if (loopNumber > 5) {
             loopNumber = 5
         }
-        for (let i = 0; i < loopNumber; i++)
-        {
-            items.push(<HistoryItem key={`historyItem${i}`}data={props.diary[props.diary.length -1 - i]}/>)
+        for (let i = 0; i < loopNumber; i++) {
+            items.push(<HistoryItem key={`historyItem${i}`} data={props.diary[props.diary.length - 1 - i]}/>)
         }
-        setHistoryItems( items)}, [props.wholeDiary])
+        setHistoryItems(items)
+    }, [props.wholeDiary])
     const renderItems = ({item}) => {
 
 
-        return(
-            <View style={{marginRight: 10, marginLeft: 10 ,}}>
+        return (
+            <View style={{marginRight: 10, marginLeft: 10,}}>
                 <InventoryItem data={{...item}}/>
             </View>
 
@@ -229,7 +228,7 @@ function HomeScreen(props) {
                             <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
                                 Inventory
                             </Text>
-                            <TouchableOpacity  onPress={() => {
+                            <TouchableOpacity onPress={() => {
                                 navigation.navigate('TeaInventory')
                             }} activeOpacity={1} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
@@ -243,7 +242,8 @@ function HomeScreen(props) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.inventoryView}>
-                            <FlatList data={props.teaAvailable} style={{height: '100%',}} renderItem={renderItems} horizontal={true}
+                            <FlatList data={props.teaAvailable} style={{height: '100%',}} renderItem={renderItems}
+                                      horizontal={true}
 
 
                                       keyExtractor={item => item.teaID}/>
@@ -328,7 +328,7 @@ function HomeScreen(props) {
                                     height: 66,
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0,230]
+                                        outputRange: [0, 230]
                                     }),
                                     backgroundColor: '#E9C46A',
                                     justifyContent: 'space-around',
@@ -356,7 +356,9 @@ function HomeScreen(props) {
                                 <Text>
                                     Diary
                                 </Text></AnimatedTouchable>
-                            <AnimatedTouchable activeOpacity={1} style={{
+                            <AnimatedTouchable activeOpacity={1} onPress={() => {
+                                navigation.navigate("TimerTeaName")
+                            }} style={{
                                 backgroundColor: '#3C91E6',
                                 height: 48,
                                 width: textInputWidth.interpolate({

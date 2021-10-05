@@ -1,305 +1,491 @@
-import React, {useEffect, useState} from 'react';
-import {Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import React, {useEffect, useRef, useState} from 'react';
+import {
+    Animated,
+
+    Image,
+    Modal,
+
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import Sound from "react-native-sound";
+
+import BackgroundTimer from 'react-native-background-timer';
+import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 
 function TimerPage(props) {
 
 
-    const navigation = useNavigation()
-    const route = useRoute()
-
-
-    let timerEndingSound
-    const {startingTime} = route.params
-
-    const [first, setFirst] = useState(true)
-    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
-    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
-    const [startTimer, setStartTimer] = useState(false)
-    const [increment, setIncrement] = useState(5);
-    useEffect(() => {
-        timerEndingSound = new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE, (error) => {
-            if (error) {
-                console.log('failed to load the sound', error);
-                return;
-            }
-        })
-    }  )
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: 'white',
+            backgroundColor: '#264653',
 
         },
-        topBar: {
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
+        topPart: {
+            height: 170,
+            width: '100%',
+
+
+        },
+        topPartBar: {
+            height: 250,
+            width: '100%',
+
             alignItems: 'center',
-            flex: 0.6,
-            margin: 10,
-            marginTop: 0,
-
+            backgroundColor: '#2A9D8F',
+            borderBottomLeftRadius: 93,
+            borderBottomRightRadius: 93,
 
         },
-        timerView: {
-            alignItems: 'center',
-            marginTop: 100,
-            marginLeft: 10,
-            marginRight: 10,
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            flex: 3,
-        },
-        countdownTimer: {
+        steepView: {
+            alignSelf: 'center',
 
-            backgroundColor: 'grey',
+
+            top: 300,
+            height: 400,
+            width: '90%',
+
+        },
+        steepTag: {
+
+            alignSelf: 'center',
             borderRadius: 15,
-            marginBottom: 50,
-            height: 180,
-            width: 180,
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        countdownTimerText: {
-
-            textAlign: 'center',
-
-            fontSize: 60,
-        },
-
-
-        endButton: {
-
-            backgroundColor: 'grey',
-            borderRadius: 5,
-            height: '45%',
-            width: '25%',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        endButtonText: {
-
-            textAlign: 'center',
-            bottom: '5%',
-            fontSize: 23,
-        },
-        incrementView: {
-            backgroundColor: 'grey',
-            borderRadius: 20,
-            flexDirection: 'row',
-            borderTopLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            justifyContent: 'space-between',
-            height: 80,
-            width: '70%',
-
-
-        },
-        incrementTag: {
-            fontSize: 17,
-            margin: 5,
-            marginTop: 1,
-
-        }, incrementNumber: {
-            alignSelf: 'flex-end',
-            fontSize: 30,
-            color: 'black',
-
-
-        }, teaNameView: {
-            height: 80,
-            flexDirection: 'row',
-            marginBottom: 30,
-            marginLeft: 20,
-            marginRight: 20,
-            backgroundColor: 'grey',
-            borderRadius: 20,
-            borderTopLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            justifyContent: 'space-between',
+            height: 40,
+            marginBottom: 10,
+            width: '50%',
+            backgroundColor: '#E9C46A',
         }, teaFlavorView: {
             backgroundColor: 'grey',
-            flex: 4,
-
+            flex: 5,
             marginLeft: 20,
             marginRight: 20,
             borderRadius: 20,
+            flexDirection: 'column',
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-        }, doneButtonView: {
-            flex: 1,
-            justifyContent: 'center',
-            alignContent: 'center',
-            alignItems: 'center',
-        },
-        teaNameTag: {
-            fontSize: 17,
-            margin: 5,
-            marginTop: 1,
-        },
-        teaName: {
-            height: '100%',
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            fontSize: 15,
-            borderTopRightRadius: 20,
-            color: 'black',
-        },
-        teaNameTextView: {
-
-
-            width: '70%',
-            justifyContent: 'center',
-            alignSelf: 'flex-end',
-
-
-        },
-        graphView: {
+        }, graphView: {
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
+            backgroundColor: 'white',
+            marginTop: 20,
+            borderRadius: 20,
+        }, notesView: {
 
-        }, doneButton: {
-            backgroundColor: 'grey',
-            width: 200,
-            height: 50,
-            borderRadius: 10,
+            alignSelf: 'center',
+
+
+            top: 350,
+            height: 400,
+            width: '90%',
+        },
+        noteElement: {
+            alignItems: 'center',
             justifyContent: 'center',
-            alignContent: 'center',
-        },
-        doneButtonText: {
-            textAlign: 'center',
-            bottom: '5%',
-            fontSize: 25,
-        },
-        incrementNumberView: {
+            height: 380,
 
 
-            justifyContent: 'flex-end',
-
-            height: '100%',
-            marginRight: 20,
-            marginBottom: 20,
+            borderRadius: 20,
         },
+        notesTag: {
+            alignSelf: 'center',
+            borderRadius: 15,
+            height: 40,
+            marginBottom: 10,
+            width: '50%',
+            backgroundColor: '#E9C46A',
+        },
+        sessionActionMenu: {
+            height: 66,
+            width: 'auto',
+            backgroundColor: '#E9C46A',
+            flexDirection: 'row',
+            borderRadius: 25,
+
+            alignItems: "center",
+            justifyContent: 'center',
+            alignSelf: "flex-end",
+
+        }
 
 
     });
 
 
+    let beginX
+    const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+    const textInputWidth = useRef(new Animated.Value(0)).current
+    const navigation = useNavigation()
+    const route = useRoute()
+    const {startingTime} = route.params
+    const [first, setFirst] = useState(true)
+    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
+    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
+    const [startTimer, setStartTimer] = useState(true)
+    const [increment, setIncrement] = useState(5);
+
+    const [timerViewVisibility, setTimerViewVisibility] = useState(false)
+    const [buttonText, setButtonText] = useState('Stop')
+
+
+
     const endButtonAction = () => {
+
+
         navigation.navigate("HomeScreen")
-    }
-    const startInterval = () => {
-
-        setCurrenTime(countdownTimer)
-
-        if(first)
-        {
-            setCountdownTimer((t) => t - 1)
-        }else {
-        setCountdownTimer((t) => t + increment)}
-        setStartTimer(true)
-
     }
 
 
     useEffect(() => {
-
-            if (startTimer) {
-                setTimeout(() => {
-                        if (countdownTimer <= 0) {
-                            setStartTimer(false)
-                            timerEndingSound.play((success) => {
-                                if (!success) {
-                                    console.log('Sound did not play')
-                                }
-                            })
-                            if(first)
-                            {
-                                setCountdownTimer(parseInt(currentTime))
-                                setFirst(false)
-                            }else {
-                                setCountdownTimer(parseInt(currentTime) + parseInt(increment))}
+        if (!startTimer) {
 
 
-                        } else {
-                            setCountdownTimer((t) => t - 1)
-                        }
-                    }, 1000
-                )
+            if (first) {
+
+
+                setFirst(false)
+                setCountdownTimer(parseInt(currentTime))
+
+            } else {
+                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
+                setCurrenTime(parseInt(currentTime) + parseInt(increment))
             }
+            BackgroundTimer.stopBackgroundTimer()
+            setButtonText('Close')
+        }
+    }, [startTimer])
+    const startInterval = () => {
+
+
+
+
+
+        if (!first) {
+
+            setCountdownTimer((t) => t + increment)
         }
 
 
-        ,
-        [countdownTimer]
-    )
-    const goToFlavorSelection = () => {
-        navigation.navigate('FlavorEntry')
+        BackgroundTimer.runBackgroundTimer(() => {
+
+
+                setCountdownTimer(secs => {
+                    if (secs > 0) {
+                        return secs - 1
+
+
+                    } else {
+
+                        setStartTimer(false)
+                        return 0
+
+
+                    }
+                })
+
+            },
+            1000);
+        setStartTimer(true)
+
+
     }
+
+
+    const clockiFy = () => {
+        let mins = Math.floor((countdownTimer / 60) )
+        let seconds = Math.floor(countdownTimer % 60)
+
+        let displayMins = mins < 10 ? `0${mins}` : mins
+        let displaySecs = seconds < 10 ? `0${seconds}` : seconds
+
+        return {
+            displayMins,
+            displaySecs
+        }
+
+    }
+
+
+
+
+
     return (
 
 
-        <TouchableOpacity style={{flex: 1}} onPress={() => {
-            Keyboard.dismiss();
-
-        }
-        } activeOpacity={1}>
-            <View style={styles.container}>
-
-                <View style={styles.topBar}>
+        <View style={styles.container}>
 
 
-                    <TouchableOpacity style={styles.endButton} activeOpacity={1} onPress={endButtonAction}>
-                        <Text style={styles.endButtonText}>
-                            End
-                        </Text>
-                    </TouchableOpacity>
+            <Modal animationType="slide"
+                   transparent={true}
+                   visible={timerViewVisibility}
+                   onRequestClose={() => {
 
-                </View>
-                <View style={styles.timerView}>
+                       setTimerViewVisibility(!timerViewVisibility)
+                   }}>
+                <View style={{height: '100%', width: '100%', justifyContent: 'flex-end'}}>
+                    <View style={{
+                        height: '80%',
+                        width: '100%',
+                        backgroundColor: '#13242A',
+                        borderTopLeftRadius: 100,
+                        borderTopRightRadius: 100
+                    }}>
 
-                    <View style={styles.countdownTimer}>
-                        <Text style={styles.countdownTimerText}>
-                            {countdownTimer}
-                        </Text>
-                    </View>
-                    <View style={styles.incrementView}>
-                        <View>
-                            <Text style={styles.incrementTag}>
-                                Increment
+
+                        <View style={{
+                            marginTop: '15%',
+                            marginBottom: 5,
+                            alignSelf: 'center',
+                            borderRadius: 300,
+                            backgroundColor: '#264653',
+                            borderWidth: 10,
+                            borderColor: '#2A9D8F',
+                            height: '50%',
+                            width: '75%',
+                            justifyContent: 'center',
+
+                        }}>
+                            <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
+                                {clockiFy().displayMins + ':' + clockiFy().displaySecs}
                             </Text>
                         </View>
-
-                        <View style={styles.incrementNumberView}>
-                            <TextInput selectTextOnFocus={true} keyboardType={"number-pad"}
-                                       style={styles.incrementNumber}
-                                       onChangeText={(text) => {
-                                           setIncrement(parseInt(text))
-                                       }}>
-                                {increment}
-                            </TextInput>
+                        <View style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setStartTimer(false)
+                                    setTimerViewVisibility(!timerViewVisibility)
+                                }} style={{
+                                backgroundColor: '#E53B3B',
+                                width: 200,
+                                height: 50,
+                                borderRadius: 10,
+                                justifyContent: 'center',
+                                alignContent: 'center',
+                            }} activeOpacity={1}>
+                                <Text style={{
+                                    textAlign: 'center',
+                                    bottom: '5%',
+                                    fontWeight: 'bold',
+                                    fontSize: 30,
+                                    color: '#000000',
+                                }}>
+                                    {buttonText}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
+                    </View>
+
+                </View>
+
+            </Modal>
+
+                <View style={styles.topPart}>
+                    <View style={styles.topPartBar}>
+
+                    </View>
+                    <View style={{
+                        top: '70%',
+                        left: '10%',
+                        width: '80%',
+                        height: 400,
+                        backgroundColor: '#E9C46A',
+                        borderRadius: 30,
+                        position: "absolute",
+                        alignContent: 'center',
+                        justifyContent: 'space-around'
+                    }}>
+                        <Text style={{alignSelf: 'center', fontSize: 70, color: '#264653', fontWeight: 'bold'}}>
+                            {currentTime}
+                        </Text>
+                        <Text style={{alignSelf: 'center', fontSize: 40, color: '#264653'}}>
+                            Timer
+                        </Text>
+                        <View style={{
+                            width: '80%',
+                            marginTop: 5,
+                            alignSelf: 'center',
+                            height: 2,
+                            backgroundColor: '#2A9D8F'
+                        }}/>
+                        <TextInput
+                            selectTextOnFocus={true}
+                            keyboardType={"number-pad"}
+                            onChangeText={(text) => {
+                                if (text !== '') {
+                                    setIncrement(parseInt(text))
+                                } else {
+                                    setIncrement(0)
+                                }
+                            }}
+                            style={{
+                                alignSelf: 'center',
+                                marginTop: 5,
+                                fontSize: 45,
+                                color: '#264653',
+                                fontWeight: 'bold'
+                            }}
+                            value={increment.toString()}>
+
+                        </TextInput>
+                        <Text style={{alignSelf: 'center', fontSize: 30, marginBottom: 20, color: '#264653'}}>
+                            Increment
+                        </Text>
+
+
+
+
                     </View>
                 </View>
 
 
-                <View style={styles.doneButtonView}>
-                    <TouchableOpacity style={styles.doneButton} onPress={startInterval} activeOpacity={1}>
-                        <Text style={styles.doneButtonText}>
-                            Start
-                        </Text>
-                    </TouchableOpacity>
-                </View>
 
+
+
+            <View style={{
+                position: "absolute",
+                bottom: '10%',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flexDirection: 'row'
+            }}>
+
+                <FlingGestureHandler
+                    direction={Directions.RIGHT | Directions.LEFT}
+                    onHandlerStateChange={({nativeEvent}) => {
+                        if (nativeEvent.state === State.BEGAN) {
+                            beginX = nativeEvent.absoluteX;
+                        }
+                        if (nativeEvent.state === State.END) {
+
+                            if (nativeEvent.absoluteX - beginX < -50) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 1,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+
+                            } else if (nativeEvent.absoluteX - beginX > 10) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 0,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                            }
+                        }
+                    }}>
+                    <View style={styles.sessionActionMenu}>
+                        <Animated.View style={{
+                            height: 66,
+
+
+                            backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
+                            borderBottomLeftRadius: 25,
+                            width: textInputWidth.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [110, 67]
+                            }),
+
+                        }}>
+
+
+                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
+                                   source={require('../img/pausePlay.png')}/>
+
+                        </Animated.View>
+                        <Animated.View
+                            style={[
+
+                                {
+                                    height: 66,
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 230]
+                                    }),
+                                    backgroundColor: '#E9C46A',
+                                    justifyContent: 'space-around',
+                                    flexDirection: 'row',
+
+
+                                },
+                            ]}>
+
+
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable activeOpacity={1} onPress={() => {
+                                    setButtonText('Stop')
+                                    startInterval()
+                                    setTimerViewVisibility(!timerViewVisibility)
+                                }} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}}
+                                           source={require('../img/start.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable activeOpacity={1} onPress={endButtonAction} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}} source={require('../img/stop.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+
+                        </Animated.View>
+
+                    </View>
+                </FlingGestureHandler>
 
             </View>
-
-        </TouchableOpacity>
+        </View>
 
 
     )
 }
 
-export default TimerPage
+
+
+export default TimerPage;

@@ -18,32 +18,32 @@ export function addTea(newEntry)
     };
 }
 
-export function removeTea(sessionID)
+export function removeTea(teaID)
 {
     return {
         type: 'REMOVE_TEA',
-        sessionID
+        teaID
 
 
     };
 }
 
 
-export function deductWeight(sessionID, weight)
+export function deductWeight(teaID, weight)
 {
     return {
         type: 'DEDUCT_WEIGHT',
-        sessionID,
+        teaID,
         weight
 
 
     };
 }
-export function addWeight(sessionID, weight)
+export function addWeight(teaID, weight)
 {
     return {
         type: 'ADD_WEIGHT',
-        sessionID,
+        teaID,
         weight
 
 

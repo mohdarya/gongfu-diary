@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-    Animated,
+    Animated, AppState,
     BackHandler,
     Image,
     Modal,
@@ -122,6 +122,7 @@ function DiaryEntry(props) {
 
 
     let beginX
+    let timerEndingSound
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const navigation = useNavigation()
@@ -141,6 +142,14 @@ function DiaryEntry(props) {
         return teaName + Date.now()
     })
 
+    useEffect(() => {
+        timerEndingSound = new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
+            if (error) {
+                console.log('failed to load the sound', error);
+                return;
+            }
+        })
+    } , [] )
 
     const setSteepArrayMiddleFunc = () => {
 
@@ -240,6 +249,13 @@ function DiaryEntry(props) {
                     } else {
 
                         setStartTimer(false)
+                        if(AppState.currentState === 'active') {
+                            timerEndingSound.play((success) => {
+                                if (!success) {
+                                    console.log('Sound did not play')
+                                }
+                            })
+                        }
                         return 0
 
 

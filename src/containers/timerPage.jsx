@@ -12,7 +12,7 @@ import {
     View
 } from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import Sound from "react-native-sound";
@@ -183,6 +183,7 @@ function TimerPage(props) {
             }
             BackgroundTimer.stopBackgroundTimer()
             setButtonText('Close')
+            deactivateKeepAwake("tag");
         }
     }, [startTimer])
     const startInterval = () => {
@@ -190,7 +191,7 @@ function TimerPage(props) {
 
 
 
-
+        activateKeepAwake("tag");
         if (!first) {
 
             setCountdownTimer((t) => t + increment)

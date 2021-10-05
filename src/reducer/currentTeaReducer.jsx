@@ -33,7 +33,7 @@ export function currentTeaReducer(state = initialState, action) {
             }
 
         case 'EDIT_TEA':
-            const index = state.teaAvailable.findIndex(item => item.teaID !== action.teaID)
+            const index = state.teaAvailable.findIndex(item => item.teaID === action.teaID)
             const newArray = [...state.teaAvailable]
             newArray[index] = [...state.diaryEntry[index], ...action.newEntry]
 

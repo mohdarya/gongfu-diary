@@ -27,3 +27,16 @@ export function removeTea(sessionID)
 
     };
 }
+
+
+export function deductWeight(sessionID, weight)
+{
+    return {
+        type: 'DEDUCT_WEIGHT',
+        sessionID,
+        weight
+
+
+    };
+}
+

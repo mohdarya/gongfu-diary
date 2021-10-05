@@ -40,6 +40,16 @@ export function currentTeaReducer(state = initialState, action) {
                 teaAvailable: newArray
 
             }
+        case 'DEDUCT_WEIGHT':
+            const indexWeight = state.teaAvailable.findIndex(item => item.teaID !== action.teaID)
+            const newArrayWeight = [...state.teaAvailable]
+            newArrayWeight[indexWeight].weight = parseFloat(newArrayWeight[indexWeight].weight ) - parseFloat(action.weight)
+
+            return {
+                ...state,
+                teaAvailable: newArrayWeight
+
+            }
         default:
             return state;
     }

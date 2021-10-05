@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-    Animated,
+    Animated, BackHandler,
 
     Image,
     Modal,
@@ -135,11 +135,29 @@ function TimerPage(props) {
 
     const endButtonAction = () => {
 
-
+        setStartTimer(false)
         navigation.navigate("HomeScreen")
     }
 
+    function handleBackButtonClick() {
+        if(navigation.canGoBack())
+        {
+          
+            setStartTimer(false)
+            navigation.goBack()
+        }
+        else{
 
+        }
+
+        return true;
+    }
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, []);
     useEffect(() => {
         if (!startTimer) {
 

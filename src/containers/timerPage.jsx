@@ -183,7 +183,7 @@ function TimerPage(props) {
             }
             BackgroundTimer.stopBackgroundTimer()
             setButtonText('Close')
-            deactivateKeepAwake("tag");
+            deactivateKeepAwake();
         }
     }, [startTimer])
     const startInterval = () => {
@@ -191,7 +191,7 @@ function TimerPage(props) {
 
 
 
-        activateKeepAwake("tag");
+        activateKeepAwake();
         if (!first) {
 
             setCountdownTimer((t) => t + increment)

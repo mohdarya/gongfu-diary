@@ -23,9 +23,12 @@ function HistoryItem(props) {
         teaNameView: {
             alignSelf: 'center',
             marginLeft: 10,
+            width: '60%',
+            
         },
         detailView:{
-            width: '60%',
+
+            width: '20%',
             height: '100%',
             alignSelf: "center",
             justifyContent: 'space-between',

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-    Animated, BackHandler,
+    Animated, AppState, BackHandler,
 
     Image,
     Modal,
@@ -210,11 +210,13 @@ function TimerPage(props) {
 
                         setStartTimer(false)
 
-                        timerEndingSound.play((success) => {
-                            if (!success) {
-                                console.log('Sound did not play')
-                            }
-                        })
+                        if(AppState.currentState === 'active') {
+                            timerEndingSound.play((success) => {
+                                if (!success) {
+                                    console.log('Sound did not play')
+                                }
+                            })
+                        }
                         return 0
 
 

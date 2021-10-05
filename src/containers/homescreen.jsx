@@ -328,7 +328,7 @@ function HomeScreen(props) {
                                     height: 66,
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 300]
+                                        outputRange: [0,230]
                                     }),
                                     backgroundColor: '#E9C46A',
                                     justifyContent: 'space-around',

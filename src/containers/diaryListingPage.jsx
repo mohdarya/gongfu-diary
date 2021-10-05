@@ -467,7 +467,7 @@ function DiaryListingPage(props) {
                                     height: 66,
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 200]
+                                        outputRange: [0, 230]
                                     }),
                                     backgroundColor: '#E9C46A',
                                     justifyContent: 'space-around',

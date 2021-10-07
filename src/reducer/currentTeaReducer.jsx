@@ -9,58 +9,68 @@ Link:
 }
  */
 
-import {act} from "react-test-renderer";
-
 const initialState = {
 
     currentTeaID: 0,
-    teaAvailable: [],
+    teaAvailable: {},
 };
 
 export function currentTeaReducer(state = initialState, action) {
     switch (action.type) {
 
-         case 'ADD_TEA':
+        case 'ADD_TEA':
             return {
                 ...state,
-                teaAvailable: [...state.teaAvailable,  {...action.newEntry, teaID: state.currentTeaID++}]
+                teaAvailable: {
+                    ...state.teaAvailable,
+                    [state.currentTeaID++]: {...action.newEntry}
+                }
 
             }
         case 'REMOVE_TEA':
             return {
                 ...state,
-                teaAvailable: state.teaAvailable.filter(item => item.teaID !== action.teaID)
+                teaAvailable: Object.fromEntries(Object.entries(state.teaAvailable).filter(([key, value]) => key !== action.teaID)),
 
             }
 
         case 'EDIT_TEA':
-            const index = state.teaAvailable.findIndex(item => item.teaID === action.teaID)
-            const newArray = [...state.teaAvailable]
-            newArray[index] = [...state.diaryEntry[index], ...action.newEntry]
-
             return {
                 ...state,
-                teaAvailable: newArray
+                teaAvailable: {
+                    ...state.teaAvailable,
+                    [action.teaID]: {
+                        ...state.teaAvailable[action.teaID],
+                        ...action.newEntry
+                    }
+                }
 
             }
         case 'DEDUCT_WEIGHT':
-            const indexWeight = state.teaAvailable.findIndex(item => item.teaID === action.teaID)
-            const newArrayWeight = [...state.teaAvailable]
-            newArrayWeight[indexWeight].weight = parseFloat(newArrayWeight[indexWeight].weight ) - parseFloat(action.weight)
+
+
 
             return {
                 ...state,
-                teaAvailable: newArrayWeight
+                teaAvailable: {
+                    ...state.teaAvailable,
+                    [action.teaID]: {
+                        ...state.teaAvailable[action.teaID],
+                        weight:  parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)
+                    }
+                }
 
             }
         case 'ADD_WEIGHT':
-            const indexWeightAdd = state.teaAvailable.findIndex(item => item.teaID === action.teaID)
-            const newArrayWeightAdd = [...state.teaAvailable]
-            newArrayWeightAdd[indexWeightAdd].weight = parseFloat(newArrayWeightAdd[indexWeightAdd].weight ) + parseFloat(action.weight)
-
             return {
                 ...state,
-                teaAvailable: newArrayWeightAdd
+                teaAvailable: {
+                    ...state.teaAvailable,
+                    [action.teaID]: {
+                        ...state.teaAvailable[action.teaID],
+                        weight:  parseFloat(state.teaAvailable[action.teaID].weight) + parseFloat(action.weight)
+                    }
+                }
 
             }
         default:

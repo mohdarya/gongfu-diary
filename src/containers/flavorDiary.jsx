@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from "react-native";
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useRoute} from "@react-navigation/core";
 import FlavorDiaryItem from "../components/flavorDiaryItem";
 
@@ -10,29 +10,29 @@ function FlavorDiary(props) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: 'white',
+            backgroundColor: '#264653',
 
         },
-        doneButtonView: {
-            flex: 1,
-            justifyContent: 'center',
-            alignContent: 'center',
+      flavorList: {
+            height: '70%',
+          top: '5%',
+
+
+        },
+        topPart: {
+            height: 170,
+            width: '100%',
+
+
+        },
+        topPartBar: {
+            height: 150,
+            width: '100%',
+
             alignItems: 'center',
-        },
-        doneButton: {
-            backgroundColor: 'grey',
-            width: 200,
-            height: 50,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignContent: 'center',
-        },
-        doneButtonText: {
-            textAlign: 'center',
-            bottom: '5%',
-            fontSize: 25,
-        }, flavorList: {
-            flex: 8,
+            backgroundColor: '#2A9D8F',
+            borderBottomLeftRadius: 93,
+            borderBottomRightRadius: 93,
 
         },
 
@@ -53,9 +53,20 @@ function FlavorDiary(props) {
     return (
 
         <View style={styles.container}>
+            <View style={styles.topPart}>
+                <View style={styles.topPartBar}>
+
+                </View>
+                <View style={{ top: '50%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:100, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
+                    <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
+                        Flavor Details
+                    </Text>
+                </View>
+            </View>
             <View style={styles.flavorList}>
                 <FlatList data={Object.keys(passedData)} renderItem={renderData} keyExtractor={item => item}/>
             </View>
+
 
 
         </View>

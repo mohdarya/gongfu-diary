@@ -20,7 +20,7 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
-import {addTea} from "../action/currentTeaAction";
+import {addTea, editTea} from "../action/currentTeaAction";
 
 
 function TeaInventoryEdit(props) {
@@ -226,7 +226,6 @@ function TeaInventoryEdit(props) {
     const route = useRoute()
     const {data} = route.params
    const [teaData, setTeaData] = useState({
-        teaID: data.teaID,
         teaName: data.teaName,
         type: data.type,
         weight: data.weight,
@@ -312,7 +311,7 @@ function TeaInventoryEdit(props) {
 
                     <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
                         let d = new Date()
-                        setTeaData({...teaData, teaName: text, teaID: text + d.getTime().toString()})
+                        setTeaData({...teaData, teaName: text})
 
 
                     }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
@@ -349,7 +348,13 @@ function TeaInventoryEdit(props) {
                         {teaData.link}
                     </TextInput>
                 </View>
-
+                <TouchableOpacity activeOpacity={1} onPress={() => {props.editTea(route.params.teaID, teaData)
+                navigation.goBack()}} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, marginTop: 50, justifyContent: 'center', flexDirection: 'row'}}>
+                    <Text style={{alignSelf: "center", marginLeft: 10,fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
+                        Let's Start Brewing
+                    </Text>
+                    <Image style={{height: 40, width: 40,top: '1%' ,alignSelf: "center",}} source={require('../img/nextArrow.png')}/>
+                </TouchableOpacity>
             </View>
 
 
@@ -369,8 +374,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
 
-        addTea: (data) => dispatch(addTea(data)),
-        addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
+        editTea: (teaID, data) => dispatch(editTea(data, teaID)),
+
     };
 };
 

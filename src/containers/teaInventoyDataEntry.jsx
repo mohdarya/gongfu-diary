@@ -335,7 +335,12 @@ function TeaInventoryEntry(props) {
                     }} placeholderTextColor={'white'}  placeholder={'Weight'} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} nChangeText={(text) => {
+                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
+                        setTeaData({...teaData, vendor: text})
+                    }} placeholderTextColor={'white'}  placeholder={'Vendor'} keyboardType={'default'}>
+
+                    </TextInput>
+                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
                         setTeaData({...teaData, link: text})
                     }} placeholderTextColor={'white'}  placeholder={'Link'} keyboardType={'default'}>
 

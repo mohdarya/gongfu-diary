@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from "react-native";
 import {useNavigation} from "@react-navigation/core";
+import {connect} from "react-redux";
 
 function DiaryListingItem(props){
     const styles = StyleSheet.create({
@@ -55,4 +56,12 @@ function DiaryListingItem(props){
     )
 }
 
-export default  DiaryListingItem
+
+const mapStateToProps = (state, ownProps) => {
+    const {Diary, TeaAvailable} = state;
+
+    return {
+        teaAvailable: TeaAvailable.teaAvailable
+    };
+};
+export default connect(mapStateToProps)(DiaryListingItem)

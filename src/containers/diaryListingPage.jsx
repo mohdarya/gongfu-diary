@@ -142,7 +142,7 @@ function DiaryListingPage(props) {
     let beginX
 
     const [editBackground, setEditBackground] = useState({  backgroundColor: '#E9C46A',})
-    const {data} = route.params
+    const [data, setData] = useState(route.params.data)
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [steepData, setSteepData] = useState(route.params.data.steeps)
@@ -192,7 +192,7 @@ function DiaryListingPage(props) {
         props.addWeight(data.teaID, data.weight)
         props.editName(data.sessionID, {...teaNameAndID})
 
-        setName(teaNameAndID.teaName)
+            setData({...data, teaID: teaNameAndID.teaID})
 
 
     }
@@ -297,7 +297,7 @@ function DiaryListingPage(props) {
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            {teaName}
+                            {props.teaAvailable[data.teaID].teaName}
                         </Text>
 
                         <Text style={{
@@ -549,7 +549,14 @@ function DiaryListingPage(props) {
     )
 }
 
+const mapStateToProps = (state, ownProps) => {
+    const {Diary, TeaAvailable} = state;
 
+    return {
+        teaAvailable: TeaAvailable.teaAvailable,
+        Diary: Diary.diaryEntry
+    };
+};
 const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
@@ -563,4 +570,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(DiaryListingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryListingPage);

@@ -26,6 +26,7 @@ function App(props) {
     ]);
 
 
+
     const Stack = createStackNavigator();
     return (
 

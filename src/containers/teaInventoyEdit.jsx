@@ -16,7 +16,7 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import {useNavigation} from "@react-navigation/core";
+import {useNavigation, useRoute} from "@react-navigation/core";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
@@ -223,12 +223,15 @@ function TeaInventoryEdit(props) {
         })
 
 
+    const route = useRoute()
+    const {data} = route.params
    const [teaData, setTeaData] = useState({
-        teaID: '',
-        teaName: null,
-        type: null,
-        weight: null,
-        link: '',
+        teaID: data.teaID,
+        teaName: data.teaName,
+        type: data.type,
+        weight: data.weight,
+       vendor: data.vendor,
+        link: data.link,
     })
     const navigation = useNavigation()
     const [typeModal, setTypeModal] = useState(false)
@@ -313,13 +316,13 @@ function TeaInventoryEdit(props) {
 
 
                     }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
-
+                        {teaData.teaName}
                     </TextInput>
                     <TouchableOpacity  activeOpacity={1} onPress={() => {
                        setTypeModal(true)
                     }} style={{fontSize: 20, height: 45, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, color:'white'}}>
-                            {teaType}
+                            {teaData.type}
                         </Text>
                     </TouchableOpacity>
                     <TextInput style={{fontSize: 20,marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  onChangeText={(text) => {
@@ -333,17 +336,17 @@ function TeaInventoryEdit(props) {
                        }
                         setTeaData({...teaData, weight: amount})
                     }} placeholderTextColor={'white'}  placeholder={'Weight'} keyboardType={'number-pad'}>
-
+                        {teaData.weight}
                     </TextInput>
                     <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
                         setTeaData({...teaData, vendor: text})
                     }} placeholderTextColor={'white'}  placeholder={'Vendor'} keyboardType={'default'}>
-
+                        {teaData.vendor}
                     </TextInput>
                     <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
                         setTeaData({...teaData, link: text})
                     }} placeholderTextColor={'white'}  placeholder={'Link'} keyboardType={'default'}>
-
+                        {teaData.link}
                     </TextInput>
                 </View>
 
@@ -352,143 +355,7 @@ function TeaInventoryEdit(props) {
 
 
 
-    <View style={{
-        position: "absolute",
-        bottom: '10%',
-        width: '100%',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        flexDirection: 'row'
-    }}>
-    <FlingGestureHandler
-        direction={Directions.RIGHT | Directions.LEFT}
-        onHandlerStateChange={({nativeEvent}) => {
-            if (nativeEvent.state === State.BEGAN) {
-                beginX = nativeEvent.absoluteX;
-            }
-            if (nativeEvent.state === State.END) {
 
-                if (nativeEvent.absoluteX - beginX < -50) {
-                    Animated.timing(textInputWidth, {
-                        toValue: 1,
-                        duration: 100,
-                        useNativeDriver: false,
-                    }).start();
-
-                } else if (nativeEvent.absoluteX - beginX > 10) {
-                    Animated.timing(textInputWidth, {
-                        toValue: 0,
-                        duration: 100,
-                        useNativeDriver: false,
-                    }).start();
-                }
-            }
-        }}>
-        <View style={styles.sessionActionMenu}>
-            <Animated.View style={{
-                height: 66,
-                justifyContent: 'center',
-
-                backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
-                borderBottomLeftRadius: 25,
-                width: textInputWidth.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [110, 67]
-                }),
-
-            }}>
-
-
-                <Image style={{width: 50, height: 50, alignSelf: 'center'}}
-                       source={require('../img/add.png')}/>
-
-            </Animated.View>
-            <Animated.View
-                style={[
-
-                    {
-                        height: 66,
-                        width: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 200]
-                        }),
-                        backgroundColor: '#E9C46A',
-                        justifyContent: 'space-around',
-                        flexDirection: 'row',
-
-
-                    },
-                ]}>
-
-
-                <AnimatedTouchable activeOpacity={1} style={{
-                    backgroundColor: '#3C91E6',
-                    height: 48,
-
-                    width: textInputWidth.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 50]
-                    }),
-                    borderRadius: 20,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <AnimatedTouchable onPress={() => {
-                        if(teaData.teaName !== null && teaData.type !== null && teaData.weight !== null)
-                        {
-
-                            props.addTea(teaData)
-                            navigation.goBack()
-                        }
-                        else {
-                            ToastAndroid.show("Please fill all fields", ToastAndroid.LONG)
-                        }
-
-                    }} activeOpacity={1} style={{
-                        width: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }), height: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }),
-                    }}>
-                        <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
-                    </AnimatedTouchable></AnimatedTouchable>
-                <AnimatedTouchable activeOpacity={1} style={{
-                    backgroundColor: '#3C91E6',
-                    height: 48,
-
-                    width: textInputWidth.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 50]
-                    }),
-                    borderRadius: 20,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <AnimatedTouchable activeOpacity={1} onPress={() => {
-                        navigation.goBack()
-                    }} style={{
-                        width: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }), height: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }),
-                    }}>
-                        <Image style={{height: '100%', width: '100%'}}
-                               source={require('../img/delete.png')}/>
-                    </AnimatedTouchable></AnimatedTouchable>
-
-            </Animated.View>
-
-        </View>
-    </FlingGestureHandler>
-    </View>
 </View>
 
 

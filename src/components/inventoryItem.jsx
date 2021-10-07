@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
+import {connect} from "react-redux";
 
 function InventoryItem(props) {
 
@@ -39,12 +40,14 @@ function InventoryItem(props) {
     let name = ''
 
 
-        if(props.data.teaName.length <= 20)
+
+
+        if(props.teaAvailable[props.teaID].teaName.length <= 20)
         {
-            name = props.data.teaName
+            name = props.teaAvailable[props.teaID].teaName
         }
         else {
-            name = props.data.teaName.substring(0, 20) + ' ...'
+            name = props.teaAvailable[props.teaID].teaName.substring(0, 20) + ' ...'
         }
 
         const navigation = useNavigation();
@@ -52,12 +55,12 @@ function InventoryItem(props) {
 
         <TouchableOpacity activeOpacity={1} disabled={props.turnOff} onPress={() => {
 
-            navigation.navigate('TeaDetail', {data: props.data})
+            navigation.navigate('TeaDetail', {teaID: props.teaID})
         }} style={styles.container}>
 
                <View style={styles.circleView}>
                   <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>
-                      {props.data.weight + ' G'}
+                      {props.teaAvailable[props.teaID].weight + ' G'}
                     </Text>
                 </View>
 
@@ -72,4 +75,13 @@ function InventoryItem(props) {
 
 }
 
-export default InventoryItem
+
+const mapStateToProps = (state, ownProps) => {
+    const {Diary, TeaAvailable} = state;
+
+    return {
+
+        teaAvailable: TeaAvailable.teaAvailable
+    };
+};
+export default connect(mapStateToProps)(InventoryItem)

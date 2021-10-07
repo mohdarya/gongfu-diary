@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
+import {connect} from "react-redux";
 
 function HistoryItem(props) {
 
@@ -73,7 +74,7 @@ function HistoryItem(props) {
             </View>
             <View style={styles.teaNameView}>
                 <Text style={{color: 'white'}}>
-                    {props.data.teaName}
+                    {props.teaAvailable[props.data.teaID].teaName}
                 </Text>
             </View>
             <View style={styles.detailView}>
@@ -90,4 +91,13 @@ function HistoryItem(props) {
 
 }
 
-export default HistoryItem
+
+const mapStateToProps = (state, ownProps) => {
+    const {Diary, TeaAvailable} = state;
+
+    return {
+
+        teaAvailable: TeaAvailable.teaAvailable
+    };
+};
+export default connect(mapStateToProps)(HistoryItem)

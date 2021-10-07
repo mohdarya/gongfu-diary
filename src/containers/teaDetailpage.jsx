@@ -87,7 +87,7 @@ function TeaDetailPage(props) {
 
 
     const route = useRoute()
-    const {data} = route.params
+    const data = props.teaAvailable[route.params.teaID]
     let beginX
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
@@ -103,7 +103,7 @@ function TeaDetailPage(props) {
             loopNumber = 5
         }
         for (let i = 0; i < loopNumber; i++) {
-            if(props.diary[props.diary.length - 1 - i].teaID === data.teaID) {
+            if(props.diary[props.diary.length - 1 - i].teaID === route.params.teaID) {
                 items.push({...props.diary[props.diary.length - 1 - i]})
             }
         }

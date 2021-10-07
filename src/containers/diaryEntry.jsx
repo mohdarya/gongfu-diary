@@ -127,7 +127,7 @@ function DiaryEntry(props) {
     const textInputWidth = useRef(new Animated.Value(0)).current
     const navigation = useNavigation()
     const route = useRoute()
-    const {teaName, startingTime, teaID, temp, waterVolume, weight} = route.params.teaData
+    const {startingTime, teaID, temp, waterVolume, weight} = route.params.teaData
     const [first, setFirst] = useState(true)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
@@ -170,7 +170,6 @@ function DiaryEntry(props) {
             props.deductWeight(teaID, weight)
         props.createEntry({
             teaID, waterVolume, weight,  temp,     duration, note,
-            teaName: teaName,
             sessionID: sessionID,
             steeps:  [...steepArray, [steepData]],
 
@@ -440,7 +439,7 @@ function DiaryEntry(props) {
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            {teaName}
+                            {props.teas[teaID].teaName}
                         </Text>
 
 

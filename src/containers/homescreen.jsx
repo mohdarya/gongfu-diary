@@ -180,9 +180,10 @@ function HomeScreen(props) {
     const renderItems = ({item}) => {
 
 
+
         return (
             <View style={{marginRight: 10, marginLeft: 10,}}>
-                <InventoryItem turnOff={false} data={{...item}}/>
+                <InventoryItem turnOff={false} teaID={item.key}/>
             </View>
 
         )
@@ -242,11 +243,11 @@ function HomeScreen(props) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.inventoryView}>
-                            <FlatList data={props.teaAvailable} style={{height: '100%',}} renderItem={renderItems}
+                            <FlatList data={Object.entries(props.teaAvailable).map(([key, value]) => ({key: key, value: value}))} style={{height: '100%',}} renderItem={renderItems}
                                       horizontal={true}
 
 
-                                      keyExtractor={item => item.teaID}/>
+                                      keyExtractor={item => item.key}/>
                         </View>
                     </View>
                     <View style={styles.historyContainer}>

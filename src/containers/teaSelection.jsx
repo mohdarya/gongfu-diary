@@ -281,13 +281,13 @@ function TeaSelection(props) {
     const navigation = useNavigation()
 
 
-
     const renderItems = ({item}) => {
 
         let toShow
 
 
-        if(item === 'Add')
+
+        if(item.key === "add")
         {
             toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
                 navigation.navigate('TeaInventoryData')}
@@ -306,11 +306,11 @@ function TeaSelection(props) {
             </TouchableOpacity>
         }
         else {
-            toShow = <InventoryItem  turnOff={true} data={{...item}}/>
+            toShow = <InventoryItem turnOff={true}  teaID={item.key}/>
         }
         return(
             <TouchableOpacity activeOpacity={1} onPress={ () => {
-                route.params.setTeaName({teaName: item.teaName, teaID: item.teaID})
+                route.params.setTeaName({teaName: props.teaAvailable[item.key].teaName, teaID: item.key})
                 navigation.goBack()
             }}>
 
@@ -320,6 +320,7 @@ function TeaSelection(props) {
 
         )
     }
+
 
     return (
 
@@ -341,7 +342,7 @@ function TeaSelection(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={['Add',...props.teaAvailable]} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', alignItems: 'center', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
+              <FlatList data={Object.entries({'add': {}, ...props.teaAvailable}).map(([key, value]) => ({key: key, value: value}))}  style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', alignItems: 'center', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={2}
                         keyExtractor={item => item.teaID}/>
 

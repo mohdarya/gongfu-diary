@@ -13,6 +13,7 @@ import {act} from "react-test-renderer";
 
 const initialState = {
 
+    currentTeaID: 0,
     teaAvailable: [],
 };
 
@@ -22,7 +23,7 @@ export function currentTeaReducer(state = initialState, action) {
          case 'ADD_TEA':
             return {
                 ...state,
-                teaAvailable: [...state.teaAvailable,  {...action.newEntry}]
+                teaAvailable: [...state.teaAvailable,  {...action.newEntry, teaID: state.currentTeaID++}]
 
             }
         case 'REMOVE_TEA':

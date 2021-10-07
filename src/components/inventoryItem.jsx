@@ -50,7 +50,7 @@ function InventoryItem(props) {
         const navigation = useNavigation();
     return (
 
-        <TouchableOpacity activeOpacity={1} onPress={() => {
+        <TouchableOpacity activeOpacity={1} disabled={props.turnOff} onPress={() => {
 
             navigation.navigate('TeaDetail', {data: props.data})
         }} style={styles.container}>

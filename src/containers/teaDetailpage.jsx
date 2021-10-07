@@ -133,7 +133,7 @@ function TeaDetailPage(props) {
                     </Text>
                     <Text style={{
                         alignSelf: 'center',
-                        fontSize: 17,
+                        fontSize: 15,
                         marginTop: 20,
                         color: '#264653',
                         fontWeight: 'bold'
@@ -141,7 +141,7 @@ function TeaDetailPage(props) {
                         {data.vendor}
                     </Text>
 
-                    <Text style={{textAlign: 'center', marginTop: 7, fontSize: 18,}}>
+                    <Text style={{textAlign: 'center', marginTop: 7, fontWeight: 'bold',fontSize: 18,}}>
                         {data.weight + 'G'}
                     </Text>
 

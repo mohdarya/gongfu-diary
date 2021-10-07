@@ -53,7 +53,6 @@ export function currentTeaReducer(state = initialState, action) {
 
             }
         case 'ADD_WEIGHT':
-            console.log(action.teaID)
             const indexWeightAdd = state.teaAvailable.findIndex(item => item.teaID === action.teaID)
             const newArrayWeightAdd = [...state.teaAvailable]
             newArrayWeightAdd[indexWeightAdd].weight = parseFloat(newArrayWeightAdd[indexWeightAdd].weight ) + parseFloat(action.weight)

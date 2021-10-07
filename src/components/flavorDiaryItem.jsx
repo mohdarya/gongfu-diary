@@ -10,67 +10,81 @@ function FlavorDiaryItem(props) {
 
     const styles = StyleSheet.create({
         container: {
-            height: 100,
+
+            height: 120,
             margin: 15,
             width: 'auto',
 
 
         }, sliderView: {
-            height: '65%',
+           height: 50,
+
             width: '100%',
             borderRadius: 20,
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
-            backgroundColor: 'grey',
+
         },
         detailView: {
-            height: '40%',
-            width: '35%',
-            top: '5%',
+            backgroundColor: '#E9C46A',
+            width: 140,
             borderRadius: 20,
-            borderTopLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            backgroundColor: 'grey',
-
+            marginBottom: 10,
+            height: 35,
+            justifyContent: 'center',
             alignSelf: 'flex-end',
-            flexDirection: 'column',
         },
         fieldTag: {
             fontSize: 15,
-            marginTop: 3,
-            margin: 15,
+
+
             marginBottom: 0,
-            position: 'absolute',
+          alignSelf: 'center',
+            textAlign: 'center',
         }, valueTextView: {
+            position: 'absolute',
+
+
             width: '100%',
             alignItems: 'center',
         },
         valueText: {
-            top: '40%',
+
+
+
+            textAlign: 'center',
             fontSize: 17,
 
         }, progressBar: {
 
 
+            justifyContent: 'center',
             left: 0,
-            height: '70%',
+            height: 25,
             position: 'absolute',
 
-            backgroundColor: '#98D4B0',
+            backgroundColor: 'white',
             alignSelf: 'flex-start',
         },
         progressBarContainer: {
-            top: '30%',
-            height: '30%',
+            top: 10,
+            height: 25,
             alignSelf: 'center',
-            width: '90%',
+            width: '100%',
         }, backgroundProgressBar: {
             borderRadius: 20,
 
-            backgroundColor: 'white',
-            height: '70%',
+            backgroundColor: '#E9C46A',
+            height: 25,
             width: '100%',
-        },
+        }, titleView: {
+            backgroundColor: '#E9C46A',
+            width: 140,
+            borderRadius: 20,
+            marginBottom: 10,
+            height: 35,
+            justifyContent: 'center',
+        }
 
 
     })
@@ -86,17 +100,16 @@ function FlavorDiaryItem(props) {
     })
     return (
         <View style={styles.container}>
+            <View style={styles.titleView}>
+            <Text style={styles.fieldTag}>
+                {props.flavorNotes[props.noteIndex].note}
+            </Text>
+            </View>
             <View style={styles.sliderView}>
-                <Text style={styles.fieldTag}>
-                    {props.flavorNotes[props.noteIndex].note}
-                </Text>
-                <View>
-                    <View style={styles.valueTextView}>
-                        <Text style={styles.valueText}>
-                            {value}
-                        </Text>
-                    </View>
+
+
                     <View style={styles.progressBarContainer}>
+
                         <View style={styles.backgroundProgressBar}>
 
                         </View>
@@ -104,11 +117,16 @@ function FlavorDiaryItem(props) {
                             style={[styles.progressBar, {width: props.data.level * 10 + '%',}, props.data.level  === 10 ? {borderRadius: 20,} : {
                                 borderBottomLeftRadius: 20,
                                 borderTopLeftRadius: 20,
-                            }]}/>
+                            }]}>
 
-
+                        </View>
+                        <View style={styles.valueTextView}>
+                        <Text style={styles.valueText}>
+                            {value}
+                        </Text>
+                        </View>
                     </View>
-                </View>
+
             </View>
 
             <View style={styles.detailView}>

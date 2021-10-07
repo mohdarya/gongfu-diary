@@ -41,13 +41,23 @@ export function currentTeaReducer(state = initialState, action) {
             }
 
         case 'EDIT_TEA':
+
+            let status
+
+            if(action.newEntry.weight > 0)
+            {
+                status = 'active'
+            }else {
+                status = 'archived'
+            }
             return {
                 ...state,
                 teaAvailable: {
                     ...state.teaAvailable,
                     [action.teaID]: {
                         ...state.teaAvailable[action.teaID],
-                        ...action.newEntry
+                        ...action.newEntry,
+                        status: status
                     }
                 }
 

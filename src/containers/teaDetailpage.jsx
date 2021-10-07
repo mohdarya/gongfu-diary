@@ -111,22 +111,7 @@ function TeaDetailPage(props) {
     }, [props.wholeDiary])
 
 
-    useEffect(() => {
 
-        Animated.timing(textInputWidth, {
-            toValue: 0,
-            duration: 150,
-            useNativeDriver: false,
-        }).start();
-        if(editActive){
-            setEditBackground({ backgroundColor: '#E53B3B'})
-        }
-        else {
-
-
-            setEditBackground({ backgroundColor: '#E9C46A'})
-        }
-    }, [editActive])
 
     const renderItems = ({item}) => {
 
@@ -276,7 +261,9 @@ function TeaDetailPage(props) {
                                     justifyContent: 'center'
                                 }}>
                                     <AnimatedTouchable activeOpacity={1} onPress={()=> {
-                                        setEdit(!editActive)
+
+                                        navigation.navigate('TeaInventoryEdit', {data})
+                                        textInputWidth.setValue(0)
                                     }} style={{
                                         width: textInputWidth.interpolate({
                                             inputRange: [0, 1],

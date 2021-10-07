@@ -183,7 +183,7 @@ function HomeScreen(props) {
 
         return (
             <View style={{marginRight: 10, marginLeft: 10,}}>
-                <InventoryItem turnOff={false} teaID={item.key}/>
+                <InventoryItem key={`inventoryItem${item[0]}`} turnOff={false} teaID={item[0]}/>
             </View>
 
         )
@@ -243,7 +243,9 @@ function HomeScreen(props) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.inventoryView}>
-                            <FlatList data={Object.entries(props.teaAvailable).map(([key, value]) => ({key: key, value: value}))} style={{height: '100%',}} renderItem={renderItems}
+                            <FlatList data={Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active'
+
+                          )} style={{height: '100%',}} renderItem={renderItems}
                                       horizontal={true}
 
 

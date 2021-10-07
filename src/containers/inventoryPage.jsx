@@ -290,7 +290,8 @@ function TeaInventory(props) {
 
 
 
-        if(item.key === "add")
+
+        if(item[0] === "add")
         {
             toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
             navigation.navigate('TeaInventoryData')}
@@ -308,8 +309,8 @@ function TeaInventory(props) {
 
             </TouchableOpacity>
         }
-        else {
-            toShow = <InventoryItem turnOff={false}  teaID={item.key}/>
+        else if(props.teaAvailable[item[0]].status === 'active'){
+            toShow = <InventoryItem turnOff={false}  teaID={item[0]}/>
         }
         return(
             <View>
@@ -339,7 +340,7 @@ function TeaInventory(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={Object.entries({'add': {}, ...props.teaAvailable}).map(([key, value]) => ({key: key, value: value}))} style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 30, alignItems: 'center', marginRight:15, marginLeft: 15} } horizontal={false}
+              <FlatList data={Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) =>value.status === 'active' || key === "add" )}style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 30, alignItems: 'center', marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={2}
                         keyExtractor={item => item}/>
 

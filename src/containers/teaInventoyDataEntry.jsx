@@ -224,7 +224,7 @@ function TeaInventoryEntry(props) {
 
 
    const [teaData, setTeaData] = useState({
-        teaID: '',
+       status: 'active',
         teaName: null,
         type: null,
         weight: null,

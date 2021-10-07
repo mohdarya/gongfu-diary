@@ -115,7 +115,7 @@ function TeaDetailPage(props) {
 
         Animated.timing(textInputWidth, {
             toValue: 0,
-            duration: 100,
+            duration: 150,
             useNativeDriver: false,
         }).start();
         if(editActive){

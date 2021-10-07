@@ -308,7 +308,7 @@ function TeaInventory(props) {
             </TouchableOpacity>
         }
         else {
-            toShow = <InventoryItem data={{...item}}/>
+            toShow = <InventoryItem turnOff={false} data={{...item}}/>
         }
         return(
             <View>

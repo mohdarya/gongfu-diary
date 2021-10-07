@@ -182,7 +182,7 @@ function HomeScreen(props) {
 
         return (
             <View style={{marginRight: 10, marginLeft: 10,}}>
-                <InventoryItem data={{...item}}/>
+                <InventoryItem turnOff={false} data={{...item}}/>
             </View>
 
         )

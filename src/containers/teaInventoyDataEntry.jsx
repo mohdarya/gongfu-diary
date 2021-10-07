@@ -309,7 +309,7 @@ function TeaInventoryEntry(props) {
 
                     <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
                         let d = new Date()
-                        setTeaData({...teaData, teaName: text, teaID: text + d.getTime().toString()})
+                        setTeaData({...teaData, teaName: text})
 
 
                     }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>

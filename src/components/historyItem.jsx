@@ -24,7 +24,7 @@ function HistoryItem(props) {
             alignSelf: 'center',
             marginLeft: 10,
             width: '60%',
-            
+
         },
         detailView:{
 
@@ -38,7 +38,7 @@ function HistoryItem(props) {
     const navigation = useNavigation()
     let date = 0;
 
-    let dateNumber =  parseInt(props.data.sessionID.replace(props.data.teaName, ''))
+    let dateNumber =  parseInt(props.data.sessionID.replace(toString(props.data.teaID), ''))
     date = new Date(dateNumber).toLocaleDateString()
 
     const goToTeaPage = () => {

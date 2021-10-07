@@ -113,8 +113,8 @@ export function diaryEntryReducer(state = initialState, action) {
         case 'EDIT_ENTRY_NAME':
             const teaNameIndex = state.diaryEntry.findIndex(item => item.sessionID === action.sessionID)
             const newTeaNameArray = state.diaryEntry
-            let dateNumber = parseInt(newTeaNameArray[teaNameIndex].sessionID.replace(newTeaNameArray[teaNameIndex].teaName, ''))
-            let newdate = action.newName.teaName + dateNumber
+            let dateNumber = parseInt(newTeaNameArray[teaNameIndex].sessionID.replace(toString(newTeaNameArray[teaNameIndex].teaID), ''))
+            let newdate = toString(action.newName.teaID) + dateNumber
             newTeaNameArray[teaNameIndex].teaName = action.newName.teaName
             newTeaNameArray[teaNameIndex].sessionID = newdate
             newTeaNameArray[teaNameIndex].teaID = action.newName.teaID

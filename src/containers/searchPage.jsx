@@ -223,7 +223,7 @@ function SearchPage(props) {
                                 Inventory
                             </Text>
                             <TouchableOpacity onPress={() => {
-                                navigation.navigate('TeaInventory')
+                                navigation.navigate('TeaInventory', {searchTerm})
                             }} activeOpacity={1} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,

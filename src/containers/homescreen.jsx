@@ -198,6 +198,9 @@ function HomeScreen(props) {
 
                 <View style={styles.searchView}>
                     <TextInput
+                        onSubmitEditing={(event)=> {
+                            navigation.navigate("SearchPage", {searchTerm: event.nativeEvent.text})
+                        }}
                         style={styles.searchTextInput}
                         placeholder={'Search For a Tea'}
                         placeholderTextColor={'#585858'}/>

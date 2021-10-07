@@ -30,7 +30,13 @@ export function currentTeaReducer(state = initialState, action) {
         case 'REMOVE_TEA':
             return {
                 ...state,
-                teaAvailable: Object.fromEntries(Object.entries(state.teaAvailable).filter(([key, value]) => key !== action.teaID)),
+                teaAvailable: {
+                    ...state.teaAvailable,
+                    [action.teaID]: {
+                        ...state.teaAvailable[action.teaID],
+                        status: 'archived'
+                    }
+                }
 
             }
 
@@ -49,29 +55,61 @@ export function currentTeaReducer(state = initialState, action) {
         case 'DEDUCT_WEIGHT':
 
 
-
-            return {
-                ...state,
-                teaAvailable: {
-                    ...state.teaAvailable,
-                    [action.teaID]: {
-                        ...state.teaAvailable[action.teaID],
-                        weight:  parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)
+            if (parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight) <= 0) {
+                return {
+                    ...state,
+                    teaAvailable: {
+                        ...state.teaAvailable,
+                        [action.teaID]: {
+                            ...state.teaAvailable[action.teaID],
+                            weight: parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight),
+                            status: 'archived'
+                        }
                     }
-                }
 
+                }
+            } else {
+
+                return {
+                    ...state,
+                    teaAvailable: {
+                        ...state.teaAvailable,
+                        [action.teaID]: {
+                            ...state.teaAvailable[action.teaID],
+                            weight: parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)
+                        }
+                    }
+
+                }
             }
         case 'ADD_WEIGHT':
-            return {
-                ...state,
-                teaAvailable: {
-                    ...state.teaAvailable,
-                    [action.teaID]: {
-                        ...state.teaAvailable[action.teaID],
-                        weight:  parseFloat(state.teaAvailable[action.teaID].weight) + parseFloat(action.weight)
-                    }
-                }
 
+            if (parseFloat(state.teaAvailable[action.teaID].weight) + parseFloat(action.weight) > 0) {
+                return {
+                    ...state,
+                    teaAvailable: {
+                        ...state.teaAvailable,
+                        [action.teaID]: {
+                            ...state.teaAvailable[action.teaID],
+                            weight: parseFloat(state.teaAvailable[action.teaID].weight) + parseFloat(action.weight),
+                            status: 'active'
+                        }
+                    }
+
+                }
+            } else {
+
+                return {
+                    ...state,
+                    teaAvailable: {
+                        ...state.teaAvailable,
+                        [action.teaID]: {
+                            ...state.teaAvailable[action.teaID],
+                            weight: parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)
+                        }
+                    }
+
+                }
             }
         default:
             return state;

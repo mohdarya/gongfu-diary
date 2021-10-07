@@ -1,19 +1,7 @@
-import React, {useState} from 'react';
-import {
-    FlatList,
-    Image,
-    Modal,
-    SafeAreaView,
-    StyleSheet,
-    Text, TextInput,
-    ToastAndroid,
-    TouchableOpacity,
-    View
-} from "react-native";
-import Slider from "@react-native-community/slider";
+import React, {useEffect, useState} from 'react';
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import InventoryItem from "../components/inventoryItem";
-import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
 
 
@@ -275,53 +263,59 @@ function TeaInventory(props) {
     const route = useRoute()
 
 
-
-
-
-
     const navigation = useNavigation()
 
 
+    const {searchTerm} = route.params
+    const [data, setData] = useState(()=> {
+        if (searchTerm !== null) {
+
+            return Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.teaName === searchTerm || key === "add")
 
 
+        } else {
+            return Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.status === 'active' || key === "add")
+        }
+    })
     const renderItems = ({item}) => {
 
         let toShow
 
 
-
-
-        if(item[0] === "add")
-        {
-            toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
-            navigation.navigate('TeaInventoryData')}
-            } style={{ height: 110,
+        if (item[0] === "add") {
+            toShow = <TouchableOpacity activeOpacity={1} onPress={() => {
+                navigation.navigate('TeaInventoryData')
+            }
+            } style={{
+                height: 110,
                 width: 110,
                 alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 32,
-                backgroundColor: '#3C91E6',}}>
+                backgroundColor: '#3C91E6',
+            }}>
 
 
                 <Image style={{height: 60, width: 60}} source={require('../img/add.png')}/>
 
 
             </TouchableOpacity>
+        } else if (props.teaAvailable[item[0]].status === 'active') {
+            toShow = <InventoryItem turnOff={false} teaID={item[0]}/>
         }
-        else if(props.teaAvailable[item[0]].status === 'active'){
-            toShow = <InventoryItem turnOff={false}  teaID={item[0]}/>
-        }
-        return(
+        return (
             <View>
-            {toShow}
+                {toShow}
             </View>
 
         )
     }
 
-    return (
 
+
+
+    return (
 
 
         <View style={styles.container}>
@@ -329,7 +323,17 @@ function TeaInventory(props) {
                 <View style={styles.topPartBar}>
 
                 </View>
-                <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
+                <View style={{
+                    top: '70%',
+                    left: '15%',
+                    width: '70%',
+                    height: 110,
+                    backgroundColor: '#E9C46A',
+                    borderRadius: 30,
+                    position: "absolute",
+                    alignContent: 'center',
+                    justifyContent: 'center'
+                }}>
                     <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
                         Tea Inventory
                     </Text>
@@ -340,21 +344,20 @@ function TeaInventory(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) =>value.status === 'active' || key === "add" )}style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 30, alignItems: 'center', marginRight:15, marginLeft: 15} } horizontal={false}
-                        numColumns={2}
-                        keyExtractor={item => item}/>
-
-
-
-
-
-
-
-
+                <FlatList
+                    data={data}
+                    style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{
+                    justifyContent: 'space-around',
+                    marginBottom: 30,
+                    alignItems: 'center',
+                    marginRight: 15,
+                    marginLeft: 15
+                }} horizontal={false}
+                    numColumns={2}
+                    keyExtractor={item => item}/>
 
 
             </View>
-
 
 
         </View>

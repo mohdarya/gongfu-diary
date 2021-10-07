@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useNavigation} from "@react-navigation/core";
 
 function InventoryItem(props) {
 
@@ -46,9 +47,13 @@ function InventoryItem(props) {
             name = props.data.teaName.substring(0, 20) + ' ...'
         }
 
+        const navigation = useNavigation();
     return (
 
-        <View style={styles.container}>
+        <TouchableOpacity activeOpacity={1} onPress={() => {
+
+            navigation.navigate('TeaDetail', {data: props.data})
+        }} style={styles.container}>
 
                <View style={styles.circleView}>
                   <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>
@@ -62,7 +67,7 @@ function InventoryItem(props) {
                     {name}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 
 }

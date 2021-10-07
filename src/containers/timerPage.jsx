@@ -153,6 +153,7 @@ function TimerPage(props) {
         {
 
             setStartTimer(false)
+            BackgroundTimer.stopBackgroundTimer()
             navigation.goBack()
         }
         else{

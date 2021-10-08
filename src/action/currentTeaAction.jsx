@@ -60,3 +60,14 @@ export function archiveTea(teaID)
 
     };
 }
+
+export function setTeaSessionForDay(sessionDay, date)
+{
+    return {
+        type: 'SET_DAY_SESSION',
+        sessionDay,
+    date
+
+
+    };
+}

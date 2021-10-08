@@ -11,6 +11,7 @@ Link:
 
 const initialState = {
 
+    weeklySession: ['', '', '', '', '', '', ''],
     currentTeaID: 0,
     teaAvailable: {},
 };
@@ -138,6 +139,14 @@ export function currentTeaReducer(state = initialState, action) {
 
                 }
 
+        case 'SET_DAY_SESSION':
+
+            let modifiedWeekly = state.weeklySession
+            modifiedWeekly[action.sessionDay] = action.date
+            return {
+                ...state,
+                weeklySession: modifiedWeekly,
+            }
 
         default:
             return state;

@@ -316,6 +316,7 @@ function TeaInventoryEntry(props) {
 
                     </TextInput>
                     <TouchableOpacity  activeOpacity={1} onPress={() => {
+                        Keyboard.dismiss()
                        setTypeModal(true)
                     }} style={{fontSize: 20, height: 45, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, marginLeft: 3,color:'white'}}>

@@ -484,14 +484,14 @@ function FlavorEntry(props) {
                             Exit
                         </Text>
                     </TouchableOpacity>
-                    <SafeAreaView style={styles.flavorListContainer}>
+                    <View style={styles.flavorListContainer}>
                         <FlatList data={flavorNotes}
                                   horizontal={false}
                                   numColumns={2}
                                   renderItem={renderFlavorNoteItem}
                                   keyExtractor={item => item.detail}/>
 
-                    </SafeAreaView>
+                    </View>
 
                 </View>
 
@@ -524,14 +524,14 @@ function FlavorEntry(props) {
                         </Text>
                     </TouchableOpacity>
 
-                    <SafeAreaView style={styles.flavorListContainer}>
+                    <View style={styles.flavorListContainer}>
                         <FlatList data={flavorNotes[chosenNoteIndex].detail}
                                   horizontal={false}
                                   numColumns={2}
                                   renderItem={renderFlavorDetailItem}
                                   keyExtractor={item => item}/>
 
-                    </SafeAreaView>
+                    </View>
                 </View>
 
             </Modal>

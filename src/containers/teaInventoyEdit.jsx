@@ -272,7 +272,7 @@ function TeaInventoryEdit(props) {
                             </Text>
                         </TouchableOpacity>
 
-                        <SafeAreaView style={styles.flavorListContainer}>
+                        <View style={styles.flavorListContainer}>
                             <FlatList data={['Oolong', 'Black', 'Green', 'White', 'hei cha', 'purple', 'Raw Pu-erh', 'Ripe Pu-erh', ]}
                                       horizontal={false}
                                       numColumns={2}
@@ -291,7 +291,7 @@ function TeaInventoryEdit(props) {
                                       }}
                                       keyExtractor={item => item}/>
 
-                        </SafeAreaView>
+                        </View>
                     </View>
 
                 </Modal>

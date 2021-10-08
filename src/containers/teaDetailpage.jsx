@@ -160,14 +160,18 @@ function TeaDetailPage(props) {
                         borderRadius: 30,
                     }}
                           onPress={() => {
-                                Linking.canOpenURL(data.link).then(supported => {
-                                    if(!supported)
-                                    {
-                                        ToastAndroid.show("Link that was provided cannot be opened", ToastAndroid.LONG)
-                                    }else {
-                                        return Linking.openURL(data.link)
-                                    }
-                                }).catch(error => console.log('error'))
+                              if( data.link!==  null && data.link !== '') {
+                                  Linking.canOpenURL(data.link).then(supported => {
+                                      if (!supported) {
+                                          ToastAndroid.show("Link that was provided cannot be opened", ToastAndroid.LONG)
+                                      } else {
+                                          return Linking.openURL(data.link)
+                                      }
+                                  }).catch(error => console.log('error'))
+                              }
+                              else {
+                                  ToastAndroid.show("No Link Was Provided", ToastAndroid.LONG)
+                              }
                           }}>
                         Item Link
                     </Text>

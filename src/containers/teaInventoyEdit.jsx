@@ -319,7 +319,7 @@ function TeaInventoryEdit(props) {
                     </TextInput>
                     <TouchableOpacity  activeOpacity={1} onPress={() => {
                        setTypeModal(true)
-                    }} style={{fontSize: 20, height: 45, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
+                    }} style={{fontSize: 20, height: 45, marginLeft: 3, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20, color:'white'}}>
                             {teaData.type}
                         </Text>

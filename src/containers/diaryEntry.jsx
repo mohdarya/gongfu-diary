@@ -17,9 +17,10 @@ import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
-import {deductWeight, editTea} from "../action/currentTeaAction";
+import {deductWeight, editTea, setTeaSessionForDay} from "../action/currentTeaAction";
 import Sound from "react-native-sound";
 import {activateKeepAwake, deactivateKeepAwake} from "expo-keep-awake";
+import {isDisabled} from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 function DiaryEntry(props) {
 
@@ -164,9 +165,10 @@ function DiaryEntry(props) {
 
         if(!first){
 
+
         let duration = Date.now() -  parseInt(sessionID.replace(toString(teaID), ''))
 
-
+                props.setTeaDay(new Date().getDay(), new Date().getDate())
             props.deductWeight(teaID, weight)
         props.createEntry({
             teaID, waterVolume, weight,  temp,     duration, note,
@@ -659,7 +661,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
-
+        setTeaDay: (day, date) => dispatch(setTeaSessionForDay(day, date)),
         createEntry: (data) => dispatch(addEntry(data)),
         addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
         deductWeight: (teaId, newData) => dispatch(deductWeight(teaId, newData))

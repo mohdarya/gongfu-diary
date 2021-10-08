@@ -349,11 +349,11 @@ function TeaInventoryEdit(props) {
                     </TextInput>
                 </View>
                 <TouchableOpacity activeOpacity={1} onPress={() => {props.editTea(route.params.teaID, teaData)
-                navigation.goBack()}} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, marginTop: 50, justifyContent: 'center', flexDirection: 'row'}}>
-                    <Text style={{alignSelf: "center", marginLeft: 10,fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
-                        Let's Start Brewing
+                navigation.goBack()}} style={{width: 150, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, marginTop: 50, justifyContent: 'center', flexDirection: 'row'}}>
+                    <Text style={{alignSelf: "center",fontSize: 20, color: '#264653', fontWeight: 'bold'}}>
+                        Done
                     </Text>
-                    <Image style={{height: 40, width: 40,top: '1%' ,alignSelf: "center",}} source={require('../img/nextArrow.png')}/>
+
                 </TouchableOpacity>
             </View>
 

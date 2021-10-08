@@ -207,8 +207,8 @@ function TeaNameEntryPage(props) {
                         navigation.navigate('TeaSelection', {
                             setTeaName
                         })
-                    }} style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
-                        <Text style={{fontSize: 20,marginLeft: 3, color:'white'}}>
+                    }} style={{fontSize: 20,  borderBottomWidth: 2,borderColor: '#E9C46A'}}>
+                        <Text style={{fontSize: 20,marginLeft: 3, marginBottom: 5,color:'white'}}>
                             {teaData.teaName}
                         </Text>
                     </TouchableOpacity>

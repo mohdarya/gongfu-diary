@@ -314,7 +314,7 @@ function FlavorEntry(props) {
             height: 60,
             width: 160,
             borderRadius: 20,
-            flexBasis: '40%',
+            flexBasis: '39%',
             margin: 20,
 
         },
@@ -471,9 +471,12 @@ function FlavorEntry(props) {
 
 
                 <View style={{
+                    borderWidth: 10,
+                    borderColor: '#707070',
                     height: '80%',
                     width: '90%',
                     margin: 20,
+
                     borderRadius: 20,
                     backgroundColor: '#2a9d8f'
                 }}>
@@ -510,6 +513,8 @@ function FlavorEntry(props) {
             >
 
                 <View style={{
+                    borderWidth: 10,
+                    borderColor: '#707070',
                     height: '80%',
                     width: '90%',
                     margin: 20,

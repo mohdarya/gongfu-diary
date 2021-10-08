@@ -64,7 +64,7 @@ function SearchPage(props) {
             marginLeft: 20,
             marginBottom: 20,
             marginRight: 15,
-            marginTop: '10%',
+            marginTop: 50,
             fontWeight: 'bold'
         },
         weekView: {
@@ -200,7 +200,7 @@ function SearchPage(props) {
 
             <View style={{height:'100%',}}>
 
-                <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1000}}>
+                <ScrollView style={{flex: 1}} contentContainerStyle={{height: 950}}>
 
 
                     <Text style={styles.welcomeText}>

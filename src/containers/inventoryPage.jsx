@@ -284,22 +284,22 @@ function TeaInventory(props) {
     const [data, setData] = useState(()=> {
         if (searchTerm !== null) {
 
-            return Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.teaName === searchTerm || key === "add")
+            return Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName === searchTerm || key === "add")
 
 
         } else {
-            return Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.status === 'active' || key === "add")
+            return Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active' || key === "add")
         }
     })
 
     useEffect(()=> {
         if (searchTerm !== null) {
 
-            setData( Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.teaName === searchTerm || key === "add"))
+            setData( Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName === searchTerm || key === "add"))
 
 
         } else {
-           setData(Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.status === 'active' || key === "add"))
+           setData(Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active' || key === "add"))
         }
 
     }, [props.teaAvailable])
@@ -308,26 +308,7 @@ function TeaInventory(props) {
         let toShow
 
 
-        if (item[0] === "add") {
-            toShow = <TouchableOpacity activeOpacity={1} onPress={() => {
-                navigation.navigate('TeaInventoryData')
-            }
-            } style={{
-                height: 110,
-                width: 110,
-                alignSelf: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 32,
-                backgroundColor: '#3C91E6',
-            }}>
-
-
-                <Image style={{height: 60, width: 60}} source={require('../img/add.png')}/>
-
-
-            </TouchableOpacity>
-        } else if (props.teaAvailable[item[0]].status === 'active') {
+     if (props.teaAvailable[item[0]].status === 'active') {
             toShow = <InventoryItem turnOff={false} teaID={item[0]}/>
         }
         return (
@@ -468,7 +449,7 @@ function TeaInventory(props) {
                                 justifyContent: 'center'
                             }}>
                                 <AnimatedTouchable activeOpacity={1} onPress={() => {
-
+                                    navigation.navigate('TeaInventoryData')
                                 }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],

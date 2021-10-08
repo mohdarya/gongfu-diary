@@ -281,8 +281,8 @@ function TimerPage(props) {
                             backgroundColor: '#264653',
                             borderWidth: 10,
                             borderColor: '#2A9D8F',
-                            height: '50%',
-                            width: '75%',
+                            height: 300,
+                            width: 300,
                             justifyContent: 'center',
 
                         }}>

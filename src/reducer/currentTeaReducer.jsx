@@ -121,6 +121,24 @@ export function currentTeaReducer(state = initialState, action) {
 
                 }
             }
+
+        case 'ARCHIVE_TEA':
+
+
+
+                return {
+                    ...state,
+                    teaAvailable: {
+                        ...state.teaAvailable,
+                        [action.teaID]: {
+                            ...state.teaAvailable[action.teaID],
+                            status: 'archived'
+                        }
+                    }
+
+                }
+
+
         default:
             return state;
     }

@@ -4,6 +4,8 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 import HistoryItem from "../components/historyItem";
 import {connect} from "react-redux";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {archiveTea, deductWeight} from "../action/currentTeaAction";
 
 
 function TeaDetailPage(props) {
@@ -310,7 +312,10 @@ function TeaDetailPage(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} style={{
+                                <AnimatedTouchable activeOpacity={1} onPress={()=> {
+                                    props.archiveTea(route.params.teaID)
+                                    navigation.goBack()
+                                }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
                                         outputRange: [0, 40]
@@ -344,5 +349,14 @@ const mapStateToProps = (state, ownProps) => {
         teaAvailable: TeaAvailable.teaAvailable
     };
 };
-export default connect(mapStateToProps)(TeaDetailPage)
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    return {
+
+
+        archiveTea: (teaId) => dispatch(archiveTea(teaId))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeaDetailPage)
 

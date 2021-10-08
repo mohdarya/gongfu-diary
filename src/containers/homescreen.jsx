@@ -179,7 +179,7 @@ function HomeScreen(props) {
     }, [props.wholeDiary])
     const renderItems = ({item}) => {
 
-
+        console.log(item[0])
 
         return (
             <View style={{marginRight: 10, marginLeft: 10,}}>
@@ -198,7 +198,7 @@ function HomeScreen(props) {
 
                 <View style={styles.searchView}>
                     <TextInput
-                        onSubmitEditing={(event)=> {
+                        onSubmitEditing={(event) => {
                             navigation.navigate("SearchPage", {searchTerm: event.nativeEvent.text})
                         }}
                         style={styles.searchTextInput}
@@ -246,13 +246,13 @@ function HomeScreen(props) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.inventoryView}>
-                            <FlatList data={Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active'
+                            <FlatList
+                                data={Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active'
+                                )} style={{height: '100%',}} renderItem={renderItems}
+                                horizontal={true}
 
-                          )} style={{height: '100%',}} renderItem={renderItems}
-                                      horizontal={true}
 
-
-                                      keyExtractor={item => item.key}/>
+                                keyExtractor={item => item[0]}/>
                         </View>
                     </View>
                     <View style={styles.historyContainer}>

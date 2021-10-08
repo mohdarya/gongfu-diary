@@ -277,6 +277,8 @@ function TeaInventory(props) {
             return Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.status === 'active' || key === "add")
         }
     })
+
+
     const renderItems = ({item}) => {
 
         let toShow
@@ -354,7 +356,7 @@ function TeaInventory(props) {
                     marginLeft: 15
                 }} horizontal={false}
                     numColumns={2}
-                    keyExtractor={item => item}/>
+                    keyExtractor={item => item[0]}/>
 
 
             </View>

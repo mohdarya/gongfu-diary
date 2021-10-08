@@ -344,7 +344,7 @@ function TeaSelection(props) {
 
               <FlatList data={Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) =>value.status === 'active' || key === "add" )}  style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', alignItems: 'center', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={2}
-                        keyExtractor={item => item.teaID}/>
+                        keyExtractor={item => item[0]}/>
 
 
 

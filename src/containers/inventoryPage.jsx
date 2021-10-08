@@ -278,7 +278,17 @@ function TeaInventory(props) {
         }
     })
 
+    useEffect(()=> {
+        if (searchTerm !== null) {
 
+            setData( Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.teaName === searchTerm || key === "add"))
+
+
+        } else {
+           setData(Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) => value.status === 'active' || key === "add"))
+        }
+
+    }, [props.teaAvailable])
     const renderItems = ({item}) => {
 
         let toShow

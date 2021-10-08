@@ -159,7 +159,10 @@ function SearchPage(props) {
 
     const {searchTerm} = route.params
 
+    useEffect(()=> {
 
+        route.params.setSearchTerm('')
+    },[])
     const historyItems = () => {
 
 

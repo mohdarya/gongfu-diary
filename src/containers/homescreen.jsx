@@ -152,6 +152,7 @@ function HomeScreen(props) {
     });
 
 
+    const[ searchTermValue, setSearchTerm] = useState('')
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [historyItems, setHistoryItems] = useState([])
@@ -199,11 +200,17 @@ function HomeScreen(props) {
                 <View style={styles.searchView}>
                     <TextInput
                         onSubmitEditing={(event) => {
-                            navigation.navigate("SearchPage", {searchTerm: event.nativeEvent.text})
+                            navigation.navigate("SearchPage", {searchTerm: event.nativeEvent.text, setSearchTerm})
                         }}
                         style={styles.searchTextInput}
+                        onChangeText={(text) => {
+                            setSearchTerm(text)
+                        }}
+
                         placeholder={'Search For a Tea'}
-                        placeholderTextColor={'#585858'}/>
+                        placeholderTextColor={'#585858'}>
+                        {searchTermValue}
+                    </TextInput>
                 </View>
 
 

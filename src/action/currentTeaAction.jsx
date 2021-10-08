@@ -50,3 +50,13 @@ export function addWeight(teaID, weight)
     };
 }
 
+export function archiveTea(teaID)
+{
+    return {
+        type: 'ARCHIVE_TEA',
+        teaID,
+
+
+
+    };
+}

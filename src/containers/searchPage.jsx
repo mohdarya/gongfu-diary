@@ -64,7 +64,7 @@ function SearchPage(props) {
             marginLeft: 20,
             marginBottom: 20,
             marginRight: 15,
-            marginTop: '25%',
+            marginTop: '10%',
             fontWeight: 'bold'
         },
         weekView: {

@@ -196,19 +196,9 @@ function SearchPage(props) {
     return (
         <View style={styles.container}>
 
-            <View style={styles.topBar}>
-
-                <View style={styles.searchView}>
-                    <TextInput
-                        style={styles.searchTextInput}
-                        placeholder={'Search For a Tea'}
-                        placeholderTextColor={'#585858'}/>
-                </View>
 
 
-            </View>
-
-            <View style={{flex: 7,}}>
+            <View style={{height:'100%',}}>
 
                 <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1000}}>
 

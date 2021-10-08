@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
+    Animated,
     FlatList,
     Image,
     Modal,
@@ -14,6 +15,7 @@ import Slider from "@react-native-community/slider";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import InventoryItem from "../components/inventoryItem";
 import {connect} from "react-redux";
+import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 
 
 function TeaSelection(props) {
@@ -266,6 +268,18 @@ function TeaSelection(props) {
         flavorListContainer: {
             flex: 1,
             marginBottom: 20,
+        },
+        sessionActionMenu: {
+            height: 66,
+            width: 'auto',
+            backgroundColor: '#E9C46A',
+            flexDirection: 'row',
+            borderRadius: 25,
+
+            alignItems: "center",
+            justifyContent: 'center',
+            alignSelf: "flex-end",
+
         }
 
     })
@@ -280,7 +294,9 @@ function TeaSelection(props) {
 
     const navigation = useNavigation()
 
-
+    let beginX
+    const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+    const textInputWidth = useRef(new Animated.Value(0)).current
 
     const renderItems = ({item}) => {
 
@@ -289,27 +305,8 @@ function TeaSelection(props) {
 
 
 
-        if(item[0] === "add")
-        {
-            toShow =   <TouchableOpacity activeOpacity={1} onPress={() => {
-                navigation.navigate('TeaInventoryData')}
-            } style={{ height: 110,
-                width: 110,
-                alignSelf: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 32,
-                backgroundColor: '#3C91E6',}}>
-
-
-                <Image style={{height: 60, width: 60}} source={require('../img/add.png')}/>
-
-
-            </TouchableOpacity>
-        }
-    else {
             toShow = <InventoryItem turnOff={true}  teaID={item[0]}/>
-        }
+        
         return(
             <TouchableOpacity activeOpacity={1} onPress={ () => {
                 route.params.setTeaName({teaName: props.teaAvailable[item[0]].teaName, teaID: item[0]})
@@ -342,7 +339,7 @@ function TeaSelection(props) {
             <View style={styles.infoPart}>
 
 
-              <FlatList data={Object.entries({"add": {}, ...props.teaAvailable}).filter(([key, value]) =>value.status === 'active' || key === "add" )}  style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', alignItems: 'center', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
+              <FlatList data={Object.entries(props.teaAvailable).filter(([key, value]) =>value.status === 'active' || key === "add" )}  style={{height: '100%',}} renderItem={renderItems} columnWrapperStyle={{ justifyContent: 'space-around', alignItems: 'center', marginBottom: 15, marginRight:15, marginLeft: 15} } horizontal={false}
                         numColumns={2}
                         keyExtractor={item => item[0]}/>
 
@@ -356,7 +353,111 @@ function TeaSelection(props) {
 
 
             </View>
+            <View style={{
+                position: "absolute",
+                bottom: '10%',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flexDirection: 'row'
+            }}>
 
+                <FlingGestureHandler
+                    direction={Directions.RIGHT | Directions.LEFT}
+                    onHandlerStateChange={({nativeEvent}) => {
+                        if (nativeEvent.state === State.BEGAN) {
+                            beginX = nativeEvent.absoluteX;
+                        }
+                        if (nativeEvent.state === State.END) {
+
+                            if (nativeEvent.absoluteX - beginX < -50) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 1,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+
+                            } else if (nativeEvent.absoluteX - beginX > 10) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 0,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                            }
+                        }
+                    }}>
+                    <View style={styles.sessionActionMenu}>
+                        <Animated.View style={{
+                            height: 66,
+
+
+                            backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
+                            borderBottomLeftRadius: 25,
+                            width: textInputWidth.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [110, 67]
+                            }),
+
+                        }}>
+
+
+                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
+                                   source={require('../img/add.png')}/>
+
+                        </Animated.View>
+                        <Animated.View
+                            style={[
+
+                                {
+                                    height: 66,
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0,150]
+                                    }),
+                                    backgroundColor: '#E9C46A',
+                                    justifyContent: 'space-around',
+                                    flexDirection: 'row',
+
+
+                                },
+                            ]}>
+
+
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable activeOpacity={1} onPress={() => {
+                                    navigation.navigate('TeaInventoryData')
+                                }} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}}
+                                           source={require('../img/add.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+
+
+                        </Animated.View>
+
+                    </View>
+                </FlingGestureHandler>
+
+            </View>
 
 
         </View>

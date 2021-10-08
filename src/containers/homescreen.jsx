@@ -164,7 +164,6 @@ function HomeScreen(props) {
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [historyItems, setHistoryItems] = useState([])
-
     const [data, setData] = useState(props.diary)
     let date = new Date()
 
@@ -245,7 +244,7 @@ function HomeScreen(props) {
                                         S
                                     </Text>
 
-                            <View style={styles.dateBall}>
+                            <View style={[styles.dateBall, props.weeklySession[0] === new Date(date.setDate(date.getDate() - date.getDay() + 0)).getDate() ? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 0)).getDate()}
                                     </Text>
@@ -256,7 +255,7 @@ function HomeScreen(props) {
                                     M
                                 </Text>
 
-                                <View style={styles.dateBall}>
+                                <View  style={[styles.dateBall, props.weeklySession[1] === new Date(date.setDate(date.getDate() - date.getDay() + 1)).getDate()? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 1)).getDate()}
                                     </Text>
@@ -267,7 +266,7 @@ function HomeScreen(props) {
                                     T
                                 </Text>
 
-                                <View style={styles.dateBall}>
+                                <View  style={[styles.dateBall, props.weeklySession[2] === new Date(date.setDate(date.getDate() - date.getDay() + 2)).getDate()? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 2)).getDate()}
                                     </Text>
@@ -278,7 +277,7 @@ function HomeScreen(props) {
                                     W
                                 </Text>
 
-                                <View style={styles.dateBall}>
+                                <View  style={[styles.dateBall, props.weeklySession[3] === new Date(date.setDate(date.getDate() - date.getDay() + 3)).getDate() ? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 3)).getDate()}
                                     </Text>
@@ -289,7 +288,7 @@ function HomeScreen(props) {
                                     T
                                 </Text>
 
-                                <View style={styles.dateBall}>
+                                <View  style={[styles.dateBall, props.weeklySession[4] === new Date(date.setDate(date.getDate() - date.getDay() + 4)).getDate() ? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 4)).getDate()}
                                     </Text>
@@ -300,7 +299,7 @@ function HomeScreen(props) {
                                     F
                                 </Text>
 
-                                <View style={styles.dateBall}>
+                                <View style={[styles.dateBall,props.weeklySession[5] === new Date(date.setDate(date.getDate() - date.getDay() + 5)).getDate()? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 5)).getDate()}
                                     </Text>
@@ -311,7 +310,7 @@ function HomeScreen(props) {
                                     S
                                 </Text>
 
-                                <View style={styles.dateBall}>
+                                <View  style={[styles.dateBall, props.weeklySession[6] === new Date(date.setDate(date.getDate() - date.getDay() + 6)).getDate() ? {backgroundColor: '#E76F51'} :{backgroundColor: 'white'} ]}>
                                     <Text style={{fontSize: 20,}}>
                                         {new Date(date.setDate(date.getDate() - date.getDay() + 6)).getDate()}
                                     </Text>
@@ -501,6 +500,7 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary, TeaAvailable} = state;
 
     return {
+        weeklySession : TeaAvailable.weeklySession,
         wholeDiary: Diary,
         diary: Diary.diaryEntry,
         teaAvailable: TeaAvailable.teaAvailable

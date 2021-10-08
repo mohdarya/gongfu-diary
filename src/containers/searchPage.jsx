@@ -163,7 +163,7 @@ function SearchPage(props) {
     const historyItems = () => {
 
 
-        const searchList = props.diary.filter(item => props.teaAvailable[item.teaID].teaName === searchTerm)
+        const searchList = props.diary.filter(item => props.teaAvailable[item.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase()))
 
 
         let items = []
@@ -236,13 +236,13 @@ function SearchPage(props) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.inventoryView}>
-                            <FlatList data={Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName === searchTerm
+                            <FlatList data={Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName.toLowerCase().includes( searchTerm.toLowerCase())
 
                             )} style={{height: '100%',}} renderItem={renderItems}
                                       horizontal={true}
 
 
-                                      keyExtractor={item => item.key}/>
+                                      keyExtractor={item => item}/>
                         </View>
                     </View>
                     <View style={styles.historyContainer}>

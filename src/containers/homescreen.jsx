@@ -180,7 +180,7 @@ function HomeScreen(props) {
     }, [props.wholeDiary])
     const renderItems = ({item}) => {
 
-        console.log(item[0])
+        
 
         return (
             <View style={{marginRight: 10, marginLeft: 10,}}>

@@ -81,6 +81,8 @@ function HomeScreen(props) {
             backgroundColor: '#2A9D8F',
             width: '98%',
             height: 90,
+            justifyContent: 'space-around',
+            flexDirection: 'row',
         }, inventoryContainer: {
             flex: 1.8,
             marginLeft: 15,
@@ -146,7 +148,13 @@ function HomeScreen(props) {
             justifyContent: 'center',
             alignSelf: "flex-end",
 
-        }
+        },
+        dateBall: {height: 35, width: 35, backgroundColor: 'white', borderRadius: 100,justifyContent: 'center', alignItems: 'center'},
+        dateText:
+            {
+
+            },
+        dateItem:{height: '100%', width: 40, justifyContent: 'space-around', alignItems: 'center'}
 
 
     });
@@ -156,8 +164,9 @@ function HomeScreen(props) {
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [historyItems, setHistoryItems] = useState([])
-    const [data, setData] = useState(props.diary)
 
+    const [data, setData] = useState(props.diary)
+    let date = new Date()
 
     useEffect(() => {
         setData(props.diary)
@@ -180,7 +189,7 @@ function HomeScreen(props) {
     }, [props.wholeDiary])
     const renderItems = ({item}) => {
 
-        
+
 
         return (
             <View style={{marginRight: 10, marginLeft: 10,}}>
@@ -189,6 +198,7 @@ function HomeScreen(props) {
 
         )
     }
+
 
 
     let beginX
@@ -230,6 +240,83 @@ function HomeScreen(props) {
                         </Text>
 
                         <View style={styles.weekBar}>
+                        <View style={styles.dateItem}>
+                                    <Text style={{fontSize: 17}}>
+                                        S
+                                    </Text>
+
+                            <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 0)).getDate()}
+                                    </Text>
+                            </View>
+                        </View>
+                            <View style={styles.dateItem}>
+                                <Text style={{fontSize: 17}}>
+                                    M
+                                </Text>
+
+                                <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 1)).getDate()}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.dateItem}>
+                                <Text style={{fontSize: 17}}>
+                                    T
+                                </Text>
+
+                                <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 2)).getDate()}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.dateItem}>
+                                <Text style={{fontSize: 17}}>
+                                    W
+                                </Text>
+
+                                <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 3)).getDate()}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.dateItem}>
+                                <Text style={{fontSize: 17}}>
+                                    T
+                                </Text>
+
+                                <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 4)).getDate()}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.dateItem}>
+                                <Text style={{fontSize: 17}}>
+                                    F
+                                </Text>
+
+                                <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 5)).getDate()}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.dateItem}>
+                                <Text style={{fontSize: 17}}>
+                                    S
+                                </Text>
+
+                                <View style={styles.dateBall}>
+                                    <Text style={{fontSize: 20,}}>
+                                        {new Date(date.setDate(date.getDate() - date.getDay() + 6)).getDate()}
+                                    </Text>
+                                </View>
+                            </View>
 
                         </View>
 

@@ -242,7 +242,7 @@ function SearchPage(props) {
                                       horizontal={true}
 
 
-                                      keyExtractor={item => item}/>
+                                      keyExtractor={item => item[0]}/>
                         </View>
                     </View>
                     <View style={styles.historyContainer}>

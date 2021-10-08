@@ -471,13 +471,14 @@ function FlavorEntry(props) {
 
 
                 <View style={{
-                    borderWidth: 10,
-                    borderColor: '#707070',
+
                     height: '80%',
                     width: '90%',
                     margin: 20,
 
                     borderRadius: 20,
+                    borderWidth: 10,
+                    borderColor: '#707070',
                     backgroundColor: '#2a9d8f'
                 }}>
                     <TouchableOpacity style={styles.endButton} activeOpacity={1} onPress={() => {

@@ -1,6 +1,3 @@
-
-
-
 import React, {useRef, useState} from 'react';
 import {
     Animated,
@@ -8,7 +5,6 @@ import {
     Image,
     Keyboard,
     Modal,
-    SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
@@ -18,14 +14,12 @@ import {
 } from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
-import {addEntry, addSteep} from "../action/diaryEntryAction";
+import {addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
 import {addTea} from "../action/currentTeaAction";
 
 
 function TeaInventoryEntry(props) {
-
-
 
 
     const
@@ -202,7 +196,7 @@ function TeaInventoryEntry(props) {
                 height: 60,
                 width: 160,
                 borderRadius: 20,
-                flexBasis: '40%',
+                flexBasis: '39%',
                 margin: 20,
 
             },
@@ -223,8 +217,8 @@ function TeaInventoryEntry(props) {
         })
 
 
-   const [teaData, setTeaData] = useState({
-       status: 'active',
+    const [teaData, setTeaData] = useState({
+        status: 'active',
         teaName: null,
         type: null,
         weight: null,
@@ -237,8 +231,7 @@ function TeaInventoryEntry(props) {
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     let beginX
     return (
-<View style={{flex: 1}}>
-
+        <View style={{flex: 1}}>
 
 
             <View style={styles.container}>
@@ -255,12 +248,15 @@ function TeaInventoryEntry(props) {
                 >
 
                     <View style={{
+
                         zIndex: 3,
                         height: '80%',
                         width: '90%',
                         margin: 20,
                         borderRadius: 20,
-                        backgroundColor: 'black'
+                        borderWidth: 10,
+                        borderColor: '#707070',
+                        backgroundColor: '#2a9d8f'
                     }}>
                         <TouchableOpacity style={styles.endButton} activeOpacity={1} onPress={() => {
                             setTypeModal(!typeModal)
@@ -271,23 +267,25 @@ function TeaInventoryEntry(props) {
                         </TouchableOpacity>
 
                         <View style={styles.flavorListContainer}>
-                            <FlatList data={['Oolong', 'Black', 'Green', 'White', 'hei cha', 'purple', 'Raw Pu-erh', 'Ripe Pu-erh', ]}
-                                      horizontal={false}
-                                      numColumns={2}
-                                      renderItem={({item})=> {
-                                          return(
-                                              <TouchableOpacity style={[styles.FlavorNoteItem]} activeOpacity={1} onPress={() => {
-                                                  setTeaType(item)
-                                                  setTeaData({...teaData, type: item})
-                                                  setTypeModal(!typeModal)
-                                              }}>
-                                                  <Text style={styles.flavorNoteText}>
-                                                      {item}
-                                                  </Text>
-                                              </TouchableOpacity>
-                                          )
-                                      }}
-                                      keyExtractor={item => item}/>
+                            <FlatList
+                                data={['Oolong', 'Black', 'Green', 'White', 'hei cha', 'purple', 'Raw Pu-erh', 'Ripe Pu-erh',]}
+                                horizontal={false}
+                                numColumns={2}
+                                renderItem={({item}) => {
+                                    return (
+                                        <TouchableOpacity style={[styles.FlavorNoteItem]} activeOpacity={1}
+                                                          onPress={() => {
+                                                              setTeaType(item)
+                                                              setTeaData({...teaData, type: item})
+                                                              setTypeModal(!typeModal)
+                                                          }}>
+                                            <Text style={styles.flavorNoteText}>
+                                                {item}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    )
+                                }}
+                                keyExtractor={item => item}/>
 
                         </View>
                     </View>
@@ -298,7 +296,17 @@ function TeaInventoryEntry(props) {
                     <View style={styles.topPartBar}>
 
                     </View>
-                    <View style={{ top: '40%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
+                    <View style={{
+                        top: '40%',
+                        left: '15%',
+                        width: '70%',
+                        height: 110,
+                        backgroundColor: '#E9C46A',
+                        borderRadius: 30,
+                        position: "absolute",
+                        alignContent: 'center',
+                        justifyContent: 'center'
+                    }}>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
                             Enter The Tea Detail
                         </Text>
@@ -307,43 +315,51 @@ function TeaInventoryEntry(props) {
                 </View>
                 <View style={styles.infoPart}>
 
-                    <TextInput style={{fontSize: 20,  marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
-                        let d = new Date()
-                        setTeaData({...teaData, teaName: text})
+                    <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}}
+                               onChangeText={(text) => {
+                                   let d = new Date()
+                                   setTeaData({...teaData, teaName: text})
 
 
-                    }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
+                               }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
 
                     </TextInput>
-                    <TouchableOpacity  activeOpacity={1} onPress={() => {
+                    <TouchableOpacity activeOpacity={1} onPress={() => {
                         Keyboard.dismiss()
-                       setTypeModal(true)
-                    }} style={{fontSize: 20, height: 45, marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}>
-                        <Text style={{fontSize: 20, marginLeft: 3,color:'white'}}>
+                        setTypeModal(true)
+                    }} style={{
+                        fontSize: 20,
+                        height: 45,
+                        marginBottom: 15,
+                        borderBottomWidth: 2,
+                        borderColor: '#E9C46A'
+                    }}>
+                        <Text style={{fontSize: 20, marginLeft: 3, color: 'white'}}>
                             {teaType}
                         </Text>
                     </TouchableOpacity>
-                    <TextInput style={{fontSize: 20,marginBottom: 15,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  onChangeText={(text) => {
-                        let amount
-                       if(text === '')
-                       {
-                           amount = null
-                       }
-                       else {
-                           amount = parseFloat(text)
-                       }
-                        setTeaData({...teaData, weight: amount})
-                    }} placeholderTextColor={'white'}  placeholder={'Weight'} keyboardType={'number-pad'}>
+                    <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}}
+                               onChangeText={(text) => {
+                                   let amount
+                                   if (text === '') {
+                                       amount = null
+                                   } else {
+                                       amount = parseFloat(text)
+                                   }
+                                   setTeaData({...teaData, weight: amount})
+                               }} placeholderTextColor={'white'} placeholder={'Weight'} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
-                        setTeaData({...teaData, vendor: text})
-                    }} placeholderTextColor={'white'}  placeholder={'Vendor'} keyboardType={'default'}>
+                    <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}}
+                               onChangeText={(text) => {
+                                   setTeaData({...teaData, vendor: text})
+                               }} placeholderTextColor={'white'} placeholder={'Vendor'} keyboardType={'default'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, marginBottom: 15,borderBottomWidth: 2, borderColor: '#E9C46A'}} onChangeText={(text) => {
-                        setTeaData({...teaData, link: text})
-                    }} placeholderTextColor={'white'}  placeholder={'Link'} keyboardType={'default'}>
+                    <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}}
+                               onChangeText={(text) => {
+                                   setTeaData({...teaData, link: text})
+                               }} placeholderTextColor={'white'} placeholder={'Link'} keyboardType={'default'}>
 
                     </TextInput>
                 </View>
@@ -351,148 +367,142 @@ function TeaInventoryEntry(props) {
             </View>
 
 
-
-
-    <View style={{
-        position: "absolute",
-        bottom: '10%',
-        width: '100%',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        flexDirection: 'row'
-    }}>
-    <FlingGestureHandler
-        direction={Directions.RIGHT | Directions.LEFT}
-        onHandlerStateChange={({nativeEvent}) => {
-            if (nativeEvent.state === State.BEGAN) {
-                beginX = nativeEvent.absoluteX;
-            }
-            if (nativeEvent.state === State.END) {
-
-                if (nativeEvent.absoluteX - beginX < -50) {
-                    Animated.timing(textInputWidth, {
-                        toValue: 1,
-                        duration: 100,
-                        useNativeDriver: false,
-                    }).start();
-
-                } else if (nativeEvent.absoluteX - beginX > 10) {
-                    Animated.timing(textInputWidth, {
-                        toValue: 0,
-                        duration: 100,
-                        useNativeDriver: false,
-                    }).start();
-                }
-            }
-        }}>
-        <View style={styles.sessionActionMenu}>
-            <Animated.View style={{
-                height: 66,
-                justifyContent: 'center',
-
-                backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
-                borderBottomLeftRadius: 25,
-                width: textInputWidth.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [110, 67]
-                }),
-
+            <View style={{
+                position: "absolute",
+                bottom: '10%',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flexDirection: 'row'
             }}>
-
-
-                <Image style={{width: 50, height: 50, alignSelf: 'center'}}
-                       source={require('../img/add.png')}/>
-
-            </Animated.View>
-            <Animated.View
-                style={[
-
-                    {
-                        height: 66,
-                        width: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 200]
-                        }),
-                        backgroundColor: '#E9C46A',
-                        justifyContent: 'space-around',
-                        flexDirection: 'row',
-
-
-                    },
-                ]}>
-
-
-                <AnimatedTouchable activeOpacity={1} style={{
-                    backgroundColor: '#3C91E6',
-                    height: 48,
-
-                    width: textInputWidth.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 50]
-                    }),
-                    borderRadius: 20,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <AnimatedTouchable onPress={() => {
-                        if(teaData.teaName !== null && teaData.type !== null && teaData.weight !== null)
-                        {
-
-                            props.addTea(teaData)
-                            navigation.goBack()
+                <FlingGestureHandler
+                    direction={Directions.RIGHT | Directions.LEFT}
+                    onHandlerStateChange={({nativeEvent}) => {
+                        if (nativeEvent.state === State.BEGAN) {
+                            beginX = nativeEvent.absoluteX;
                         }
-                        else {
-                            ToastAndroid.show("Please fill all fields", ToastAndroid.LONG)
+                        if (nativeEvent.state === State.END) {
+
+                            if (nativeEvent.absoluteX - beginX < -50) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 1,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+
+                            } else if (nativeEvent.absoluteX - beginX > 10) {
+                                Animated.timing(textInputWidth, {
+                                    toValue: 0,
+                                    duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                            }
                         }
-
-                    }} activeOpacity={1} style={{
-                        width: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }), height: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }),
                     }}>
-                        <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
-                    </AnimatedTouchable></AnimatedTouchable>
-                <AnimatedTouchable activeOpacity={1} style={{
-                    backgroundColor: '#3C91E6',
-                    height: 48,
+                    <View style={styles.sessionActionMenu}>
+                        <Animated.View style={{
+                            height: 66,
+                            justifyContent: 'center',
 
-                    width: textInputWidth.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, 50]
-                    }),
-                    borderRadius: 20,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <AnimatedTouchable activeOpacity={1} onPress={() => {
-                        navigation.goBack()
-                    }} style={{
-                        width: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }), height: textInputWidth.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 40]
-                        }),
-                    }}>
-                        <Image style={{height: '100%', width: '100%'}}
-                               source={require('../img/delete.png')}/>
-                    </AnimatedTouchable></AnimatedTouchable>
+                            backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
+                            borderBottomLeftRadius: 25,
+                            width: textInputWidth.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [110, 67]
+                            }),
 
-            </Animated.View>
+                        }}>
 
+
+                            <Image style={{width: 50, height: 50, alignSelf: 'center'}}
+                                   source={require('../img/add.png')}/>
+
+                        </Animated.View>
+                        <Animated.View
+                            style={[
+
+                                {
+                                    height: 66,
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 200]
+                                    }),
+                                    backgroundColor: '#E9C46A',
+                                    justifyContent: 'space-around',
+                                    flexDirection: 'row',
+
+
+                                },
+                            ]}>
+
+
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable onPress={() => {
+                                    if (teaData.teaName !== null && teaData.type !== null && teaData.weight !== null) {
+
+                                        props.addTea(teaData)
+                                        navigation.goBack()
+                                    } else {
+                                        ToastAndroid.show("Please fill all fields", ToastAndroid.LONG)
+                                    }
+
+                                }} activeOpacity={1} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+                            <AnimatedTouchable activeOpacity={1} style={{
+                                backgroundColor: '#3C91E6',
+                                height: 48,
+
+                                width: textInputWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 50]
+                                }),
+                                borderRadius: 20,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <AnimatedTouchable activeOpacity={1} onPress={() => {
+                                    navigation.goBack()
+                                }} style={{
+                                    width: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }), height: textInputWidth.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 40]
+                                    }),
+                                }}>
+                                    <Image style={{height: '100%', width: '100%'}}
+                                           source={require('../img/delete.png')}/>
+                                </AnimatedTouchable></AnimatedTouchable>
+
+                        </Animated.View>
+
+                    </View>
+                </FlingGestureHandler>
+            </View>
         </View>
-    </FlingGestureHandler>
-    </View>
-</View>
-
-
 
 
     )

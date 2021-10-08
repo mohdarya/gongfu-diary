@@ -202,7 +202,7 @@ function TeaInventoryEdit(props) {
                 height: 60,
                 width: 160,
                 borderRadius: 20,
-                flexBasis: '40%',
+                flexBasis: '39%',
                 margin: 20,
 
             },
@@ -262,7 +262,9 @@ function TeaInventoryEdit(props) {
                         width: '90%',
                         margin: 20,
                         borderRadius: 20,
-                        backgroundColor: 'black'
+                        borderWidth: 10,
+                        borderColor: '#707070',
+                        backgroundColor: '#2a9d8f'
                     }}>
                         <TouchableOpacity style={styles.endButton} activeOpacity={1} onPress={() => {
                             setTypeModal(!typeModal)

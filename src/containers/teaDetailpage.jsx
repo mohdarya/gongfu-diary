@@ -357,11 +357,19 @@ function TeaDetailPage(props) {
                             }}>
                                 <AnimatedTouchable activeOpacity={1} onPress={() => {
                                     if (archived) {
+                                        if(data.weight > 0)
+                                        {
                                         props.unarchiveTea(route.params.teaID)
+                                            navigation.goBack()
+                                            }
+                                        else {
+                                            ToastAndroid.show("Add Tea Weight", ToastAndroid.LONG)
+                                        }
                                     } else {
                                         props.archiveTea(route.params.teaID)
+                                        navigation.goBack()
                                     }
-                                    navigation.goBack()
+
                                 }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],

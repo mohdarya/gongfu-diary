@@ -203,7 +203,7 @@ function TimerPage(props) {
 
 
                 setCountdownTimer(secs => {
-                    if(startTimer) {
+
                         if (secs > 0) {
                             return secs - 1
 
@@ -222,7 +222,7 @@ function TimerPage(props) {
 
 
                         }
-                    }
+
                 })
 
             },
@@ -299,7 +299,7 @@ function TimerPage(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    BackgroundTimer.stop()
+                                    BackgroundTimer.stopBackgroundTimer();
                                     setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={{

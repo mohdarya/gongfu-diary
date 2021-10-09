@@ -244,7 +244,7 @@ function DiaryEntry(props) {
 
 
                 setCountdownTimer(secs => {
-                    if(startTimer) {
+
                         if (secs > 0) {
                             return secs - 1
 
@@ -263,7 +263,7 @@ function DiaryEntry(props) {
 
 
                         }
-                    }
+
                 })
 
             },
@@ -345,7 +345,7 @@ function DiaryEntry(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    BackgroundTimer.stop()
+                                    BackgroundTimer.stopBackgroundTimer();
                                     setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={{

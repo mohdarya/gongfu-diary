@@ -152,7 +152,7 @@ function TimerPage(props) {
     function handleBackButtonClick() {
         if(navigation.canGoBack())
         {
-
+            BackgroundTimer.stopBackgroundTimer();
             setStartTimer(false)
             navigation.goBack()
         }

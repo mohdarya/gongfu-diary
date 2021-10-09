@@ -189,6 +189,7 @@ function DiaryEntry(props) {
     function handleBackButtonClick() {
         if(navigation.canGoBack())
         {
+            BackgroundTimer.stopBackgroundTimer();
             createEntry()
             setStartTimer(false)
           navigation.goBack()

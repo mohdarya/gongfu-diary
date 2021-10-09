@@ -306,7 +306,7 @@ function TeaSelection(props) {
 
 
             toShow = <InventoryItem turnOff={true}  teaID={item[0]}/>
-        
+
         return(
             <TouchableOpacity activeOpacity={1} onPress={ () => {
                 route.params.setTeaName({teaName: props.teaAvailable[item[0]].teaName, teaID: item[0]})
@@ -395,7 +395,7 @@ function TeaSelection(props) {
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [110, 67]
+                                outputRange: [60, 67]
                             }),
 
                         }}>

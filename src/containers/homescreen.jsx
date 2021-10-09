@@ -422,7 +422,7 @@ function HomeScreen(props) {
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [110, 67]
+                                outputRange: [60, 67]
                             }),
 
                         }}>

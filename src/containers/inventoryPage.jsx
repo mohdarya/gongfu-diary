@@ -147,6 +147,7 @@ function TeaInventory(props) {
             marginTop: '20%',
             height: '65%',
 
+
         },
         buttonPart: {
 
@@ -403,7 +404,7 @@ function TeaInventory(props) {
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [110, 67]
+                                outputRange: [60, 67]
                             }),
 
                         }}>

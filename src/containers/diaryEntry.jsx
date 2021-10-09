@@ -140,7 +140,9 @@ function DiaryEntry(props) {
     const [buttonText, setButtonText] = useState('Stop')
     const [steepArray, setSteepArray] = useState([])
     const [sessionID, setSessionID] = useState(() => {
-        return toString(teaID) + Date.now()
+        console.log(teaID + Date.now())
+        return teaID + Date.now()
+
     })
 
     useEffect(() => {
@@ -164,6 +166,7 @@ function DiaryEntry(props) {
 
 
         if(!first){
+
 
 
         let duration = Date.now() -  parseInt(sessionID.replace(toString(teaID), ''))

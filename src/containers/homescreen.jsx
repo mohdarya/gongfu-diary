@@ -364,7 +364,7 @@ function HomeScreen(props) {
                                 History
                             </Text>
                             <TouchableOpacity activeOpacity={1} onPress={()=> {
-                                navigation.navigate('DiaryHistoryListing', {searchTerm: null, setParentSearch: null})
+                                navigation.navigate('DiaryHistoryListing', {searchTerm: null, setParentSearch: null, teaID: null})
                             }} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,

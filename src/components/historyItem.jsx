@@ -50,6 +50,21 @@ function HistoryItem(props) {
     }
 
 
+    let backgroundColour
+
+    if(props.teaAvailable[props.data.teaID].type === 'Hei cha')
+    {
+        backgroundColour = props.colors.HeiCha
+    }
+    else if(props.teaAvailable[props.data.teaID].type === 'Raw Pu-erh')
+    { backgroundColour = props.colors.RawPuerh}
+    else if(props.teaAvailable[props.data.teaID].type === 'Ripe Pu-erh')
+    {
+        backgroundColour = props.colors.RipePuerh
+    }
+    else{
+        backgroundColour = props.colors[props.teaAvailable[props.data.teaID].type]
+    }
     const clockiFy = (durationTime) => {
 
 
@@ -69,7 +84,7 @@ function HistoryItem(props) {
     }
     return (
         <TouchableOpacity activeOpacity={1} onPress={goToTeaPage} style={styles.container}>
-            <View style={styles.iconView}>
+            <View style={[styles.iconView, {backgroundColor: backgroundColour}]}>
                 <Image style={{height: 45, width: 45, alignSelf: 'center'}} source={require('../img/teaLeaf.png')}/>
             </View>
             <View style={styles.teaNameView}>
@@ -96,7 +111,7 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary, TeaAvailable} = state;
 
     return {
-
+        colors: TeaAvailable.teaColour,
         teaAvailable: TeaAvailable.teaAvailable
     };
 };

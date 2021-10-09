@@ -160,6 +160,22 @@ function DiaryListingPage(props) {
 
 
 
+    let backgroundColour
+
+    if(props.teaAvailable[data.teaID].type === 'Hei cha')
+    {
+        backgroundColour = props.colors.HeiCha
+    }
+    else if(props.teaAvailable[data.teaID].type === 'Raw Pu-erh')
+    { backgroundColour = props.colors.RawPuerh}
+    else if(props.teaAvailable[data.teaID].type === 'Ripe Pu-erh')
+    {
+        backgroundColour = props.colors.RipePuerh
+    }
+    else{
+        backgroundColour = props.colors[props.teaAvailable[data.teaID].type]
+    }
+
 
 
 
@@ -274,7 +290,19 @@ function DiaryListingPage(props) {
             <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1580}}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
-
+                        <View style={{
+                            top: 20,
+                            width: 80,
+                            height: 80,
+                            backgroundColor: backgroundColour,
+                            borderRadius: 100,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50, }}>
+                                <Image style={{height: '100%', width: '100%'}} source={require('../img/teaLeaf.png')}/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <TouchableOpacity onPress={editTeaName} activeOpacity={1} style={{
                         top: '80%',
@@ -553,6 +581,7 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary, TeaAvailable} = state;
 
     return {
+        colors: TeaAvailable.teaColour,
         teaAvailable: TeaAvailable.teaAvailable,
         Diary: Diary.diaryEntry
     };

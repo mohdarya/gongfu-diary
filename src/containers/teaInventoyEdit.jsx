@@ -198,7 +198,7 @@ function TeaInventoryEdit(props) {
                 fontSize: 20
             },
             FlavorNoteItem: {
-                backgroundColor: 'white',
+
                 height: 60,
                 width: 160,
                 borderRadius: 20,
@@ -279,8 +279,19 @@ function TeaInventoryEdit(props) {
                                       horizontal={false}
                                       numColumns={2}
                                       renderItem={({item})=> {
+
+                                          let styleToUse = {
+                                              backgroundColor: 'white',
+                                          }
+                                          if(teaData !== undefined) {
+                                              if (teaData.type === item || teaType === item) {
+                                                  styleToUse = {
+                                                      backgroundColor: 'grey',
+                                                  }
+                                              }
+                                          }
                                           return(
-                                              <TouchableOpacity style={[styles.FlavorNoteItem]} activeOpacity={1} onPress={() => {
+                                              <TouchableOpacity style={[styles.FlavorNoteItem, styleToUse]} activeOpacity={1} onPress={() => {
                                                   setTeaType(item)
                                                   setTeaData({...teaData, type: item})
                                                   setTypeModal(!typeModal)

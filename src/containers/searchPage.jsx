@@ -243,7 +243,9 @@ function SearchPage(props) {
                             <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
                                 History
                             </Text>
-                            <TouchableOpacity style={{alignSelf: 'flex-end', width: '50%',}}>
+                            <TouchableOpacity activeOpacity={1} onPress={()=> {
+                                navigation.navigate('DiaryHistoryListing', {searchTerm: searchTerm})
+                            }} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,
                                     color: 'white',

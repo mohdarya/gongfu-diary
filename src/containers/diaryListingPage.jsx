@@ -179,7 +179,10 @@ function DiaryListingPage(props) {
 
 
 
-
+    const setNoteMiddleFunc = (note) => {
+        setNote(note)
+        props.editNote(data.sessionID, note)
+    }
     const goToFlavorSelection = () => {
 
         if(editActive) {
@@ -239,19 +242,20 @@ function DiaryListingPage(props) {
 
     useEffect(() => {
 
-            Animated.timing(textInputWidth, {
-                toValue: 0,
-                duration: 150,
-                useNativeDriver: false,
-            }).start();
+
         if(editActive){
             setEditBackground({ backgroundColor: '#E53B3B'})
         }
         else {
 
-            props.editNote(data.sessionID, note)
+
             setEditBackground({ backgroundColor: '#E9C46A'})
         }
+        Animated.timing(textInputWidth, {
+            toValue: 0,
+            duration: 150,
+            useNativeDriver: false,
+        }).start();
     }, [editActive])
 
 
@@ -260,7 +264,7 @@ function DiaryListingPage(props) {
         if(editActive){
 
                 navigation.navigate('NoteEntry', {
-                    note, setNote
+                    note, setNote: setNoteMiddleFunc
                 })
 
         }

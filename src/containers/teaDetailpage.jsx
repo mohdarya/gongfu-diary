@@ -188,7 +188,7 @@ function TeaDetailPage(props) {
                     </Text>
                     <Text style={{
                         alignSelf: 'center',
-                        fontSize: 15,
+                        fontSize: 14,
                         marginTop: 10,
                         color: '#264653',
                         fontWeight: 'bold'

@@ -12,10 +12,10 @@ Link:
 const initialState = {
 
     teaColour: {
-        Oolong: '#84a98c',
+        Oolong: '#80B06D',
         Purple: '#35345B',
         Black: '#51010F',
-        White: '#80B06D',
+        White: '#84a98c',
         Green: '#33673B',
         HeiCha: '#081c15',
         RawPuerh: '#053835',

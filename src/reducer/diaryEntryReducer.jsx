@@ -157,7 +157,10 @@ export function diaryEntryReducer(state = initialState, action) {
                 ...state,
                 diaryEntry: noteArray
             }
-
+        case 'RESET_DATA':
+            return {
+                initialState
+            }
 
         default:
             return state;

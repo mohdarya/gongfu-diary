@@ -147,6 +147,10 @@ export function currentTeaReducer(state = initialState, action) {
                 ...state,
                 weeklySession: modifiedWeekly,
             }
+        case 'RESET_DATA':
+            return {
+                initialState
+            }
 
         default:
             return state;

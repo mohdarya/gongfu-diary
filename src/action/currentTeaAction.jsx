@@ -71,3 +71,9 @@ export function setTeaSessionForDay(sessionDay, date)
 
     };
 }
+
+export function resetCurrentTeaData(){
+    return{
+        type: 'RESET_DATA'
+    }
+}

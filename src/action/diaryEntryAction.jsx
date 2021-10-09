@@ -76,3 +76,9 @@ export function editNote(sessionID, note)
 
     };
 }
+
+export function resetDiaryData(){
+    return{
+        type: 'RESET_DATA'
+    }
+}

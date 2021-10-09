@@ -127,6 +127,19 @@ function TeaDetailPage(props) {
     else{
         backgroundColour = props.colors[props.teaAvailable[route.params.teaID].type]
     }
+    const [teaNameToDisplay, setTeaName] = useState()
+
+    useEffect(()=> {
+        if(props.teaAvailable[route.params.teaID].teaName.length <=80)
+        {
+            setTeaName(props.teaAvailable[route.params.teaID].teaName)
+        }
+        else {
+            setTeaName( props.teaAvailable[route.params.teaID].teaName.substring(0, 80) + ' ...')
+        }
+    }, [props.teaAvailable])
+
+
 
 
 
@@ -171,7 +184,7 @@ function TeaDetailPage(props) {
                         color: '#264653',
                         fontWeight: 'bold'
                     }}>
-                        {data.teaName}
+                        {teaNameToDisplay}
                     </Text>
                     <Text style={{
                         alignSelf: 'center',

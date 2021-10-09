@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import {connect} from "react-redux";
@@ -50,6 +50,19 @@ function HistoryItem(props) {
     }
 
 
+    const [teaNameToDisplay, setTeaName] = useState()
+
+    useEffect(()=> {
+        if(props.teaAvailable[props.data.teaID].teaName.length <=60)
+        {
+            setTeaName(props.teaAvailable[props.data.teaID].teaName)
+        }
+        else {
+            setTeaName( props.teaAvailable[props.data.teaID].teaName.substring(0, 60) + ' ...')
+        }
+    }, [props.teaAvailable])
+
+
     let backgroundColour
 
     if(props.teaAvailable[props.data.teaID].type === 'Hei cha')
@@ -89,7 +102,7 @@ function HistoryItem(props) {
             </View>
             <View style={styles.teaNameView}>
                 <Text style={{color: 'white'}}>
-                    {props.teaAvailable[props.data.teaID].teaName}
+                    {teaNameToDisplay}
                 </Text>
             </View>
             <View style={styles.detailView}>

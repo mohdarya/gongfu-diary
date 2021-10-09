@@ -323,6 +323,19 @@ function DiaryEntry(props) {
         })
     }
 
+    const [teaNameToDisplay, setTeaName] = useState()
+
+    useEffect(()=> {
+        if(props.teas[teaID].teaName.length <=110)
+        {
+            setTeaName(props.teas[teaID].teaName)
+        }
+        else {
+            setTeaName( props.teas[teaID].teaName.substring(0, 110) + ' ...')
+        }
+    }, [props.teas])
+
+
 
     return (
 
@@ -427,7 +440,7 @@ function DiaryEntry(props) {
                         alignContent: 'center',
                         justifyContent: 'flex-start'
                     }}>
-                        <Text style={{alignSelf: 'center', fontSize: 60, color: '#264653', fontWeight: 'bold'}}>
+                        <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
                             {currentTime}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
@@ -452,7 +465,7 @@ function DiaryEntry(props) {
                             }}
                             style={{
                                 alignSelf: 'center',
-                                marginTop: 5,
+
                                 fontSize: 25,
                                 color: '#264653',
                                 fontWeight: 'bold'
@@ -467,12 +480,14 @@ function DiaryEntry(props) {
                         <Text style={{
                             alignSelf: 'center',
                             marginTop: 15,
+                            marginRight: 5,
+                            marginLeft: 5,
                             fontSize: 15,
                             color: '#264653',
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            {props.teas[teaID].teaName}
+                            {teaNameToDisplay}
                         </Text>
 
 

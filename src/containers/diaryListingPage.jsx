@@ -177,6 +177,17 @@ function DiaryListingPage(props) {
     }
 
 
+    const [teaNameToDisplay, setDisplayTeaName] = useState()
+
+    useEffect(()=> {
+        if(props.teaAvailable[data.teaID].teaName.length <= 85)
+        {
+            setDisplayTeaName(props.teaAvailable[data.teaID].teaName)
+        }
+        else {
+            setDisplayTeaName( props.teaAvailable[data.teaID].teaName.substring(0, 85) + ' ...')
+        }
+    }, [props.teaAvailable])
 
 
     const setNoteMiddleFunc = (note) => {
@@ -322,19 +333,19 @@ function DiaryListingPage(props) {
 
                         <Text style={{
                             alignSelf: 'center',
-                            marginTop: 15,
+                            marginTop: 5,
                             fontSize: 15,
                             color: '#264653',
                             width: '90%',
                             fontWeight: 'bold',
                             textAlign: 'center'
                         }}>
-                            {props.teaAvailable[data.teaID].teaName}
+                            {teaNameToDisplay}
                         </Text>
 
                         <Text style={{
                             alignSelf: 'center',
-                            marginTop: 15,
+
                             fontSize: 15,
                             color: '#264653',
                             fontWeight: 'bold',

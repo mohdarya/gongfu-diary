@@ -159,7 +159,16 @@ function TeaNameEntryPage(props) {
 
     const navigation = useNavigation()
     const route  = useRoute()
+    const [teaNameToDisplay, setDisplayTeaName] = useState()
     const setTeaName = (teaNameAndID) => {
+
+        if(teaNameAndID.teaName.length <=65)
+        {
+            setDisplayTeaName(teaNameAndID.teaName)
+        }
+        else {
+            setDisplayTeaName(teaNameAndID.teaName.substring(0, 65) + ' ...')
+        }
         setTeaData({...teaData, ...teaNameAndID})
     }
     function goToDiaryEntry() {
@@ -201,7 +210,7 @@ function TeaNameEntryPage(props) {
             <View style={styles.container}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
-                      
+
                     </View>
                     <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
@@ -217,7 +226,7 @@ function TeaNameEntryPage(props) {
                         })
                     }} style={{fontSize: 20,  borderBottomWidth: 2,borderColor: '#E9C46A'}}>
                         <Text style={{fontSize: 20,marginLeft: 3, marginBottom: 5,color:'white'}}>
-                            {teaData.teaName}
+                            {teaNameToDisplay}
                         </Text>
                     </TouchableOpacity>
                     <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'}  onChangeText={(text) => {

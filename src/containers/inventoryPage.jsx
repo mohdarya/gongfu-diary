@@ -305,15 +305,11 @@ function TeaInventory(props) {
     }, [props.teaAvailable])
     const renderItems = ({item}) => {
 
-        let toShow
 
 
-     if (props.teaAvailable[item[0]].status === 'active') {
-            toShow = <InventoryItem turnOff={false} teaID={item[0]}/>
-        }
         return (
             <View>
-                {toShow}
+                <InventoryItem turnOff={false} teaID={item[0]}/>
             </View>
 
         )

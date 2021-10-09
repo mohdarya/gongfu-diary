@@ -182,7 +182,7 @@ function TimerPage(props) {
                 setCountdownTimer(parseInt(currentTime) + parseInt(increment))
                 setCurrenTime(parseInt(currentTime) + parseInt(increment))
             }
-            BackgroundTimer.stop()
+            BackgroundTimer.stopBackgroundTimer();
             setButtonText('Close')
             deactivateKeepAwake();
         }

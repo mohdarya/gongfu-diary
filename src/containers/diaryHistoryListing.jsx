@@ -71,6 +71,9 @@ function DiaryHistoryListing(props) {
 
     const route = useRoute()
     const [searchTerm, setSearchTerm] = useState(route.params.searchTerm)
+    const [searchBar, setSearchBar] = useState(()=> {
+        return route.params.teaID === null;
+    })
     const [data, setData] = useState(() => {
         if (searchTerm !== null) {
 
@@ -116,6 +119,7 @@ function DiaryHistoryListing(props) {
 
             <View style={styles.topBar}>
 
+                {searchBar &&
                 <View style={styles.searchView}>
                     <TextInput
                         onSubmitEditing={(event) => {
@@ -141,7 +145,7 @@ function DiaryHistoryListing(props) {
                         placeholderTextColor={'#585858'}>
                         {searchTerm}
                     </TextInput>
-                </View>
+                </View>}
 
 
             </View>

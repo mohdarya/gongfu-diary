@@ -162,10 +162,12 @@ function TeaDetailPage(props) {
                     justifyContent: 'space-around'
                 }}>
                     <Text style={{
+                        marginLeft: 10,
+                        marginRight: 10,
                         alignSelf: 'center',
                         textAlign: "center",
                         marginTop: 30,
-                        fontSize: 20,
+                        fontSize: 16,
                         color: '#264653',
                         fontWeight: 'bold'
                     }}>
@@ -174,14 +176,14 @@ function TeaDetailPage(props) {
                     <Text style={{
                         alignSelf: 'center',
                         fontSize: 15,
-                        marginTop: 20,
+                        marginTop: 10,
                         color: '#264653',
                         fontWeight: 'bold'
                     }}>
                         {data.vendor}
                     </Text>
 
-                    <Text style={{textAlign: 'center', marginTop: 7, fontWeight: 'bold', fontSize: 18,}}>
+                    <Text style={{textAlign: 'center', marginTop: 5, fontWeight: 'bold', fontSize: 18,}}>
                         {data.weight + 'G'}
                     </Text>
 

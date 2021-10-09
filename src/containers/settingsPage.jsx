@@ -78,6 +78,9 @@ function SettingsPage(props) {
                             justifyContent: 'center',
                             alignContent: 'center',}}  onPress={()=> {
 
+                                props.resetDiary()
+                            props.resetTeaInventory()
+                            setConfirmation(!confirmationVisible)
                         }} activeOpacity={1}>
                             <Text style={ {
                                 textAlign: 'center',

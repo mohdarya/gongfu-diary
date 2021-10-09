@@ -179,7 +179,7 @@ function TeaNameEntryPage(props) {
             waterVolume: null,
             startingTime: null}
 
-        if(route.params.teaID !== undefined)
+        if( typeof route.params !== 'undefined')
         {
             data = {
                 ...data,

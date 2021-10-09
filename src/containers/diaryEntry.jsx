@@ -200,7 +200,7 @@ function DiaryEntry(props) {
 
         return true;
     }
-    const ONE_SECOND_IN_MS = 200;
+    const ONE_SECOND_IN_MS = 300;
     const PATTERN = [
         1 * ONE_SECOND_IN_MS,
         2 * ONE_SECOND_IN_MS,

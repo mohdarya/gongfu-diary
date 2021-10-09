@@ -21,7 +21,7 @@ import TeaDetailPage from "./teaDetailpage";
 import TeaInventoryEdit from "./teaInventoyEdit";
 import SearchPage from "./searchPage";
 import SettingsPage from "./settingsPage";
-import DiaryListing from "./diaryListPage";
+import DiaryHistoryListing from "./diaryHistoryListing";
 
 function App(props) {
     LogBox.ignoreLogs([
@@ -60,7 +60,7 @@ function App(props) {
                         <Stack.Screen name="TeaDetail" component={TeaDetailPage}/>
                         <Stack.Screen name="SearchPage" component={SearchPage}/>
                         <Stack.Screen name="SettingsPage" component={SettingsPage}/>
-                        <Stack.Screen name="DiaryHistoryListing" component={DiaryListing}/>
+                        <Stack.Screen name="DiaryHistoryListing" component={DiaryHistoryListing}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </PersistGate>

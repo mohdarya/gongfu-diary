@@ -6,7 +6,7 @@ import {resetCurrentTeaData} from "../action/currentTeaAction";
 import {resetDiaryData} from "../action/diaryEntryAction";
 import HistoryItem from "../components/historyItem";
 
-function DiaryListing(props) {
+function DiaryHistoryListing(props) {
 
 
     const navigation = useNavigation();
@@ -116,5 +116,5 @@ const mapStateToProps = (state, ownProps) => {
         teaAvailable: TeaAvailable.teaAvailable
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(DiaryListing)
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryHistoryListing)
 

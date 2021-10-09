@@ -115,7 +115,9 @@ function SettingsPage(props) {
                         Settings
                     </Text>
                     <View style={{height: 500, width: '100%',alignItems: 'center',}}>
-                        <TouchableOpacity  activeOpacity={1} style={{height: 50, width: '80%',alignSelf: "center", flexDirection: 'row', alignItems: 'center',}}>
+                        <TouchableOpacity  activeOpacity={1} onPress={()=> {
+                            navigation.navigate('TeaInventory', {searchTerm: null, status: 'archived'})
+                        }} style={{height: 50, width: '80%',alignSelf: "center", flexDirection: 'row', alignItems: 'center',}}>
                             <View style={{height: 50, width: 50, backgroundColor: 'white', borderRadius: 10}}>
                                 <Image style={{height: '100%', width: '100%'}} source={require('../img/archive.png')}/>
 

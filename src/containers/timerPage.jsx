@@ -144,6 +144,7 @@ function TimerPage(props) {
 
     const endButtonAction = () => {
 
+
         setStartTimer(false)
         navigation.navigate("HomeScreen")
     }
@@ -153,7 +154,6 @@ function TimerPage(props) {
         {
 
             setStartTimer(false)
-            BackgroundTimer.stopBackgroundTimer()
             navigation.goBack()
         }
         else{
@@ -182,7 +182,7 @@ function TimerPage(props) {
                 setCountdownTimer(parseInt(currentTime) + parseInt(increment))
                 setCurrenTime(parseInt(currentTime) + parseInt(increment))
             }
-            BackgroundTimer.stopBackgroundTimer()
+            BackgroundTimer.stop()
             setButtonText('Close')
             deactivateKeepAwake();
         }
@@ -203,24 +203,25 @@ function TimerPage(props) {
 
 
                 setCountdownTimer(secs => {
-                    if (secs > 0) {
-                        return secs - 1
+                    if(startTimer) {
+                        if (secs > 0) {
+                            return secs - 1
 
 
-                    } else {
+                        } else {
 
-                        setStartTimer(false)
+                            setStartTimer(false)
+                            if (AppState.currentState === 'active') {
+                                timerEndingSound.play((success) => {
+                                    if (!success) {
+                                        console.log('Sound did not play')
+                                    }
+                                })
+                            }
+                            return 0
 
-                        if(AppState.currentState === 'active') {
-                            timerEndingSound.play((success) => {
-                                if (!success) {
-                                    console.log('Sound did not play')
-                                }
-                            })
+
                         }
-                        return 0
-
-
                     }
                 })
 
@@ -298,6 +299,7 @@ function TimerPage(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
+                                    BackgroundTimer.stop()
                                     setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={{

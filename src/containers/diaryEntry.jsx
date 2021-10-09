@@ -220,7 +220,7 @@ function DiaryEntry(props) {
                 setCountdownTimer(parseInt(currentTime) + parseInt(increment))
                 setCurrenTime(parseInt(currentTime) + parseInt(increment))
             }
-            BackgroundTimer.stopBackgroundTimer()
+            BackgroundTimer.stop()
             setButtonText('Close')
             deactivateKeepAwake();
         }
@@ -243,23 +243,25 @@ function DiaryEntry(props) {
 
 
                 setCountdownTimer(secs => {
-                    if (secs > 0) {
-                        return secs - 1
+                    if(startTimer) {
+                        if (secs > 0) {
+                            return secs - 1
 
 
-                    } else {
+                        } else {
 
-                        setStartTimer(false)
-                        if(AppState.currentState === 'active') {
-                            timerEndingSound.play((success) => {
-                                if (!success) {
-                                    console.log('Sound did not play')
-                                }
-                            })
+                            setStartTimer(false)
+                            if (AppState.currentState === 'active') {
+                                timerEndingSound.play((success) => {
+                                    if (!success) {
+                                        console.log('Sound did not play')
+                                    }
+                                })
+                            }
+                            return 0
+
+
                         }
-                        return 0
-
-
                     }
                 })
 
@@ -342,6 +344,7 @@ function DiaryEntry(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
+                                    BackgroundTimer.stop()
                                     setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={{

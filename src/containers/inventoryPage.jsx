@@ -284,7 +284,7 @@ function TeaInventory(props) {
     const [data, setData] = useState(()=> {
         if (searchTerm !== null) {
 
-            return Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName === searchTerm || key === "add")
+            return Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName.toLowerCase().includes( searchTerm.toLowerCase()))
 
 
         } else {
@@ -295,7 +295,7 @@ function TeaInventory(props) {
     useEffect(()=> {
         if (searchTerm !== null) {
 
-            setData( Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName === searchTerm || key === "add"))
+            setData( Object.entries(props.teaAvailable).filter(([key, value]) => value.teaName.toLowerCase().includes( searchTerm.toLowerCase())))
 
 
         } else {

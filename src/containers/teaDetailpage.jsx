@@ -111,13 +111,44 @@ function TeaDetailPage(props) {
             <HistoryItem key={`historyItem${item.sessionID}`} data={{...item}}/>
         )
     }
+
+    let backgroundColour
+
+    if(props.teaAvailable[route.params.teaID].type === 'Hei cha')
+    {
+        backgroundColour = props.colors.HeiCha
+    }
+    else if(props.teaAvailable[route.params.teaID].type === 'Raw Pu-erh')
+    { backgroundColour = props.colors.RawPuerh}
+    else if(props.teaAvailable[route.params.teaID].type === 'Ripe Pu-erh')
+    {
+        backgroundColour = props.colors.RipePuerh
+    }
+    else{
+        backgroundColour = props.colors[props.teaAvailable[route.params.teaID].type]
+    }
+
+
+
     return (
 
 
         <View style={styles.container}>
             <View style={styles.topPart}>
                 <View style={styles.topPartBar}>
-
+                    <View style={{
+                        top: 10,
+                        width: 50,
+                        height: 50,
+                        backgroundColor: backgroundColour,
+                        borderRadius: 100,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <TouchableOpacity activeOpacity={1} style={{width: 30, height: 30, }}>
+                            <Image style={{height: '100%', width: '100%'}} source={require('../img/teaLeaf.png')}/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={{
                     top: '40%',
@@ -361,6 +392,7 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary, TeaAvailable} = state;
 
     return {
+        colors: TeaAvailable.teaColour,
         wholeDiary: Diary,
         diary: Diary.diaryEntry,
         teaAvailable: TeaAvailable.teaAvailable

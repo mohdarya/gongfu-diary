@@ -201,11 +201,7 @@ function TeaNameEntryPage(props) {
             <View style={styles.container}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
-                        <View style={{ top: 20,width: 80, height: 80, backgroundColor: '#E9C46A', borderRadius:100, justifyContent: 'center', alignItems: 'center'}}>
-                            <TouchableOpacity activeOpacity={1} style={{width: 70, height: 70}}>
-                                <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
-                            </TouchableOpacity>
-                        </View>
+                      
                     </View>
                     <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>

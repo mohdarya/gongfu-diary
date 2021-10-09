@@ -78,7 +78,11 @@ function DiaryHistoryListing(props) {
             return Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase()))
 
 
-        } else {
+        } else if(route.params.teaID !== null)
+        {
+            return Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID)
+        }
+        else {
             return Object.entries(props.diary).filter(([key, value]) => {
 
 
@@ -93,7 +97,11 @@ function DiaryHistoryListing(props) {
         setData(Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase())))
 
 
-    } else {
+    }else if(route.params.teaID !== null)
+    {
+        setData( Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID))
+    }
+    else {
         setData( Object.entries(props.diary).filter(([key, value]) => {
 
 

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import React, {useEffect, useState} from 'react';
+import {FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import {connect} from "react-redux";
 import {resetCurrentTeaData} from "../action/currentTeaAction";
@@ -39,6 +39,31 @@ function DiaryHistoryListing(props) {
             fontWeight: 'bold',
             fontSize: 30,
             color: '#264653',
+        },    searchTextInput: {
+            marginLeft: 15,
+            color: 'black'
+        },      searchView: {
+            alignSelf: 'center',
+            backgroundColor: '#E9C46A',
+            flexDirection: 'row',
+
+
+            borderRadius: 15,
+            width: '98%',
+            height: 42
+
+        },    topBar: {
+            top: '5%',
+            position: 'absolute',
+            zIndex: 2,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+            marginLeft: 15,
+            marginRight: 15,
+
+
         },
 
 
@@ -50,11 +75,7 @@ function DiaryHistoryListing(props) {
         if (searchTerm !== null) {
 
 
-            return Object.entries(props.diary).filter(([key, value]) => {
-
-
-                return parseInt(value.teaID) === searchTerm
-            })
+            return Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase()))
 
 
         } else {
@@ -66,21 +87,59 @@ function DiaryHistoryListing(props) {
         }
     })
 
+    useEffect(()=> {  if (searchTerm !== null) {
+
+
+        setData(Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase())))
+
+
+    } else {
+        setData( Object.entries(props.diary).filter(([key, value]) => {
+
+
+            return true
+        }))
+    }} , [searchTerm])
 
     console.log(data)
 
     return (
         <View style={styles.container}>
 
+            <View style={styles.topBar}>
 
-            <View style={{flex: 1}}>
+                <View style={styles.searchView}>
+                    <TextInput
+                        onSubmitEditing={(event) => {
+                            if(event.nativeEvent.text === '')
+                            {setSearchTerm(null)
+
+                            }else {
+                                setSearchTerm(event.nativeEvent.text)
+                            }
+                        }}
+                        style={styles.searchTextInput}
+                        onChangeText={(text) => {
+                            setSearchTerm(text)
+                        }}
+
+                        placeholder={'Search For a Tea'}
+                        placeholderTextColor={'#585858'}>
+                        {searchTerm}
+                    </TextInput>
+                </View>
+
+
+            </View>
+
+            <View style={{flex: 1, top: '10%'}}>
 
 
                 <Text style={styles.welcomeText}>
                     History
                 </Text>
 
-                <View style={{height: '90%', width: '90%', alignSelf: 'center',}}>
+                <View style={{height: '76%', width: '90%', alignSelf: 'center'}}>
 
 
                     <FlatList data={data} renderItem={({item}) => {

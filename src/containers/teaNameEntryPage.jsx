@@ -159,7 +159,7 @@ function TeaNameEntryPage(props) {
 
     const navigation = useNavigation()
     const route  = useRoute()
-    const [teaNameToDisplay, setDisplayTeaName] = useState()
+    const [teaNameToDisplay, setDisplayTeaName] = useState('Tea')
     const setTeaName = (teaNameAndID) => {
 
         if(teaNameAndID.teaName.length <=65)

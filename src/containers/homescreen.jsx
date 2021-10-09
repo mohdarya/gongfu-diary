@@ -336,7 +336,7 @@ function HomeScreen(props) {
                                 Inventory
                             </Text>
                             <TouchableOpacity onPress={() => {
-                                navigation.navigate('TeaInventory', {searchTerm: null})
+                                navigation.navigate('TeaInventory', {searchTerm: null, status: 'active'})
                             }} activeOpacity={1} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,
@@ -494,7 +494,7 @@ function HomeScreen(props) {
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/settings.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={1} onPress={() => {
-                        navigation.navigate('TeaInventory', {searchTerm: null})
+                        navigation.navigate('TeaInventory', {searchTerm: null, status: 'active'})
                     }} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/teaStorage.png')}/>
                     </TouchableOpacity>

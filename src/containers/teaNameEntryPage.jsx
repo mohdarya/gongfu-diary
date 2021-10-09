@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-
 
 
 function TeaNameEntryPage(props) {
@@ -181,25 +180,25 @@ function TeaNameEntryPage(props) {
         }
     }
     const [teaData, setTeaData] = useState(()=> {
-        let data = {teaName: 'Tea',
+        return {
+            teaName: 'Tea',
             teaID: null,
             weight: null,
             temp: null,
             waterVolume: null,
-            startingTime: null}
-
-        if( typeof route.params !== 'undefined')
-        {
-            data = {
-                ...data,
-                teaName: route.params.teaName,
-                teaID: route.params.teaID,
-            }
+            startingTime: null
         }
-
-        return data
             })
 
+    useEffect(()=> {
+        if( typeof route.params !== 'undefined')
+        {
+
+            setTeaName({  teaName: route.params.teaName,
+                teaID: route.params.teaID,})
+        }
+
+    }, [])
     return (
 
         <TouchableOpacity style={{flex: 1}} onPress={() => {

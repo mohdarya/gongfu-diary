@@ -288,7 +288,21 @@ function DiaryEntry(props) {
 
     }
 
+    let backgroundColour
 
+    if(props.teas[teaID].type === 'Hei cha')
+    {
+        backgroundColour = props.colors.HeiCha
+    }
+    else if(props.teas[teaID].type === 'Raw Pu-erh')
+    { backgroundColour = props.colors.RawPuerh}
+    else if(props.teas[teaID].type === 'Ripe Pu-erh')
+    {
+        backgroundColour = props.colors.RipePuerh
+    }
+    else{
+        backgroundColour = props.colors[props.teas[teaID].type]
+    }
     const goToFlavorSelection = () => {
         navigation.navigate('FlavorEntry', {
             setSteepData,
@@ -374,18 +388,18 @@ function DiaryEntry(props) {
             </Modal>
             <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1500}}>
                 <View style={styles.topPart}>
-                    <View style={styles.topPartBar}>
+                    <View style={[styles.topPartBar,]}>
                         <View style={{
                             top: 20,
                             width: 80,
                             height: 80,
-                            backgroundColor: '#E9C46A',
+                            backgroundColor: backgroundColour,
                             borderRadius: 100,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity activeOpacity={1} style={{width: 70, height: 70}}>
-                                <Image style={{height: '100%', width: '100%'}} source={require('../img/add.png')}/>
+                            <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50, }}>
+                                <Image style={{height: '100%', width: '100%'}} source={require('../img/teaLeaf.png')}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -658,6 +672,7 @@ const mapStateToProps = (state, ownProps) => {
     const {Diary, TeaAvailable} = state;
 
     return {
+        colors: TeaAvailable.teaColour,
         teas: TeaAvailable.teaAvailable,
         Diary: Diary.diaryEntry
     };

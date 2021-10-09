@@ -74,45 +74,34 @@ function DiaryHistoryListing(props) {
     const [searchBar, setSearchBar] = useState(()=> {
         return route.params.teaID === null;
     })
-    const [data, setData] = useState(() => {
+    const [data, setData] = useState()
+
+    useEffect(()=> {
+
+        let tempData
+
         if (searchTerm !== null) {
 
 
-            return Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase()))
-
-
-        } else if(route.params.teaID !== null)
-        {
-            return Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID)
-        }
-        else {
-            return Object.entries(props.diary).filter(([key, value]) => {
-
-
-                return true
-            })
-        }
-    })
-
-    useEffect(()=> {  if (searchTerm !== null) {
-
-
-        setData(Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase())))
+         tempData = (Object.entries(props.diary).filter(([key, value]) => props.teaAvailable[value.teaID].teaName.toLowerCase().includes( searchTerm.toLowerCase())))
 
 
     }else if(route.params.teaID !== null)
     {
-        setData( Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID))
+        tempData = ( Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID))
     }
     else {
-        setData( Object.entries(props.diary).filter(([key, value]) => {
+        tempData = ( Object.entries(props.diary).filter(([key, value]) => {
 
 
             return true
         }))
-    }} , [searchTerm])
+    }
 
-    console.log(data)
+    tempData.reverse()
+    setData(tempData)} , [searchTerm])
+
+
 
     return (
         <View style={styles.container}>
@@ -163,7 +152,7 @@ function DiaryHistoryListing(props) {
                     <FlatList data={data} renderItem={({item}) => {
 
                         return(
-                            <HistoryItem key={`historyItem${item[1].sessionID}`} data={item[1]}/>
+                            <HistoryItem key={`historyItem${item[1].sessionID}${item[1].time}`} data={item[1]}/>
                         )
                     }}
                               keyExtractor={item => item[1].sessionID}/>

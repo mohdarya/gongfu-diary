@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Animated, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {getFocusedRouteNameFromRoute, useNavigation, useRoute} from "@react-navigation/core";
+import React, {useState} from 'react';
+import {Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
-import InventoryItem from "../components/inventoryItem";
-import HistoryItem from "../components/historyItem";
-import {Directions, FlingGestureHandler, State} from 'react-native-gesture-handler';
+import {deductWeight, resetCurrentTeaData, setTeaSessionForDay} from "../action/currentTeaAction";
+import {addEntry, addSteep, resetDiaryData} from "../action/diaryEntryAction";
 
 function SettingsPage(props) {
 
@@ -17,47 +16,6 @@ function SettingsPage(props) {
 
 
         },
-        topBar: {
-            top: '5%',
-            position: 'absolute',
-            zIndex: 2,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flex: 1,
-            marginLeft: 15,
-            marginRight: 15,
-
-
-        },
-
-
-        buttonText: {
-
-            textAlign: 'center',
-
-            fontSize: 45,
-        },
-
-        searchView: {
-            alignSelf: 'center',
-            backgroundColor: '#E9C46A',
-            flexDirection: 'row',
-
-
-            borderRadius: 15,
-            width: '98%',
-            height: 42
-
-        },
-        settingView: {
-            height: '45%',
-
-        },
-        searchTextInput: {
-            marginLeft: 15,
-            color: 'black'
-        },
         welcomeText: {
             fontSize: 30,
             color: 'white',
@@ -66,99 +24,10 @@ function SettingsPage(props) {
             marginRight: 15,
             marginTop: 50,
             fontWeight: 'bold'
-        },
-        weekView: {
-            flex: 1,
-
-            marginBottom: 50,
-            marginLeft: 15,
-            marginRight: 15,
-
-        },
-        weekBar: {
-            alignSelf: 'center',
-            borderRadius: 16,
-            backgroundColor: '#2A9D8F',
-            width: '98%',
-            height: 90,
-        }, inventoryContainer: {
-            flex: 1.8,
-            marginLeft: 15,
-            marginRight: 15,
-            marginBottom: 50,
-
-
-        },
-        inventoryView: {
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            marginTop: 23,
-
-            height: 175,
-        },
-        inventoryViewTextView: {
-            width: '100%',
-            height: 50,
-            flexDirection: 'row',
-            alignItems: 'center'
-        },
-        HistoryViewTextView: {
-            width: '100%',
-            height: 50,
-            flexDirection: 'row',
-            alignItems: 'center'
-        },
-        historyContainer: {
-            flex: 5,
-            marginLeft: 15,
-            marginRight: 15,
-
-        },
-        historyView: {
-            marginLeft: 15,
-            marginRight: 15,
-        },
-        navigationBar: {
-
-
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            borderTopRightRadius: 34,
-            height: 61, width: 331,
-            backgroundColor: '#E9C46A'
-        },
-        navigationGroup: {
-            position: 'absolute',
-            justifyContent: 'flex-end',
-            bottom: 0,
-            width: '100%',
-            height: '20%'
-        },
-        sessionActionMenu: {
-            height: 66,
-            width: 'auto',
-            backgroundColor: '#E9C46A',
-            flexDirection: 'row',
-            borderRadius: 25,
-
-            alignItems: "center",
-            justifyContent: 'center',
-            alignSelf: "flex-end",
-
         }
 
 
     });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -167,7 +36,7 @@ function SettingsPage(props) {
 
 
 
-            <View style={{height:'100%',}}>
+            <View style={{height: '100%',}}>
 
                 <View style={{flex: 1}}>
 
@@ -175,7 +44,28 @@ function SettingsPage(props) {
                     <Text style={styles.welcomeText}>
                         Settings
                     </Text>
+                    <View style={{height: 500, width: '100%',alignItems: 'center',}}>
+                        <TouchableOpacity  activeOpacity={1} style={{height: 50, width: '80%',alignSelf: "center", flexDirection: 'row', alignItems: 'center',}}>
+                            <View style={{height: 50, width: 50, backgroundColor: 'white', borderRadius: 10}}>
+                                <Image style={{height: '100%', width: '100%'}} source={require('../img/archive.png')}/>
 
+                            </View>
+                            <Text style={{marginLeft: 20, fontSize:  20, color: 'white', fontWeight: 'bold',}}>
+                                Archived Tea
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity  activeOpacity={1} onPress={()=> {
+                                        setConfirmation(!confirmationVisible)
+                        }} style={{height: 50, width: '80%', marginTop: 50,alignSelf: "center", flexDirection: 'row', alignItems: 'center',}}>
+                            <View style={{height: 50, width: 50, backgroundColor: 'white', borderRadius: 10}}>
+                                <Image style={{height: '100%', width: '100%'}} source={require('../img/reset.png')}/>
+
+                            </View>
+                            <Text style={{marginLeft: 20, fontSize:  20, color: 'white', fontWeight: 'bold',}}>
+                                Reset Data
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
 
                 </View>
             </View>
@@ -185,14 +75,7 @@ function SettingsPage(props) {
     )
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const {Diary, TeaAvailable} = state;
 
-    return {
-        wholeDiary: Diary,
-        diary: Diary.diaryEntry,
-        teaAvailable: TeaAvailable.teaAvailable
-    };
-};
-export default connect(mapStateToProps)(SettingsPage)
+
+export default connect(null)(SettingsPage)
 

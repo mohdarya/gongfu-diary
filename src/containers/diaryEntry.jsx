@@ -179,6 +179,7 @@ function DiaryEntry(props) {
         props.createEntry({
             teaID, waterVolume, weight,  temp,     duration, note,
             sessionID: sessionID,
+            teaName: props.teas[teaID].teaName,
             steeps:  [...steepArray, [steepData]],
 
 

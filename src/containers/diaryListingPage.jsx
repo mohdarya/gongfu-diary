@@ -304,7 +304,7 @@ function DiaryListingPage(props) {
                             alignItems: 'center'
                         }}>
                             <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50, }}>
-                                <Image style={{height: '100%', width: '100%'}} source={require('../img/teaLeaf.png')}/>
+                                <Image style={{height: '100%', width: '100%'}} source={require('../img/teaLeafWhite.png')}/>
                             </TouchableOpacity>
                         </View>
                     </View>

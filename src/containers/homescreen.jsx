@@ -500,12 +500,13 @@ function HomeScreen(props) {
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={1} onPress={() => {
                         let active = Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active')
-                        let randomTea = active[Math.floor(Math.random() * active.length)]
+                        if(active.length >= 2)
+                        {let randomTea = active[Math.floor(Math.random() * active.length)]
                         navigation.navigate("TeaName", {
                             teaID: randomTea[0],
                             teaName: randomTea[1].teaName
                         })
-
+                            }
                     }} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/shuffle.png')}/>
                     </TouchableOpacity>

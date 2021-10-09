@@ -40,6 +40,7 @@ function DiaryHistoryListing(props) {
             fontSize: 30,
             color: '#264653',
         },    searchTextInput: {
+            width: '90%',
             marginLeft: 15,
             color: 'black'
         },      searchView: {

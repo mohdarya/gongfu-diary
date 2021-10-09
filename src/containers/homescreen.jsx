@@ -55,6 +55,8 @@ function HomeScreen(props) {
 
         },
         searchTextInput: {
+
+            width: '90%',
             marginLeft: 15,
             color: 'black'
         },

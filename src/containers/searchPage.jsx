@@ -55,6 +55,7 @@ function SearchPage(props) {
 
         },
         searchTextInput: {
+            width: '90%',
             marginLeft: 15,
             color: 'black'
         },

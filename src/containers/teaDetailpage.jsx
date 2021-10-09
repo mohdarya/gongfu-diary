@@ -4,8 +4,7 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 import HistoryItem from "../components/historyItem";
 import {connect} from "react-redux";
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
-import {addEntry, addSteep} from "../action/diaryEntryAction";
-import {archiveTea, deductWeight} from "../action/currentTeaAction";
+import {archiveTea, unarchiveTea} from "../action/currentTeaAction";
 
 
 function TeaDetailPage(props) {
@@ -80,6 +79,14 @@ function TeaDetailPage(props) {
     const [editActive, setEdit] = useState(false)
     const [editBackground, setEditBackground] = useState({backgroundColor: '#E9C46A',})
     const [historyItems, setHistoryItems] = useState([])
+    const [archived, setArchived] = useState(() => {
+        return data.status === 'archived';
+    })
+
+    useEffect(() => {
+        setArchived(data.status === 'archived')
+
+    }, [props.teaAvailable])
     useEffect(() => {
         let items = []
 
@@ -143,7 +150,7 @@ function TeaDetailPage(props) {
                         {data.vendor}
                     </Text>
 
-                    <Text style={{textAlign: 'center', marginTop: 7, fontWeight: 'bold',fontSize: 18,}}>
+                    <Text style={{textAlign: 'center', marginTop: 7, fontWeight: 'bold', fontSize: 18,}}>
                         {data.weight + 'G'}
                     </Text>
 
@@ -160,7 +167,7 @@ function TeaDetailPage(props) {
                         borderRadius: 30,
                     }}
                           onPress={() => {
-                              if( data.link!==  null && data.link !== '') {
+                              if (data.link !== null && data.link !== '') {
                                   Linking.canOpenURL(data.link).then(supported => {
                                       if (!supported) {
                                           ToastAndroid.show("Link that was provided cannot be opened", ToastAndroid.LONG)
@@ -168,8 +175,7 @@ function TeaDetailPage(props) {
                                           return Linking.openURL(data.link)
                                       }
                                   }).catch(error => console.log('error'))
-                              }
-                              else {
+                              } else {
                                   ToastAndroid.show("No Link Was Provided", ToastAndroid.LONG)
                               }
                           }}>
@@ -316,8 +322,12 @@ function TeaDetailPage(props) {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                <AnimatedTouchable activeOpacity={1} onPress={()=> {
-                                    props.archiveTea(route.params.teaID)
+                                <AnimatedTouchable activeOpacity={1} onPress={() => {
+                                    if (archived) {
+                                        props.unarchiveTea(route.params.teaID)
+                                    } else {
+                                        props.archiveTea(route.params.teaID)
+                                    }
                                     navigation.goBack()
                                 }} style={{
                                     width: textInputWidth.interpolate({
@@ -328,8 +338,11 @@ function TeaDetailPage(props) {
                                         outputRange: [0, 40]
                                     }),
                                 }}>
-                                    <Image style={{height: '100%', width: '100%'}}
-                                           source={require('../img/delete.png')}/>
+                                    {archived ? <Image style={{height: '100%', width: '100%'}}
+                                                       source={require('../img/unarchive.png')}/> :
+                                        <Image style={{height: '100%', width: '100%'}}
+                                               source={require('../img/archive.png')}/>}
+
                                 </AnimatedTouchable></AnimatedTouchable>
 
                         </Animated.View>
@@ -357,7 +370,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     return {
 
-
+        unarchiveTea: (teaId) => dispatch(unarchiveTea(teaId)),
         archiveTea: (teaId) => dispatch(archiveTea(teaId))
     };
 };

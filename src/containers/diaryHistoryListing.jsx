@@ -147,7 +147,7 @@ function DiaryHistoryListing(props) {
                     History
                 </Text>
 
-                <View style={{height: '76%', width: '90%', alignSelf: 'center'}}>
+                <View style={{height: '73%', width: '90%', alignSelf: 'center'}}>
 
 
                     <FlatList data={data} renderItem={({item}) => {

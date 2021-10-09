@@ -8,7 +8,7 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    TouchableOpacity,
+    TouchableOpacity, Vibration,
     View
 } from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
@@ -162,6 +162,13 @@ function TimerPage(props) {
 
         return true;
     }
+
+    const ONE_SECOND_IN_MS = 100;
+    const PATTERN = [
+        1 * ONE_SECOND_IN_MS,
+        2 * ONE_SECOND_IN_MS,
+        3 * ONE_SECOND_IN_MS
+    ];
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
         return () => {
@@ -212,11 +219,13 @@ function TimerPage(props) {
 
                             setStartTimer(false)
                             if (AppState.currentState === 'active') {
+                                Vibration.vibrate(PATTERN)
                                 timerEndingSound.play((success) => {
                                     if (!success) {
                                         console.log('Sound did not play')
                                     }
                                 })
+
                             }
                             return 0
 

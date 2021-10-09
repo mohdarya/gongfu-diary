@@ -157,7 +157,7 @@ function SearchPage(props) {
     const [data, setData] = useState(props.diary)
     const route = useRoute()
 
-    const {searchTerm} = route.params
+    const [searchTerm, setSearchTerm] = useState(route.params.searchTerm)
 
     useEffect(()=> {
 
@@ -182,6 +182,7 @@ function SearchPage(props) {
         return items
     }
 
+
     const renderItems = ({item}) => {
 
 
@@ -200,8 +201,32 @@ function SearchPage(props) {
         <View style={styles.container}>
 
 
+            <View style={styles.topBar}>
 
-            <View style={{height:'100%',}}>
+                <View style={styles.searchView}>
+                    <TextInput
+                        onSubmitEditing={(event) => {
+                            if(event.nativeEvent.text === '')
+                            {setSearchTerm(null)
+
+                            }else {
+                                setSearchTerm(event.nativeEvent.text)
+                            }
+                        }}
+                        style={styles.searchTextInput}
+                        onChangeText={(text) => {
+                            setSearchTerm(text)
+                        }}
+
+                        placeholder={'Search For a Tea'}
+                        placeholderTextColor={'#585858'}>
+                        {searchTerm}
+                    </TextInput>
+                </View>
+
+
+            </View>
+            <View style={{height:'90%', marginTop: 50,}}>
 
                 <ScrollView style={{flex: 1}} contentContainerStyle={{height: 950}}>
 
@@ -244,7 +269,7 @@ function SearchPage(props) {
                                 History
                             </Text>
                             <TouchableOpacity activeOpacity={1} onPress={()=> {
-                                navigation.navigate('DiaryHistoryListing', {searchTerm: searchTerm})
+                                navigation.navigate('DiaryHistoryListing', {searchTerm: searchTerm, steParentSearch: setSearchTerm})
                             }} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,

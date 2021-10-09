@@ -177,7 +177,7 @@ function TeaNameEntryPage(props) {
                 teaData
             })
         } else {
-            ToastAndroid.show("Please Enter a Tea Name", ToastAndroid.LONG)
+            ToastAndroid.show("Please Fill All Fields", ToastAndroid.LONG)
         }
     }
     const [teaData, setTeaData] = useState(()=> {

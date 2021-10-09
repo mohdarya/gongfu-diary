@@ -142,7 +142,14 @@ function SettingsPage(props) {
     )
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    return {
+       resetDiary: ()=> dispatch(resetDiaryData()),
+        resetTeaInventory: ()=> dispatch(resetCurrentTeaData())
+    };
+};
 
 
-export default connect(null)(SettingsPage)
+export default connect(null,mapDispatchToProps)(SettingsPage)
 

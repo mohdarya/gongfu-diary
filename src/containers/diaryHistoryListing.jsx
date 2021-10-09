@@ -150,7 +150,7 @@ function DiaryHistoryListing(props) {
 
             </View>
 
-            <View style={{flex: 1, top: '10%'}}>
+            <View style={[{flex: 1}, searchBar ? {top: '10%'} : {}]}>
 
 
                 <Text style={styles.welcomeText}>

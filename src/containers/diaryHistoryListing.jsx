@@ -129,6 +129,10 @@ function DiaryHistoryListing(props) {
                         style={styles.searchTextInput}
                         onChangeText={(text) => {
                             setSearchTerm(text)
+                            if(route.params.setParentSearch !== null)
+                            {
+                                route.params.setParentSearch(text)
+                            }
                         }}
 
                         placeholder={'Search For a Tea'}

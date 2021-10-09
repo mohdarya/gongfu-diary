@@ -192,7 +192,7 @@ function TeaInventoryEntry(props) {
                 fontSize: 20
             },
             FlavorNoteItem: {
-              
+
                 height: 60,
                 width: 160,
                 borderRadius: 20,
@@ -268,7 +268,7 @@ function TeaInventoryEntry(props) {
 
                         <View style={styles.flavorListContainer}>
                             <FlatList
-                                data={['Oolong', 'Black', 'Green', 'White', 'hei cha', 'purple', 'Raw Pu-erh', 'Ripe Pu-erh',]}
+                                data={['Oolong', 'Black', 'Green', 'White', 'Hei cha', 'Purple', 'Raw Pu-erh', 'Ripe Pu-erh',]}
                                 horizontal={false}
                                 numColumns={2}
                                 renderItem={({item}) => {

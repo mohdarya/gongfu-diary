@@ -39,7 +39,8 @@ function HistoryItem(props) {
     const navigation = useNavigation()
     let date = 0;
 
-    let dateNumber =  parseInt(props.data.sessionID.replace(toString(props.data.teaID), ''))
+    console.log(props.data.sessionID)
+    let dateNumber = parseInt(props.data.sessionID.replace(props.data.teaID + props.teaAvailable[props.data.teaID].teaName, ''))
     date = new Date(dateNumber).toLocaleDateString()
 
     const goToTeaPage = () => {

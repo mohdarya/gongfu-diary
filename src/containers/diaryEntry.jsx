@@ -139,9 +139,9 @@ function DiaryEntry(props) {
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
     const [steepArray, setSteepArray] = useState([])
-    const [sessionID, setSessionID] = useState(() => {
-        console.log(teaID + Date.now())
-        return teaID + Date.now()
+    const [startTime, setStartTime] = useState(() => {
+
+        return  Date.now()
 
     })
 
@@ -169,7 +169,10 @@ function DiaryEntry(props) {
 
 
 
-        let duration = Date.now() -  parseInt(sessionID.replace(toString(teaID), ''))
+            let sessionID = teaID + props.teas[teaID].teaName + startTime
+
+            console.log(teaID)
+        let duration = Date.now() -  parseInt(startTime)
 
                 props.setTeaDay(new Date().getDay(), new Date().getDate())
             props.deductWeight(teaID, weight)

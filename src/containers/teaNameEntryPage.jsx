@@ -1,22 +1,14 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
-import {useNavigation} from "@react-navigation/core";
+import {useNavigation, useRoute} from "@react-navigation/core";
 
 
 
 function TeaNameEntryPage(props) {
 
 
-    const [teaData, setTeaData] = useState({
-        teaName: 'Tea',
-        teaID: null,
-        weight: null,
-        temp: null,
-        waterVolume: null,
-        startingTime: null
 
-    })
-    const navigation = useNavigation()
+
     const
         styles = StyleSheet.create({
             container: {
@@ -165,6 +157,8 @@ function TeaNameEntryPage(props) {
         })
 
 
+    const navigation = useNavigation()
+    const route  = useRoute()
     const setTeaName = (teaNameAndID) => {
         setTeaData({...teaData, ...teaNameAndID})
     }
@@ -177,7 +171,25 @@ function TeaNameEntryPage(props) {
             ToastAndroid.show("Please Enter a Tea Name", ToastAndroid.LONG)
         }
     }
+    const [teaData, setTeaData] = useState(()=> {
+        let data = {teaName: 'Tea',
+            teaID: null,
+            weight: null,
+            temp: null,
+            waterVolume: null,
+            startingTime: null}
 
+        if(route.params.teaID !== undefined)
+        {
+            data = {
+                ...data,
+                teaName: route.params.teaName,
+                teaID: route.params.teaID,
+            }
+        }
+
+        return data
+            })
 
     return (
 

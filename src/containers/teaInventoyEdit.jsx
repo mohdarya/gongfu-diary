@@ -275,7 +275,7 @@ function TeaInventoryEdit(props) {
                         </TouchableOpacity>
 
                         <View style={styles.flavorListContainer}>
-                            <FlatList data={['Oolong', 'Black', 'Green', 'White', 'hei cha', 'purple', 'Raw Pu-erh', 'Ripe Pu-erh', ]}
+                            <FlatList data={['Oolong', 'Black', 'Green', 'White', 'Hei cha', 'Purple', 'Raw Pu-erh', 'Ripe Pu-erh', ]}
                                       horizontal={false}
                                       numColumns={2}
                                       renderItem={({item})=> {

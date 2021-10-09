@@ -420,7 +420,7 @@ function TeaInventoryEntry(props) {
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [60, 67]
+                                outputRange: [65, 67]
                             }),
 
                         }}>

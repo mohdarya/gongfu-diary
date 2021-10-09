@@ -11,6 +11,17 @@ Link:
 
 const initialState = {
 
+    teaColour: {
+        Oolong: '#84a98c',
+        Purple: '#35345B',
+        Black: '#51010F',
+        White: '#80B06D',
+        Green: '#33673B',
+        HeiCha: '#081c15',
+        RawPuerh: '#053835',
+        RipePuerh: '#19535F'
+
+    },
     weeklySession: ['', '', '', '', '', '', ''],
     currentTeaID: 0,
     teaAvailable: {},

@@ -139,6 +139,23 @@ export function currentTeaReducer(state = initialState, action) {
 
                 }
 
+        case 'UNARCHIVE_TEA':
+
+
+
+            return {
+                ...state,
+                teaAvailable: {
+                    ...state.teaAvailable,
+                    [action.teaID]: {
+                        ...state.teaAvailable[action.teaID],
+                        status: 'active'
+                    }
+                }
+
+            }
+
+
         case 'SET_DAY_SESSION':
 
             let modifiedWeekly = state.weeklySession

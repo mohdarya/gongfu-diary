@@ -112,10 +112,16 @@ function DiaryHistoryListing(props) {
                     <TextInput
                         onSubmitEditing={(event) => {
                             if(event.nativeEvent.text === '')
-                            {setSearchTerm(null)
+                            {
+
+                                    setSearchTerm(null)
 
                             }else {
                                 setSearchTerm(event.nativeEvent.text)
+                                if(route.params.setParentSearch !== null)
+                                {
+                                    route.params.setParentSearch(event.nativeEvent.text)
+                                }
                             }
                         }}
                         style={styles.searchTextInput}

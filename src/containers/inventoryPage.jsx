@@ -299,7 +299,7 @@ function TeaInventory(props) {
 
 
         } else {
-           setData(Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active' || key === "add"))
+           setData(Object.entries(props.teaAvailable).filter(([key, value]) => value.status === route.params.status || key === "add"))
         }
 
     }, [props.teaAvailable])

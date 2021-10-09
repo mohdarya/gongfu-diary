@@ -169,6 +169,7 @@ export function currentTeaReducer(state = initialState, action) {
 
         case 'SET_DAY_SESSION':
 
+
             let modifiedWeekly = state.weeklySession
             modifiedWeekly[action.sessionDay] = action.date
             return {

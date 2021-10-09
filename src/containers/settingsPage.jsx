@@ -77,9 +77,9 @@ function SettingsPage(props) {
                             borderRadius: 10,
                             justifyContent: 'center',
                             alignContent: 'center',}}  onPress={()=> {
-
-                                props.resetDiary()
                             props.resetTeaInventory()
+                                props.resetDiary()
+
                             setConfirmation(!confirmationVisible)
                         }} activeOpacity={1}>
                             <Text style={ {

@@ -205,6 +205,7 @@ function HomeScreen(props) {
     }
 
 
+
     let beginX
     return (
         <View style={styles.container}>

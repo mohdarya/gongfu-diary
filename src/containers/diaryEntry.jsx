@@ -171,7 +171,7 @@ function DiaryEntry(props) {
 
             let sessionID = teaID + props.teas[teaID].teaName + startTime
 
-            console.log(teaID)
+
         let duration = Date.now() -  parseInt(startTime)
 
                 props.setTeaDay(new Date().getDay(), new Date().getDate())

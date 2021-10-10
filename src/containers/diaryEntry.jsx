@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
     Animated, AppState,
     BackHandler,
-    Image,
+    Image, Keyboard,
     Modal,
     ScrollView,
     StyleSheet,
@@ -440,12 +440,18 @@ function DiaryEntry(props) {
                         alignContent: 'center',
                         justifyContent: 'flex-start'
                     }}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> {
+                            setButtonText('Stop')
+                            startInterval()
+                            setTimerViewVisibility(!timerViewVisibility)
+                        }}>
                         <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
                             {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                             Timer
                         </Text>
+                        </TouchableOpacity>
                         <View style={{
                             width: '80%',
                             marginTop: 5,

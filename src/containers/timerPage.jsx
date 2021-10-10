@@ -348,12 +348,18 @@ function TimerPage(props) {
                         alignContent: 'center',
                         justifyContent: 'space-around'
                     }}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> {
+                            setButtonText('Stop')
+                            startInterval()
+                            setTimerViewVisibility(!timerViewVisibility)
+                        }}>
                         <Text style={{alignSelf: 'center', fontSize: 70, color: '#264653', fontWeight: 'bold'}}>
                             {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 40, color: '#264653'}}>
                             Timer
                         </Text>
+                        </TouchableOpacity>
                         <View style={{
                             width: '80%',
                             marginTop: 5,

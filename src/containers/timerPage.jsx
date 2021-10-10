@@ -118,7 +118,12 @@ function TimerPage(props) {
 
 
     let beginX
-    let timerEndingSound
+    const [ timerEndingSound, setTimerSound] = useState(new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
+        if (error) {
+            console.log('failed to load the sound', error);
+            return;
+        }
+    }))
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -135,14 +140,7 @@ function TimerPage(props) {
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
 
-    useEffect(() => {
-        timerEndingSound = new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
-            if (error) {
-                console.log('failed to load the sound', error);
-                return;
-            }
-        })
-    } , [] )
+
 
     const endButtonAction = () => {
 

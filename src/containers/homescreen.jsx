@@ -169,7 +169,10 @@ function HomeScreen(props) {
 
     const [searchTermValue, setSearchTerm] = useState('')
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+    const AnimatedImage = Animated.createAnimatedComponent(Image);
+    const iconWidth = useRef(new Animated.Value(0)).current
     const textInputWidth = useRef(new Animated.Value(0)).current
+
     const [historyItems, setHistoryItems] = useState([])
     const [data, setData] = useState(props.diary)
     let date = new Date()
@@ -203,7 +206,6 @@ function HomeScreen(props) {
 
         )
     }
-
 
 
     let beginX
@@ -366,8 +368,12 @@ function HomeScreen(props) {
                             <Text style={{fontSize: 34, color: 'white', marginLeft: 10, width: '45%'}}>
                                 History
                             </Text>
-                            <TouchableOpacity activeOpacity={1} onPress={()=> {
-                                navigation.navigate('DiaryHistoryListing', {searchTerm: null, setParentSearch: null, teaID: null})
+                            <TouchableOpacity activeOpacity={1} onPress={() => {
+                                navigation.navigate('DiaryHistoryListing', {
+                                    searchTerm: null,
+                                    setParentSearch: null,
+                                    teaID: null
+                                })
                             }} style={{alignSelf: 'flex-end', width: '50%',}}>
                                 <Text style={{
                                     fontSize: 18,
@@ -406,11 +412,21 @@ function HomeScreen(props) {
                                     duration: 100,
                                     useNativeDriver: false,
                                 }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 1,
+                                    duration: 1,
+                                    useNativeDriver: false,
+                                }).start();
 
                             } else if (nativeEvent.absoluteX - beginX > 10) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 0,
                                     duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 0,
+                                    duration: 1,
                                     useNativeDriver: false,
                                 }).start();
                             }
@@ -420,19 +436,35 @@ function HomeScreen(props) {
                         <Animated.View style={{
                             height: 66,
 
-
+                            flexDirection: 'row',
                             backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [70, 67]
+                                outputRange: [60, 67]
                             }),
 
                         }}>
 
+                            <AnimatedImage style={{
+                                width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 67]
+                                }), height: 67, alignSelf: 'center'
+                            }}
+                                   source={require('../img/push.png')}/>
 
-                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
-                                   source={require('../img/add.png')}/>
+
+
+
+                            <AnimatedImage style={{
+                                height: 67, width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [60, 0]
+                                }), alignSelf: 'center'
+                            }}
+                                   source={require('../img/pull.png')}/>
+
 
                         </Animated.View>
                         <Animated.View
@@ -505,13 +537,13 @@ function HomeScreen(props) {
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={1} onPress={() => {
                         let active = Object.entries(props.teaAvailable).filter(([key, value]) => value.status === 'active')
-                        if(active.length >= 2)
-                        {let randomTea = active[Math.floor(Math.random() * active.length)]
-                        navigation.navigate("TeaName", {
-                            teaID: randomTea[0],
-                            teaName: randomTea[1].teaName
-                        })
-                            }
+                        if (active.length >= 2) {
+                            let randomTea = active[Math.floor(Math.random() * active.length)]
+                            navigation.navigate("TeaName", {
+                                teaID: randomTea[0],
+                                teaName: randomTea[1].teaName
+                            })
+                        }
                     }} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/shuffle.png')}/>
                     </TouchableOpacity>

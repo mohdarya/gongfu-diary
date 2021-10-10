@@ -121,6 +121,8 @@ function TimerPage(props) {
     let timerEndingSound
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
+    const AnimatedImage = Animated.createAnimatedComponent(Image);
+    const iconWidth = useRef(new Animated.Value(0)).current
     const navigation = useNavigation()
     const route = useRoute()
     const {startingTime} = route.params
@@ -415,10 +417,16 @@ function TimerPage(props) {
                         }
                         if (nativeEvent.state === State.END) {
 
+
                             if (nativeEvent.absoluteX - beginX < -50) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 1,
                                     duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 1,
+                                    duration: 1,
                                     useNativeDriver: false,
                                 }).start();
 
@@ -426,6 +434,11 @@ function TimerPage(props) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 0,
                                     duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 0,
+                                    duration: 1,
                                     useNativeDriver: false,
                                 }).start();
                             }
@@ -438,6 +451,7 @@ function TimerPage(props) {
 
                             backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
+                            flexDirection: 'row',
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [65, 67]
@@ -446,8 +460,24 @@ function TimerPage(props) {
                         }}>
 
 
-                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
-                                   source={require('../img/pausePlay.png')}/>
+                            <AnimatedImage style={{
+                                width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 67]
+                                }), height: 67, alignSelf: 'center'
+                            }}
+                                           source={require('../img/push.png')}/>
+
+
+
+
+                            <AnimatedImage style={{
+                                height: 67, width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [60, 0]
+                                }), alignSelf: 'center'
+                            }}
+                                           source={require('../img/pull.png')}/>
 
                         </Animated.View>
                         <Animated.View

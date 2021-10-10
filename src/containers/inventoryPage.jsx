@@ -281,6 +281,8 @@ function TeaInventory(props) {
     let beginX
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
+    const AnimatedImage = Animated.createAnimatedComponent(Image);
+    const iconWidth = useRef(new Animated.Value(0)).current
     const {searchTerm} = route.params
     const [data, setData] = useState(()=> {
         if (searchTerm !== null) {
@@ -379,10 +381,16 @@ function TeaInventory(props) {
                         }
                         if (nativeEvent.state === State.END) {
 
+
                             if (nativeEvent.absoluteX - beginX < -50) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 1,
                                     duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 1,
+                                    duration: 1,
                                     useNativeDriver: false,
                                 }).start();
 
@@ -392,6 +400,11 @@ function TeaInventory(props) {
                                     duration: 100,
                                     useNativeDriver: false,
                                 }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 0,
+                                    duration: 1,
+                                    useNativeDriver: false,
+                                }).start();
                             }
                         }
                     }}>
@@ -399,19 +412,35 @@ function TeaInventory(props) {
                         <Animated.View style={{
                             height: 66,
 
-
+                            flexDirection: 'row',
                             backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [70, 67]
+                                outputRange: [60, 60]
                             }),
 
                         }}>
 
 
-                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
-                                   source={require('../img/add.png')}/>
+                            <AnimatedImage style={{
+                                width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 67]
+                                }), height: 67, alignSelf: 'center'
+                            }}
+                                           source={require('../img/push.png')}/>
+
+
+
+
+                            <AnimatedImage style={{
+                                height: 67, width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [60, 0]
+                                }), alignSelf: 'center'
+                            }}
+                                           source={require('../img/pull.png')}/>
 
                         </Animated.View>
                         <Animated.View

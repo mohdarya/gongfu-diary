@@ -145,6 +145,8 @@ function DiaryListingPage(props) {
     const [data, setData] = useState(route.params.data)
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
+    const AnimatedImage = Animated.createAnimatedComponent(Image);
+    const iconWidth = useRef(new Animated.Value(0)).current
     const [steepData, setSteepData] = useState(route.params.data.steeps)
     const [editActive, setEdit] = useState(false)
     const [note, setNote] = useState(route.params.data.note)
@@ -476,10 +478,16 @@ function DiaryListingPage(props) {
                         }
                         if (nativeEvent.state === State.END) {
 
+
                             if (nativeEvent.absoluteX - beginX < -50) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 1,
                                     duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 1,
+                                    duration: 1,
                                     useNativeDriver: false,
                                 }).start();
 
@@ -489,12 +497,18 @@ function DiaryListingPage(props) {
                                     duration: 100,
                                     useNativeDriver: false,
                                 }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 0,
+                                    duration: 1,
+                                    useNativeDriver: false,
+                                }).start();
                             }
                         }
                     }}>
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={[{
                             height: 66,
+                            flexDirection: 'row',
                             justifyContent: 'center',
                             borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
@@ -506,8 +520,24 @@ function DiaryListingPage(props) {
                         }, editBackground]}>
 
 
-                            <Image style={{width: 50, height: 50, alignSelf: 'center'}}
-                                   source={require('../img/edit.png')}/>
+                            <AnimatedImage style={{
+                                width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 67]
+                                }), height: 67, alignSelf: 'center'
+                            }}
+                                           source={require('../img/push.png')}/>
+
+
+
+
+                            <AnimatedImage style={{
+                                height: 67, width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [60, 0]
+                                }), alignSelf: 'center'
+                            }}
+                                           source={require('../img/pull.png')}/>
 
                         </Animated.View>
                         <Animated.View

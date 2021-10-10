@@ -297,6 +297,8 @@ function TeaSelection(props) {
     let beginX
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
+    const AnimatedImage = Animated.createAnimatedComponent(Image);
+    const iconWidth = useRef(new Animated.Value(0)).current
 
     const renderItems = ({item}) => {
 
@@ -376,11 +378,21 @@ function TeaSelection(props) {
                                     duration: 100,
                                     useNativeDriver: false,
                                 }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 1,
+                                    duration: 1,
+                                    useNativeDriver: false,
+                                }).start();
 
                             } else if (nativeEvent.absoluteX - beginX > 10) {
                                 Animated.timing(textInputWidth, {
                                     toValue: 0,
                                     duration: 100,
+                                    useNativeDriver: false,
+                                }).start();
+                                Animated.timing(iconWidth, {
+                                    toValue: 0,
+                                    duration: 1,
                                     useNativeDriver: false,
                                 }).start();
                             }
@@ -389,7 +401,7 @@ function TeaSelection(props) {
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={{
                             height: 66,
-
+                            flexDirection: 'row',
 
                             backgroundColor: '#E9C46A', borderTopLeftRadius: 25,
                             borderBottomLeftRadius: 25,
@@ -401,8 +413,24 @@ function TeaSelection(props) {
                         }}>
 
 
-                            <Image style={{width: 67, height: 67, alignSelf: 'center'}}
-                                   source={require('../img/add.png')}/>
+                            <AnimatedImage style={{
+                                width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 67]
+                                }), height: 67, alignSelf: 'center'
+                            }}
+                                           source={require('../img/push.png')}/>
+
+
+
+
+                            <AnimatedImage style={{
+                                height: 67, width: iconWidth.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [60, 0]
+                                }), alignSelf: 'center'
+                            }}
+                                           source={require('../img/pull.png')}/>
 
                         </Animated.View>
                         <Animated.View

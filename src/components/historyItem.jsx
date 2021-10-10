@@ -11,7 +11,7 @@ function HistoryItem(props) {
             height: 56,
             width: '100%',
             flexDirection: 'row',
-         
+
 
 
         }, iconView: {
@@ -84,13 +84,17 @@ function HistoryItem(props) {
 
 
         durationTime = durationTime / 1000
-        let mins = Math.floor((durationTime / 60))
+        let hour = Math.floor((durationTime / 60) %  60)
+        let mins = Math.floor((durationTime / 60) %60)
         let seconds = Math.floor(durationTime % 60)
 
+
+        let displayHour = hour < 10 ? `0${mins}` : hour
         let displayMins = mins < 10 ? `0${mins}` : mins
         let displaySecs = seconds < 10 ? `0${seconds}` : seconds
 
         return {
+            displayHour,
             displayMins,
             displaySecs
         }
@@ -108,7 +112,7 @@ function HistoryItem(props) {
             </View>
             <View style={styles.detailView}>
                 <Text style={{textAlign: 'right', color: 'white'}}>
-                    {clockiFy(props.data.duration).displayMins + ':' + clockiFy(props.data.duration).displaySecs}
+                    {clockiFy(props.data.duration).displayHour + ':' +clockiFy(props.data.duration).displayMins + ':' + clockiFy(props.data.duration).displaySecs}
                 </Text>
                 <Text style={{textAlign: 'right', color: 'white'}}>
                     {date}

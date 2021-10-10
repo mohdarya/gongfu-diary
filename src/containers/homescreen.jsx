@@ -242,8 +242,8 @@ function HomeScreen(props) {
                         Welcome
                     </Text>
                     <View style={styles.weekView}>
-                        <Text style={{fontSize: 34, color: 'white', marginLeft: 10}}>
-                            Week
+                        <Text style={{fontSize: 30, color: 'white',marginBottom: 10, marginLeft: 10}}>
+                            Weekly Streak
                         </Text>
 
                         <View style={styles.weekBar}>

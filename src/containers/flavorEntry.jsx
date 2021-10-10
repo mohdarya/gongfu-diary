@@ -83,6 +83,10 @@ function FlavorEntry(props) {
         {
             'note': 'Berries',
             'detail': ['Raspberry', 'Strawberry', 'Blackberry', 'Black Currant']
+        },
+        {
+            'note': 'Milky',
+            'detail': ['Butter', 'Creamy']
         }
 
     ]

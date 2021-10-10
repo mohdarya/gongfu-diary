@@ -24,7 +24,7 @@ function HistoryItem(props) {
         teaNameView: {
             alignSelf: 'center',
             marginLeft: 10,
-            width: '60%',
+            width: '55%',
 
         },
         detailView:{
@@ -53,12 +53,12 @@ function HistoryItem(props) {
     const [teaNameToDisplay, setTeaName] = useState()
 
     useEffect(()=> {
-        if(props.teaAvailable[props.data.teaID].teaName.length <=60)
+        if(props.teaAvailable[props.data.teaID].teaName.length <=45)
         {
             setTeaName(props.teaAvailable[props.data.teaID].teaName)
         }
         else {
-            setTeaName( props.teaAvailable[props.data.teaID].teaName.substring(0, 60) + ' ...')
+            setTeaName( props.teaAvailable[props.data.teaID].teaName.substring(0,45) + ' ...')
         }
     }, [props.teaAvailable])
 

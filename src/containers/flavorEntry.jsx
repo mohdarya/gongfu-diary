@@ -21,32 +21,32 @@ function FlavorEntry(props) {
     let flavorNotes = [
         {
             'note': 'Marine',
-            'detail': ['Seaweed', 'Ocean Air']
+            'detail': ['Seaweed','Fish', 'Oyster','Shrimp','Seasalt', 'Ocean Air']
         },
         {
             'note': 'Mineral',
-            'detail': ['Salt', 'Metallic', 'Wet Rocks']
+            'detail': ['Salt','Volcanic','Chalk','Granite', 'Metallic', 'Wet Rocks']
         },
         {
             'note': 'Earth',
-            'detail': ['moss', 'Musty', 'Leather', 'Compost', 'Wet Earth', 'Forest Floor', 'Decaying Wood']
+            'detail': ['Moss', 'Musty', 'Leather', 'Compost', 'Wet Earth', 'Forest Floor', 'Wet Leaves']
         },
         {
             'note': 'Wood',
-            'detail': ['Pine', 'Bark', 'Cedar', 'Resin', 'Wet Wood', 'Dark Wood', 'Green Wood', 'Cherry Wood']
+            'detail': ['Pine', 'Bark', 'Cedar', 'Resin', 'Wet Wood','Sawdust','Oak' ,'Dark Wood', 'Green Wood', 'Cherry Wood', 'Eucalyptus']
         },
         {
             'note': 'Grass',
-            'detail': ['Grass', 'Stems', 'Straw', 'barnyard', 'grass seed', 'freshly cut grass']
+            'detail': ['Grass', 'Stems', 'Straw', 'barnyard', 'Bamboo', 'freshly cut grass']
         },
         {
             'note': 'Vegetables',
-            'detail': ['Spinach', 'Broccoli', 'Zucchini', 'Asparagus', 'Garden Peas', 'Green Pepper']
+            'detail': ['Spinach', 'Broccoli', 'Zucchini', 'Asparagus', 'Peas', 'Green Pepper', 'Bean sprout', 'Green beans']
         },
 
         {
             'note': 'Herbs',
-            'detail': ['Thyme', 'Parsley', 'Cardamon', 'Eucalyptus', 'Fennel Seed', 'Coriander Seed']
+            'detail': ['Thyme', 'Parsley', 'Cardamon', 'Fennel Seed', 'Coriander Seed', 'Lavender','Mint','Basil', 'Sage']
         },
         {
             'note': 'Floral',
@@ -58,7 +58,7 @@ function FlavorEntry(props) {
         },
         {
             'note': 'Sweet',
-            'detail': ['Malt', 'Candy', 'Honey', 'Caramel', 'Molasses', 'Burnt Sugar', 'Maple Syrup']
+            'detail': ['Malt', 'Candy', 'Honey', 'Toffee','Brown sugar', 'Caramel', 'Molasses', 'Burnt Sugar', 'Maple Syrup']
         },
         {
             'note': 'Char',
@@ -66,7 +66,7 @@ function FlavorEntry(props) {
         },
         {
             'note': 'Spice',
-            'detail': ['Cocoa', 'Clove', 'Vanilla', 'Pepper', 'Saffron', 'Nutmeg', 'Licorice', 'Menthol', 'Cinnamon']
+            'detail': ['Cocoa', 'Clove', 'Vanilla', 'Pepper','Cardamom', 'Saffron', 'Nutmeg', 'Licorice', 'Menthol', 'Cinnamon', 'Ginger',]
         },
         {
             'note': 'Tropical Fruit',
@@ -78,11 +78,11 @@ function FlavorEntry(props) {
         },
         {
             'note': 'Citrus Fruit',
-            'detail': ['Lemon', 'Orange', 'Grapefruit', 'Citrus Zest']
+            'detail': ['Lemon','Lime','Mandarin', 'Orange', 'Grapefruit', 'Citrus Zest']
         },
         {
             'note': 'Berries',
-            'detail': ['Raspberry', 'Strawberry', 'Blackberry', 'Black Currant']
+            'detail': ['Raspberry', 'Strawberry', 'Blackberry', 'Blackcurrant']
         },
         {
             'note': 'Milky',

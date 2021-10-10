@@ -179,7 +179,6 @@ function DiaryEntry(props) {
     const createEntry = (force) => {
 
 
-
         if (!first || force) {
 
 
@@ -210,7 +209,7 @@ function DiaryEntry(props) {
     const handleBack = () => {
 
 
-            setConfirmation(!confirmationVisible)
+        setConfirmation(!confirmationVisible)
 
     }
 
@@ -218,9 +217,9 @@ function DiaryEntry(props) {
 
         if (navigation.canGoBack()) {
 
-                handleBack()
+            handleBack()
 
-                return true
+            return true
 
         } else {
             return true
@@ -307,16 +306,19 @@ function DiaryEntry(props) {
     }
 
 
-    const clockiFy = (time) => {
+    const clockiFy = (time, origin) => {
         let mins = Math.floor((time / 60))
         let seconds = Math.floor(time % 60)
 
         let displayMins = mins < 10 ? `${mins}` : mins
         let displaySecs = seconds < 10 ? `0${seconds}` : seconds
 
-        return {
-            displayMins,
-            displaySecs
+        if (displayMins === '0' && origin === 'currentTime') {
+            return displaySecs
+        } else {
+            return (
+                displayMins + ':'+ displaySecs
+            )
         }
 
     }
@@ -452,7 +454,7 @@ function DiaryEntry(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                {clockiFy(countdownTimer).displayMins + ':' + clockiFy(countdownTimer).displaySecs}
+                                {clockiFy(countdownTimer, 'countdownTimer')}
                             </Text>
                         </View>
                         <View style={{
@@ -525,7 +527,7 @@ function DiaryEntry(props) {
                             setTimerViewVisibility(!timerViewVisibility)
                         }}>
                             <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
-                                {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
+                                {clockiFy(currentTime, 'currentTime')}
                             </Text>
                             <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                                 Timer

@@ -287,11 +287,11 @@ function DiaryEntry(props) {
     }
 
 
-    const clockiFy = () => {
-        let mins = Math.floor((countdownTimer / 60) )
-        let seconds = Math.floor(countdownTimer % 60)
+    const clockiFy = (time) => {
+        let mins = Math.floor((time / 60) )
+        let seconds = Math.floor(time % 60)
 
-        let displayMins = mins < 10 ? `0${mins}` : mins
+        let displayMins = mins < 10 ? `${mins}` : mins
         let displaySecs = seconds < 10 ? `0${seconds}` : seconds
 
         return {
@@ -374,7 +374,7 @@ function DiaryEntry(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                {clockiFy().displayMins + ':' + clockiFy().displaySecs}
+                                {clockiFy(countdownTimer).displayMins + ':' + clockiFy(countdownTimer).displaySecs}
                             </Text>
                         </View>
                         <View style={{
@@ -441,7 +441,7 @@ function DiaryEntry(props) {
                         justifyContent: 'flex-start'
                     }}>
                         <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
-                            {currentTime}
+                            {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
                             Timer

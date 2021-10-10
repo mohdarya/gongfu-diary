@@ -242,11 +242,11 @@ function TimerPage(props) {
     }
 
 
-    const clockiFy = () => {
-        let mins = Math.floor((countdownTimer / 60) )
-        let seconds = Math.floor(countdownTimer % 60)
+    const clockiFy = (time) => {
+        let mins = Math.floor((time / 60) )
+        let seconds = Math.floor(time % 60)
 
-        let displayMins = mins < 10 ? `0${mins}` : mins
+        let displayMins = mins < 10 ? `${mins}` : mins
         let displaySecs = seconds < 10 ? `0${seconds}` : seconds
 
         return {
@@ -255,9 +255,6 @@ function TimerPage(props) {
         }
 
     }
-
-
-
 
 
     return (
@@ -297,7 +294,7 @@ function TimerPage(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                {clockiFy().displayMins + ':' + clockiFy().displaySecs}
+                                {clockiFy(countdownTimer).displayMins + ':' + clockiFy(countdownTimer).displaySecs}
                             </Text>
                         </View>
                         <View style={{
@@ -352,7 +349,7 @@ function TimerPage(props) {
                         justifyContent: 'space-around'
                     }}>
                         <Text style={{alignSelf: 'center', fontSize: 70, color: '#264653', fontWeight: 'bold'}}>
-                            {currentTime}
+                            {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
                         </Text>
                         <Text style={{alignSelf: 'center', fontSize: 40, color: '#264653'}}>
                             Timer

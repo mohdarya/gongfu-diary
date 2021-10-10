@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+    BackHandler,
     FlatList,
     Image,
     Modal,
@@ -439,6 +440,25 @@ function FlavorEntry(props) {
 
     }
 
+    function handleBackButtonClick() {
+
+        if(navigation.canGoBack())
+        {
+           navigation.goBack()
+            return true;
+        }
+
+        else{
+            return true
+        }
+
+    }
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
+    }, []);
     const doneButtonAction = () => {
 
 

@@ -10,8 +10,8 @@ function HistoryItem(props) {
             marginTop: 23,
             height: 56,
             width: '100%',
-            flexDirection: 'row'
-
+            flexDirection: 'row',
+         
 
 
         }, iconView: {
@@ -26,10 +26,11 @@ function HistoryItem(props) {
             marginLeft: 10,
             width: '55%',
 
+
         },
         detailView:{
 
-            width: '20%',
+            width: '24%',
             height: '100%',
             alignSelf: "center",
             justifyContent: 'space-between',

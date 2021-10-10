@@ -176,12 +176,11 @@ function DiaryEntry(props) {
     }
 
 
-    const createEntry = () => {
+    const createEntry = (force) => {
 
 
 
-        if (!first) {
-
+        if (!first || force) {
 
 
             let sessionID = teaID + props.teas[teaID].teaName + startTime
@@ -204,24 +203,31 @@ function DiaryEntry(props) {
 
     const endButtonAction = () => {
 
-        createEntry()
+        createEntry(false)
         setStartTimer(false)
         navigation.navigate("HomeScreen")
+    }
+    const handleBack = () => {
+
+
+            setConfirmation(!confirmationVisible)
+
     }
 
     function handleBackButtonClick() {
 
-        if(navigation.canGoBack())
-        {
-        setConfirmation(!confirmationVisible)
-            return true;
-            }
+        if (navigation.canGoBack()) {
 
-        else{
+                handleBack()
+
+                return true
+
+        } else {
             return true
         }
 
     }
+
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
         return () => {
@@ -357,10 +363,22 @@ function DiaryEntry(props) {
 
                        setConfirmation(!confirmationVisible)
                    }}>
-                <View style={{height: '50%', width: '100%', justifyContent: 'center',alignSelf: 'center', alignItems: 'center'}}>
-                    <View style={{backgroundColor: 'white' , justifyContent: 'space-around',height: 200, width: '90%',borderRadius:20}}>
+                <View style={{
+                    height: '50%',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    alignItems: 'center'
+                }}>
+                    <View style={{
+                        backgroundColor: 'white',
+                        justifyContent: 'space-around',
+                        height: 200,
+                        width: '90%',
+                        borderRadius: 20
+                    }}>
 
-                        <Text style={ {
+                        <Text style={{
                             fontSize: 23,
                             color: 'black',
                             marginLeft: 20,
@@ -372,9 +390,14 @@ function DiaryEntry(props) {
                             Would You Like To Save Your Data The Data?
                         </Text>
 
-                        <View style={{flexDirection: 'row',  justifyContent: 'space-around', marginRight: 50, marginLeft: 50,}}>
-                            <TouchableOpacity style={styles.doneButton}  onPress={()=> {
-                                createEntry()
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            marginRight: 50,
+                            marginLeft: 50,
+                        }}>
+                            <TouchableOpacity style={styles.doneButton} onPress={() => {
+                                createEntry(true)
                                 setStartTimer(false)
 
                                 setConfirmation(!confirmationVisible)
@@ -384,9 +407,9 @@ function DiaryEntry(props) {
                                     Yes
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.doneButton}  onPress={()=> {
+                            <TouchableOpacity style={styles.doneButton} onPress={() => {
                                 setConfirmation(!confirmationVisible)
-                                    navigation.goBack()
+                                navigation.goBack()
                             }} activeOpacity={1}>
                                 <Text style={styles.doneButtonText}>
                                     No

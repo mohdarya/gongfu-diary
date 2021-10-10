@@ -51,8 +51,10 @@ function TeaDetailPage(props) {
 
             },
             historyView: {
+                alignSelf: 'center',
                 height: '80%',
-                width: '100%',
+                marginLeft: 15,
+                marginRight: 15,
 
 
             }, sessionActionMenu: {

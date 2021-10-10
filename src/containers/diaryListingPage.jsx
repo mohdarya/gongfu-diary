@@ -334,13 +334,15 @@ function DiaryListingPage(props) {
                     }}>
 
                         <Text style={{
+                           textAlignVertical: 'center',
                             alignSelf: 'center',
                             marginTop: 5,
                             fontSize: 15,
                             color: '#264653',
                             width: '90%',
                             fontWeight: 'bold',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            height: 80,
                         }}>
                             {teaNameToDisplay}
                         </Text>

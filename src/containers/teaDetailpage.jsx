@@ -169,7 +169,7 @@ function TeaDetailPage(props) {
                     top: '40%',
                     left: '20%',
                     width: '60%',
-                    height: 230,
+                    height: 270,
                     backgroundColor: '#E9C46A',
                     borderRadius: 50,
                     position: "absolute",
@@ -177,6 +177,9 @@ function TeaDetailPage(props) {
                     justifyContent: 'space-around'
                 }}>
                     <Text style={{
+
+                        textAlignVertical: 'center',
+                        height: 90,
                         marginLeft: 10,
                         marginRight: 10,
                         alignSelf: 'center',

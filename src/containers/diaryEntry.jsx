@@ -478,6 +478,9 @@ function DiaryEntry(props) {
                         </Text>
 
                         <Text style={{
+                            height: 84,
+
+                            textAlignVertical: 'center',
                             alignSelf: 'center',
                             marginTop: 15,
                             marginRight: 5,

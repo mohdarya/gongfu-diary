@@ -479,7 +479,7 @@ function DiaryEntry(props) {
                             value={increment.toString()}>
 
                         </TextInput>
-                        <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
+                        <Text style={{alignSelf: 'center', fontSize: 20, color: '#264653'}}>
                             Increment
                         </Text>
 

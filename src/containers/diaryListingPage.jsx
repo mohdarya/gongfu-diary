@@ -288,12 +288,12 @@ function DiaryListingPage(props) {
 
 
         durationTime = durationTime / 1000
-        let hour = Math.floor((durationTime / 60) %  60)
+        let hour = Math.floor(durationTime / 60 /  60)
         let mins = Math.floor((durationTime / 60) %60)
         let seconds = Math.floor(durationTime % 60)
 
 
-        let displayHour = hour < 10 ? `0${mins}` : hour
+        let displayHour = hour < 10 ? `0${hour}` : hour
         let displayMins = mins < 10 ? `0${mins}` : mins
         let displaySecs = seconds < 10 ? `0${seconds}` : seconds
 

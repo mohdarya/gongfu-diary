@@ -1,26 +1,27 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-    Animated, AppState,
+    Animated,
+    AppState,
     BackHandler,
-    Image, Keyboard,
+    Image,
     Modal,
     ScrollView,
     StyleSheet,
     Text,
     TextInput,
-    TouchableOpacity, Vibration,
+    TouchableOpacity,
+    Vibration,
     View
 } from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {addDuration, addEntry, addSteep} from "../action/diaryEntryAction";
+import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
 import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
-import {deductWeight, editTea, setTeaSessionForDay} from "../action/currentTeaAction";
+import {deductWeight, setTeaSessionForDay} from "../action/currentTeaAction";
 import Sound from "react-native-sound";
 import {activateKeepAwake, deactivateKeepAwake} from "expo-keep-awake";
-import {isDisabled} from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 function DiaryEntry(props) {
 
@@ -116,14 +117,28 @@ function DiaryEntry(props) {
             justifyContent: 'center',
             alignSelf: "flex-end",
 
-        }
+        }, doneButton: {
+            backgroundColor: '#E9C46A',
+            width: 100,
+            height: 50,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignContent: 'center',
+        },
+        doneButtonText: {
+            textAlign: 'center',
+            bottom: '5%',
+            fontWeight: 'bold',
+            fontSize: 30,
+            color: '#264653',
+        },
 
 
     });
 
 
     let beginX
-    const [ timerEndingSound, setTimerSound] = useState(new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
+    const [timerEndingSound, setTimerSound] = useState(new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE, (error) => {
         if (error) {
             console.log('failed to load the sound', error);
             return;
@@ -137,6 +152,7 @@ function DiaryEntry(props) {
     const route = useRoute()
     const {startingTime, teaID, temp, waterVolume, weight} = route.params.teaData
     const [first, setFirst] = useState(true)
+    const [confirmationVisible, setConfirmation] = useState(false)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
     const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
     const [startTimer, setStartTimer] = useState(true)
@@ -148,14 +164,14 @@ function DiaryEntry(props) {
     const [steepArray, setSteepArray] = useState([])
     const [startTime, setStartTime] = useState(() => {
 
-        return  Date.now()
+        return Date.now()
 
     })
 
 
     const setSteepArrayMiddleFunc = () => {
 
-       setSteepArray( [...steepArray, [steepData]])
+        setSteepArray([...steepArray, [steepData]])
 
     }
 
@@ -164,27 +180,28 @@ function DiaryEntry(props) {
 
 
 
-        if(!first){
+        if (!first) {
 
 
 
             let sessionID = teaID + props.teas[teaID].teaName + startTime
 
 
-        let duration = Date.now() -  parseInt(startTime)
+            let duration = Date.now() - parseInt(startTime)
 
-                props.setTeaDay(new Date().getDay(), new Date().getDate())
+            props.setTeaDay(new Date().getDay(), new Date().getDate())
             props.deductWeight(teaID, weight)
-        props.createEntry({
-            teaID, waterVolume, weight,  temp,     duration, note,
-            sessionID: sessionID,
-            teaName: props.teas[teaID].teaName,
-            steeps:  [...steepArray, [steepData]],
+            props.createEntry({
+                teaID, waterVolume, weight, temp, duration, note,
+                sessionID: sessionID,
+                teaName: props.teas[teaID].teaName,
+                steeps: [...steepArray, [steepData]],
 
 
-        })
+            })
         }
     }
+
     const endButtonAction = () => {
 
         createEntry()
@@ -193,31 +210,31 @@ function DiaryEntry(props) {
     }
 
     function handleBackButtonClick() {
+
         if(navigation.canGoBack())
         {
-            BackgroundTimer.stopBackgroundTimer();
-            createEntry()
-            setStartTimer(false)
-          navigation.goBack()
-        }
+        setConfirmation(!confirmationVisible)
+            return true;
+            }
+
         else{
-
+            return true
         }
 
-        return true;
     }
-    const ONE_SECOND_IN_MS = 300;
-    const PATTERN = [
-        1 * ONE_SECOND_IN_MS,
-        2 * ONE_SECOND_IN_MS,
-        3 * ONE_SECOND_IN_MS
-    ];
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
         return () => {
             BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
         };
     }, []);
+    const ONE_SECOND_IN_MS = 300;
+    const PATTERN = [
+        1 * ONE_SECOND_IN_MS,
+        2 * ONE_SECOND_IN_MS,
+        3 * ONE_SECOND_IN_MS
+    ];
+
 
     useEffect(() => {
         if (!startTimer) {
@@ -241,9 +258,6 @@ function DiaryEntry(props) {
     const startInterval = () => {
 
 
-
-
-
         activateKeepAwake();
         if (!first) {
 
@@ -257,25 +271,25 @@ function DiaryEntry(props) {
 
                 setCountdownTimer(secs => {
 
-                        if (secs > 0) {
-                            return secs - 1
+                    if (secs > 0) {
+                        return secs - 1
 
 
-                        } else {
+                    } else {
 
-                            setStartTimer(false)
-                            if (AppState.currentState === 'active') {
-                                Vibration.vibrate(PATTERN)
-                                timerEndingSound.play((success) => {
-                                    if (!success) {
-                                        console.log('Sound did not play')
-                                    }
-                                })
-                            }
-                            return 0
-
-
+                        setStartTimer(false)
+                        if (AppState.currentState === 'active') {
+                            Vibration.vibrate(PATTERN)
+                            timerEndingSound.play((success) => {
+                                if (!success) {
+                                    console.log('Sound did not play')
+                                }
+                            })
                         }
+                        return 0
+
+
+                    }
 
                 })
 
@@ -288,7 +302,7 @@ function DiaryEntry(props) {
 
 
     const clockiFy = (time) => {
-        let mins = Math.floor((time / 60) )
+        let mins = Math.floor((time / 60))
         let seconds = Math.floor(time % 60)
 
         let displayMins = mins < 10 ? `${mins}` : mins
@@ -303,17 +317,13 @@ function DiaryEntry(props) {
 
     let backgroundColour
 
-    if(props.teas[teaID].type === 'Hei cha')
-    {
+    if (props.teas[teaID].type === 'Hei cha') {
         backgroundColour = props.colors.HeiCha
-    }
-    else if(props.teas[teaID].type === 'Raw Pu-erh')
-    { backgroundColour = props.colors.RawPuerh}
-    else if(props.teas[teaID].type === 'Ripe Pu-erh')
-    {
+    } else if (props.teas[teaID].type === 'Raw Pu-erh') {
+        backgroundColour = props.colors.RawPuerh
+    } else if (props.teas[teaID].type === 'Ripe Pu-erh') {
         backgroundColour = props.colors.RipePuerh
-    }
-    else{
+    } else {
         backgroundColour = props.colors[props.teas[teaID].type]
     }
     const goToFlavorSelection = () => {
@@ -325,16 +335,13 @@ function DiaryEntry(props) {
 
     const [teaNameToDisplay, setTeaName] = useState()
 
-    useEffect(()=> {
-        if(props.teas[teaID].teaName.length <=110)
-        {
+    useEffect(() => {
+        if (props.teas[teaID].teaName.length <= 110) {
             setTeaName(props.teas[teaID].teaName)
-        }
-        else {
-            setTeaName( props.teas[teaID].teaName.substring(0, 110) + ' ...')
+        } else {
+            setTeaName(props.teas[teaID].teaName.substring(0, 110) + ' ...')
         }
     }, [props.teas])
-
 
 
     return (
@@ -343,6 +350,54 @@ function DiaryEntry(props) {
         <View style={styles.container}>
 
 
+            <Modal animationType="slide"
+                   transparent={true}
+                   visible={confirmationVisible}
+                   onRequestClose={() => {
+
+                       setConfirmation(!confirmationVisible)
+                   }}>
+                <View style={{height: '50%', width: '100%', justifyContent: 'center',alignSelf: 'center', alignItems: 'center'}}>
+                    <View style={{backgroundColor: 'white' , justifyContent: 'space-around',height: 200, width: '90%',borderRadius:20}}>
+
+                        <Text style={ {
+                            fontSize: 23,
+                            color: 'black',
+                            marginLeft: 20,
+                            marginRight: 20,
+                            textAlign: 'center',
+                            marginTop: 5,
+                            fontWeight: 'bold'
+                        }}>
+                            Would You Like To Save Your Data The Data?
+                        </Text>
+
+                        <View style={{flexDirection: 'row',  justifyContent: 'space-around', marginRight: 50, marginLeft: 50,}}>
+                            <TouchableOpacity style={styles.doneButton}  onPress={()=> {
+                                createEntry()
+                                setStartTimer(false)
+
+                                setConfirmation(!confirmationVisible)
+                                navigation.goBack()
+                            }} activeOpacity={1}>
+                                <Text style={styles.doneButtonText}>
+                                    Yes
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.doneButton}  onPress={()=> {
+                                setConfirmation(!confirmationVisible)
+                                    navigation.goBack()
+                            }} activeOpacity={1}>
+                                <Text style={styles.doneButtonText}>
+                                    No
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </View>
+
+            </Modal>
             <Modal animationType="slide"
                    transparent={true}
                    visible={timerViewVisibility}
@@ -424,8 +479,9 @@ function DiaryEntry(props) {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50, }}>
-                                <Image style={{height: '100%', width: '100%'}} source={require('../img/teaLeafWhite.png')}/>
+                            <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50,}}>
+                                <Image style={{height: '100%', width: '100%'}}
+                                       source={require('../img/teaLeafWhite.png')}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -440,17 +496,17 @@ function DiaryEntry(props) {
                         alignContent: 'center',
                         justifyContent: 'flex-start'
                     }}>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> {
+                        <TouchableOpacity activeOpacity={1} onPress={() => {
                             setButtonText('Stop')
                             startInterval()
                             setTimerViewVisibility(!timerViewVisibility)
                         }}>
-                        <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
-                            {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
-                        </Text>
-                        <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
-                            Timer
-                        </Text>
+                            <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
+                                {clockiFy(currentTime).displayMins + ':' + clockiFy(currentTime).displaySecs}
+                            </Text>
+                            <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653'}}>
+                                Timer
+                            </Text>
                         </TouchableOpacity>
                         <View style={{
                             width: '80%',
@@ -632,8 +688,6 @@ function DiaryEntry(props) {
                                 }), height: 67, alignSelf: 'center'
                             }}
                                            source={require('../img/push.png')}/>
-
-
 
 
                             <AnimatedImage style={{

@@ -157,7 +157,7 @@ function DiaryHistoryListing(props) {
                     <FlatList data={data} renderItem={({item}) => {
 
                         return(
-                            <HistoryItem key={`historyItem${item[1].sessionID}${item[1].time}`} data={item[1]}/>
+                            <HistoryItem key={`historyItem${item[1].sessionID}`} data={item[1]}/>
                         )
                     }}
                               keyExtractor={item => item[1].sessionID}/>

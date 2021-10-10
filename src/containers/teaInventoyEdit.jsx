@@ -342,7 +342,7 @@ function TeaInventoryEdit(props) {
                         let amount
                        if(text === '')
                        {
-                           amount = null
+                           amount =parseFloat(0)
                        }
                        else {
                            amount = parseFloat(text)

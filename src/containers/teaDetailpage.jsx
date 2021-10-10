@@ -144,7 +144,15 @@ function TeaDetailPage(props) {
     }, [props.teaAvailable])
 
 
-
+    function validURL(str) {
+        let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+            '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+        return pattern.test(str);
+    }
 
 
     return (
@@ -220,14 +228,16 @@ function TeaDetailPage(props) {
                         borderRadius: 30,
                     }}
                           onPress={() => {
+                              console.log(data.link)
                               if (data.link !== null && data.link !== '') {
-                                  Linking.canOpenURL(data.link).then(supported => {
-                                      if (!supported) {
+
+                                      if (!validURL(data.link)) {
+
                                           ToastAndroid.show("Link that was provided cannot be opened", ToastAndroid.LONG)
                                       } else {
                                           return Linking.openURL(data.link)
                                       }
-                                  }).catch(error => console.log('error'))
+
                               } else {
                                   ToastAndroid.show("No Link Was Provided", ToastAndroid.LONG)
                               }

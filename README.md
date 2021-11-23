@@ -11,6 +11,6 @@ A tea diary app used to keep track of the teas you try as well as offering a tim
 - color coded tea types 
 
 # Attribution
-Sound effects obtained from https://www.zapsplat.com
+<a href=”https://www.zapsplat.com”>Sound effects and music obtained from zapsplat.com</a>
 
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

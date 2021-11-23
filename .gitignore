@@ -8,7 +8,11 @@
 
 
 
+# BUCK
+buck-out/
+\.buckd/
 *.keystore
+!debug.keystore
 upload.keystore.properties
 # User-specific stuff
 .idea/**/workspace.xml

@@ -135,6 +135,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 8
+        resConfigs "en"
         versionName "2.3.2"
     }
     splits {

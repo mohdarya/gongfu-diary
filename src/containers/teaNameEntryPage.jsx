@@ -284,7 +284,7 @@ function TeaNameEntryPage(props) {
 
                     </TextInput>
 
-                    <TouchableOpacity style={{fontSize: 20, borderBottomWidth: 2,marginTop: 5, borderColor: '#E9C46A', flexDirection: 'row', justifyContent: 'space-between'}} activeOpacity={1} onPress={()=> {
+                    <TouchableOpacity style={{fontSize: 20, borderBottomWidth: 2, height: 50, borderColor: '#E9C46A', flexDirection: 'row', justifyContent: 'space-between'}} activeOpacity={1} onPress={()=> {
                         if(flavorText.localeCompare('On') === 0) {
                             setFlavorText('Off')
                             setTeaData({...teaData, flavor: false})
@@ -295,10 +295,10 @@ function TeaNameEntryPage(props) {
                             setFlavorColor( '#E9C46A')
                         }
                     }} >
-                        <Text style={{fontSize: 20, marginBottom: 5,color:'white'}}>
+                        <Text  style={{fontSize: 20,marginLeft: 3,marginTop: 8,color:'white'}}>
                             Flavor
                         </Text>
-                        <View style={{height: '85%', width: 100,marginBottom: 5, borderRadius: 10, backgroundColor: flavorColor, alignSelf: 'center'}}>
+                        <View style={{height: 30, width: 100,marginBottom: 4, borderRadius: 10, backgroundColor: flavorColor, alignSelf: 'center'}}>
                             <Text style={{fontSize: 20, alignSelf: 'center', color: '#264653', fontWeight: 'bold'}}>
                                 {flavorText}
                             </Text>

@@ -204,7 +204,7 @@ function DiaryEntry(props) {
                 sessionID: sessionID,
                 teaName: props.teas[teaID].teaName,
                 steeps: [...steepArray, [steepData]],
-
+                flavor
 
 
             })

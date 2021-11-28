@@ -150,7 +150,7 @@ function DiaryEntry(props) {
     const iconWidth = useRef(new Animated.Value(0)).current
     const navigation = useNavigation()
     const route = useRoute()
-    const {startingTime, teaID, temp, waterVolume, weight} = route.params.teaData
+    const {startingTime, teaID, temp, waterVolume, weight, flavor} = route.params.teaData
     const [first, setFirst] = useState(true)
     const [confirmationVisible, setConfirmation] = useState(false)
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
@@ -169,6 +169,16 @@ function DiaryEntry(props) {
     })
 
 
+
+    let height
+    if(flavor)
+    {
+        height = 1580
+    }
+    else if(!flavor)
+    {
+        height = 1000
+    }
     const setSteepArrayMiddleFunc = () => {
 
         setSteepArray([...steepArray, [steepData]])
@@ -194,6 +204,7 @@ function DiaryEntry(props) {
                 sessionID: sessionID,
                 teaName: props.teas[teaID].teaName,
                 steeps: [...steepArray, [steepData]],
+
 
 
             })
@@ -492,7 +503,7 @@ function DiaryEntry(props) {
                 </View>
 
             </Modal>
-            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1500}}>
+            <ScrollView style={{flex: 1}} contentContainerStyle={{height: height}}>
                 <View style={styles.topPart}>
                     <View style={[styles.topPartBar,]}>
                         <View style={{
@@ -583,6 +594,8 @@ function DiaryEntry(props) {
 
                     </View>
                 </View>
+
+                {flavor &&
                 <View style={styles.steepView}>
                     <View style={styles.steepTag}>
                         <Text style={{
@@ -608,7 +621,7 @@ function DiaryEntry(props) {
                     </TouchableOpacity>
                 </View>
 
-
+                }
                 <View style={styles.notesView}>
                     <View style={styles.notesTag}>
                         <Text style={{

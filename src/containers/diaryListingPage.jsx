@@ -72,7 +72,7 @@ function DiaryListingPage(props) {
             alignSelf: 'center',
 
 
-            top: '14%',
+            top: '20%',
             height: 400,
             width: '90%',
         },
@@ -143,6 +143,7 @@ function DiaryListingPage(props) {
 
     const [editBackground, setEditBackground] = useState({  backgroundColor: '#E9C46A',})
     const [data, setData] = useState(route.params.data)
+    console.log(data)
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -160,8 +161,24 @@ function DiaryListingPage(props) {
         }
     })
 
+    let flavorValue
+    if('flavor' in data)
+    {
+        flavorValue = data.flavor
+    }
+    else {
+        flavorValue = true
+    }
+    let height
 
-
+    if(flavorValue)
+    {
+        height = 1580
+    }
+    else if(!flavorValue)
+    {
+        height = 1000
+    }
     let backgroundColour
 
     if(props.teaAvailable[data.teaID].type === 'Hei cha')
@@ -308,7 +325,7 @@ function DiaryListingPage(props) {
 
 
         <View style={styles.container}>
-            <ScrollView style={{flex: 1}} contentContainerStyle={{height: 1580}}>
+            <ScrollView style={{flex: 1}} contentContainerStyle={{height: height}}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
                         <View style={{
@@ -402,6 +419,7 @@ function DiaryListingPage(props) {
 
 
                 </View>
+                {flavorValue &&
                 <View style={styles.steepView}>
                     <View style={styles.steepTag}>
                         <Text style={{
@@ -429,7 +447,7 @@ function DiaryListingPage(props) {
                         <SteepSelector maxValue={steepData.length} processChange={steepChanged}/>
                     </View>
                 </View>
-
+                }
 
                 <View style={styles.notesView}>
                     <View style={styles.notesTag}>

@@ -160,6 +160,7 @@ function TeaNameEntryPage(props) {
     const route  = useRoute()
     const [teaNameToDisplay, setDisplayTeaName] = useState('Tea')
     const [flavorText, setFlavorText] = useState('On')
+
     const setTeaName = (teaNameAndID) => {
 
         if(teaNameAndID.teaName.length <=65)
@@ -187,7 +188,8 @@ function TeaNameEntryPage(props) {
             weight: null,
             temp: null,
             waterVolume: null,
-            startingTime: null
+            startingTime: null,
+            flavor: true
         }
             })
 
@@ -285,8 +287,12 @@ function TeaNameEntryPage(props) {
                     <TouchableOpacity style={{fontSize: 20, borderBottomWidth: 2,marginTop: 5, borderColor: '#E9C46A', flexDirection: 'row', justifyContent: 'space-between'}} activeOpacity={1} onPress={()=> {
                         if(flavorText.localeCompare('On') === 0) {
                             setFlavorText('Off')
+                            setTeaData({...teaData, flavor: false})
+
                         }else {
                             setFlavorText('On')
+                            setTeaData({...teaData, flavor: true})
+
                         }
                     }} >
                         <Text style={{fontSize: 20, marginBottom: 5,color:'white'}}>

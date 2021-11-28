@@ -159,6 +159,7 @@ function TeaNameEntryPage(props) {
     const navigation = useNavigation()
     const route  = useRoute()
     const [teaNameToDisplay, setDisplayTeaName] = useState('Tea')
+    const [flavorText, setFlavorText] = useState('On')
     const setTeaName = (teaNameAndID) => {
 
         if(teaNameAndID.teaName.length <=65)
@@ -280,6 +281,24 @@ function TeaNameEntryPage(props) {
                     }} keyboardType={'number-pad'}>
 
                     </TextInput>
+
+                    <TouchableOpacity style={{fontSize: 20, borderBottomWidth: 2,marginTop: 5, borderColor: '#E9C46A', flexDirection: 'row', justifyContent: 'space-between'}} activeOpacity={1} onPress={()=> {
+                        if(flavorText.localeCompare('On') === 0) {
+                            setFlavorText('Off')
+                        }else {
+                            setFlavorText('On')
+                        }
+                    }} >
+                        <Text style={{fontSize: 20, marginBottom: 5,color:'white'}}>
+                            Flavor
+                        </Text>
+                        <View style={{height: '85%', width: 100,marginBottom: 5, borderRadius: 10, backgroundColor: '#E9C46A', alignSelf: 'center'}}>
+                            <Text style={{fontSize: 20, alignSelf: 'center', color: '#264653', fontWeight: 'bold'}}>
+                                {flavorText}
+                            </Text>
+                        </View>
+
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.buttonPart}>
                     <TouchableOpacity activeOpacity={1} onPress={goToDiaryEntry} style={{width: 260, height: 55,backgroundColor: '#E9C46A', alignSelf: 'flex-end', marginRight: 15, borderRadius: 16, justifyContent: 'center', flexDirection: 'row'}}>

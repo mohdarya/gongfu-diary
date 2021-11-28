@@ -9,7 +9,7 @@ function HistoryItem(props) {
         container: {
             marginTop: 23,
             height: 56,
-            width: '100%',
+            width: '80%',
             flexDirection: 'row',
 
 
@@ -49,6 +49,17 @@ function HistoryItem(props) {
             date
         })
     }
+
+    let flavorColor = '#E9C46A'
+
+        if('flavor' in props.data)
+        {
+            if(props.data.flavor === false)
+            {
+                flavorColor = 'grey'
+            }
+        }
+
 
 
     const [teaNameToDisplay, setTeaName] = useState()
@@ -102,6 +113,13 @@ function HistoryItem(props) {
     }
     return (
         <TouchableOpacity activeOpacity={1} onPress={goToTeaPage} style={styles.container}>
+            <View style={{backgroundColor: flavorColor, height: '80%', width: 40, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 10, marginRight: 10}}>
+
+                <Text style={{fontWeight: 'bold',fontSize: 20}}>
+                    F
+                </Text>
+
+            </View>
             <View style={[styles.iconView, {backgroundColor: backgroundColour}]}>
                 <Image style={{height: 45, width: 45, alignSelf: 'center'}} source={require('../img/teaLeafWhite.png')}/>
             </View>

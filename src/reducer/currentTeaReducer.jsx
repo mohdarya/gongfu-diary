@@ -84,7 +84,7 @@ export function currentTeaReducer(state = initialState, action) {
                         ...state.teaAvailable,
                         [action.teaID]: {
                             ...state.teaAvailable[action.teaID],
-                            weight: parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight),
+                            weight: parseFloat(parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)).toFixed(2),
                             status: 'archived'
                         }
                     }
@@ -98,7 +98,7 @@ export function currentTeaReducer(state = initialState, action) {
                         ...state.teaAvailable,
                         [action.teaID]: {
                             ...state.teaAvailable[action.teaID],
-                            weight: parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)
+                            weight: parseFloat(parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)).toFixed(2)
                         }
                     }
 

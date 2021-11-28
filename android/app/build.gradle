@@ -11,7 +11,7 @@ import com.android.build.OutputFile
  * and their defaults. If you decide to add a configuration block, make sure to add it before the
  * `apply from: "../../node_modules/react-native/react.gradle"` line.
  *
- * project.ext.react = [
+  project.ext.react = [
  *   // the name of the generated asset file containing your JS bundle
  *   bundleAssetName: "index.android.bundle",
  *
@@ -134,9 +134,9 @@ android {
         applicationId "com.gongfudiary"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
+        versionCode 9
         resConfigs "en"
-        versionName "2.3.2"
+        versionName "2.4.0"
     }
     splits {
         abi {

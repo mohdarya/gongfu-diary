@@ -113,20 +113,22 @@ function HistoryItem(props) {
     }
     return (
         <TouchableOpacity activeOpacity={1} onPress={goToTeaPage} style={styles.container}>
-            <View style={{backgroundColor: flavorColor, height: '80%', width: 40, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 10, marginRight: 10}}>
+
+            <View style={[styles.iconView, {backgroundColor: backgroundColour}]}>
+                <Image style={{height: 45, width: 45, alignSelf: 'center'}} source={require('../img/teaLeafWhite.png')}/>
+            </View>
+
+            <View style={styles.teaNameView}>
+                <Text style={{color: 'white'}}>
+                    {teaNameToDisplay}
+                </Text>
+            </View>
+            <View style={{backgroundColor: flavorColor, height: 35, width: 35, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 10, marginRight: 10}}>
 
                 <Text style={{fontWeight: 'bold',fontSize: 20}}>
                     F
                 </Text>
 
-            </View>
-            <View style={[styles.iconView, {backgroundColor: backgroundColour}]}>
-                <Image style={{height: 45, width: 45, alignSelf: 'center'}} source={require('../img/teaLeafWhite.png')}/>
-            </View>
-            <View style={styles.teaNameView}>
-                <Text style={{color: 'white'}}>
-                    {teaNameToDisplay}
-                </Text>
             </View>
             <View style={styles.detailView}>
                 <Text style={{textAlign: 'right', color: 'white'}}>

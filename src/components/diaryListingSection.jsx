@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from "react-native";
-import DiaryListingItem from "./diaryListingItem";
 import HistoryItem from "./historyItem";
 
 function DiaryListingSection(props) {

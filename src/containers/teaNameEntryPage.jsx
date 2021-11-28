@@ -160,7 +160,7 @@ function TeaNameEntryPage(props) {
     const route  = useRoute()
     const [teaNameToDisplay, setDisplayTeaName] = useState('Tea')
     const [flavorText, setFlavorText] = useState('On')
-
+    const [flavorColor, setFlavorColor] = useState( '#E9C46A')
     const setTeaName = (teaNameAndID) => {
 
         if(teaNameAndID.teaName.length <=65)
@@ -288,17 +288,17 @@ function TeaNameEntryPage(props) {
                         if(flavorText.localeCompare('On') === 0) {
                             setFlavorText('Off')
                             setTeaData({...teaData, flavor: false})
-
+                            setFlavorColor( 'grey')
                         }else {
                             setFlavorText('On')
                             setTeaData({...teaData, flavor: true})
-
+                            setFlavorColor( '#E9C46A')
                         }
                     }} >
                         <Text style={{fontSize: 20, marginBottom: 5,color:'white'}}>
                             Flavor
                         </Text>
-                        <View style={{height: '85%', width: 100,marginBottom: 5, borderRadius: 10, backgroundColor: '#E9C46A', alignSelf: 'center'}}>
+                        <View style={{height: '85%', width: 100,marginBottom: 5, borderRadius: 10, backgroundColor: flavorColor, alignSelf: 'center'}}>
                             <Text style={{fontSize: 20, alignSelf: 'center', color: '#264653', fontWeight: 'bold'}}>
                                 {flavorText}
                             </Text>

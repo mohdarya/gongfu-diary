@@ -281,11 +281,8 @@ function DiaryListingPage(props) {
 
             setEditBackground({ backgroundColor: '#E9C46A'})
         }
-        Animated.timing(textInputWidth, {
-            toValue: 0,
-            duration: 150,
-            useNativeDriver: false,
-        }).start();
+        setOpenNavigation(!openNavigation)
+
     }, [editActive])
 
     useEffect(() => {

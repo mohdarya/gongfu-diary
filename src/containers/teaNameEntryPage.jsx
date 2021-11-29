@@ -162,6 +162,7 @@ function TeaNameEntryPage(props) {
     const [flavorText, setFlavorText] = useState('On')
     const [flavorColor, setFlavorColor] = useState( '#E9C46A')
     const [flavorFontColor, setFlavorFontColor] = useState(  '#264653')
+    const [teaTagColor, setTeaTagColor] = useState('grey')
     const setTeaName = (teaNameAndID) => {
 
         if(teaNameAndID.teaName.length <=65)
@@ -171,6 +172,7 @@ function TeaNameEntryPage(props) {
         else {
             setDisplayTeaName(teaNameAndID.teaName.substring(0, 65) + ' ...')
         }
+        setTeaTagColor('white')
         setTeaData({...teaData, ...teaNameAndID})
     }
     function goToDiaryEntry() {
@@ -228,7 +230,7 @@ function TeaNameEntryPage(props) {
                             setTeaName
                         })
                     }} style={{fontSize: 20,  borderBottomWidth: 2,borderColor: '#E9C46A'}}>
-                        <Text style={{fontSize: 20,marginLeft: 3, marginBottom: 5,color:'white'}}>
+                        <Text style={{fontSize: 20,marginLeft: 3, marginBottom: 5,color:teaTagColor}}>
                             {teaNameToDisplay}
                         </Text>
                     </TouchableOpacity>

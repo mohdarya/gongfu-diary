@@ -198,11 +198,16 @@ function DiaryEntry(props) {
 
 
             let duration = Date.now() - parseInt(startTime)
+            let tempnote = note
+            if (tempnote === "Tap To Enter Note")
+            {
+                tempnote = ''
+            }
 
             props.setTeaDay(new Date().getDay(), new Date().getDate())
             props.deductWeight(teaID, weight)
             props.createEntry({
-                teaID, waterVolume, weight, temp, duration, note,
+                teaID, waterVolume, weight, temp, duration, note: tempnote,
                 sessionID: sessionID,
                 teaName: props.teas[teaID].teaName,
                 steeps: [...steepArray, [steepData]],
@@ -233,7 +238,7 @@ function DiaryEntry(props) {
             navigation.navigate("HomeScreen")
             return true
         }
-        else 
+        else
         {
         if (navigation.canGoBack()) {
 

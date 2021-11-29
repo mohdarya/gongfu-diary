@@ -275,7 +275,7 @@ function DiaryListingPage(props) {
 
         if(editActive){
             setEditBackground({ backgroundColor: '#E53B3B'})
-            
+
         }
         else if (!editActive) {
 
@@ -412,32 +412,32 @@ function DiaryListingPage(props) {
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
-                               source={require('../img/temperature.png')}/>
-                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                               source={require('../img/temperatureWhite.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7, color: 'white'}}>
                             {data.temp + '°C'}
                         </Text>
                     </View>
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
-                               source={require('../img/water.png')}/>
-                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                               source={require('../img/waterWhite.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7, color: 'white'}}>
                             {data.waterVolume + 'ml'}
                         </Text>
                     </View>
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
-                               source={require('../img/clock.png')}/>
-                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                               source={require('../img/clockWhite.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7, color: 'white'}}>
                             {clockiFy(route.params.data.duration).displayHour + ':' +clockiFy(route.params.data.duration).displayMins + ':' + clockiFy(route.params.data.duration).displaySecs}
                         </Text>
                     </View>
                     <View style={{height: 100, width: 70, backgroundColor: '#2A9D8F', borderRadius: 25, justifyContent: 'center'}}>
 
                         <Image style={{width: 40, height: 40, alignSelf: 'center'}}
-                               source={require('../img/scale.png')}/>
-                        <Text style={{textAlign: 'center', marginTop: 7}}>
+                               source={require('../img/scaleWhite.png')}/>
+                        <Text style={{textAlign: 'center', marginTop: 7, color: 'white'}}>
                             {data.weight + 'G'}
                         </Text>
                     </View>

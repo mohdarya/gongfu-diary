@@ -175,6 +175,9 @@ function HomeScreen(props) {
 
     const [historyItems, setHistoryItems] = useState([])
     const [data, setData] = useState(props.diary)
+    const [openNavigation, setOpenNavigation] = useState(false)
+
+
     let date = new Date()
 
     useEffect(() => {
@@ -196,6 +199,34 @@ function HomeScreen(props) {
         }
         setHistoryItems(items)
     }, [props.wholeDiary])
+
+    useEffect(() => {
+
+        if (openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 1,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 1,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+
+        } else if (!openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 0,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 0,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+        }
+    }, [openNavigation])
     const renderItems = ({item}) => {
 
 
@@ -407,28 +438,10 @@ function HomeScreen(props) {
                         if (nativeEvent.state === State.END) {
 
                             if (nativeEvent.absoluteX - beginX < -50) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 1,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 1,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
+                                setOpenNavigation(true)
 
                             } else if (nativeEvent.absoluteX - beginX > 10) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 0,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 0,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
+                            setOpenNavigation(false)
                             }
                         }
                     }}>

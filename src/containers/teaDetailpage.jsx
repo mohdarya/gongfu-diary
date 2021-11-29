@@ -83,6 +83,7 @@ function TeaDetailPage(props) {
     const [editActive, setEdit] = useState(false)
     const [editBackground, setEditBackground] = useState({backgroundColor: '#E9C46A',})
     const [historyItems, setHistoryItems] = useState([])
+    const [openNavigation, setOpenNavigation] = useState(false)
     const [archived, setArchived] = useState(() => {
         return data.status === 'archived';
     })
@@ -133,6 +134,34 @@ function TeaDetailPage(props) {
     }
     const [teaNameToDisplay, setTeaName] = useState()
 
+
+    useEffect(() => {
+
+        if (openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 1,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 1,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+
+        } else if (!openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 0,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 0,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+        }
+    }, [openNavigation])
     useEffect(()=> {
         if(props.teaAvailable[route.params.teaID].teaName.length <=80)
         {
@@ -286,41 +315,7 @@ function TeaDetailPage(props) {
                 flexDirection: 'row'
             }}>
 
-                <FlingGestureHandler
-                    direction={Directions.RIGHT | Directions.LEFT}
-                    onHandlerStateChange={({nativeEvent}) => {
-                        if (nativeEvent.state === State.BEGAN) {
-                            beginX = nativeEvent.absoluteX;
-                        }
-                        if (nativeEvent.state === State.END) {
-
-
-                            if (nativeEvent.absoluteX - beginX < -50) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 1,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 1,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
-
-                            } else if (nativeEvent.absoluteX - beginX > 10) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 0,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 0,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
-                            }
-                        }
-                    }}>
+                <TouchableOpacity activeOpacity={1} onPress={() => {setOpenNavigation(!openNavigation)}}>
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={[{
                             height: 66,
@@ -449,7 +444,7 @@ function TeaDetailPage(props) {
                         </Animated.View>
 
                     </View>
-                </FlingGestureHandler>
+                </TouchableOpacity>
 
             </View>
         </View>

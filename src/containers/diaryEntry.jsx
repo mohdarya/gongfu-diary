@@ -226,8 +226,15 @@ function DiaryEntry(props) {
 
     }
 
-    function handleBackButtonClick() {
+    function handleBackButtonClick(goHome) {
 
+        if(goHome)
+        {
+            navigation.navigate("HomeScreen")
+            return true
+        }
+        else 
+        {
         if (navigation.canGoBack()) {
 
             handleBack()
@@ -236,7 +243,8 @@ function DiaryEntry(props) {
 
         } else {
             return true
-        }
+
+        }   }
 
     }
 
@@ -443,7 +451,7 @@ function DiaryEntry(props) {
                                 setStartTimer(false)
 
                                 setConfirmation(!confirmationVisible)
-                                navigation.goBack()
+                                handleBackButtonClick(true)
                             }} activeOpacity={1}>
                                 <Text style={styles.doneButtonText}>
                                     Yes

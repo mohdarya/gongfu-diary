@@ -271,6 +271,12 @@ function DiaryListingPage(props) {
     }
 
 
+
+    //this needs to be here to handle the color change in noteentrypage
+    const setTeaTagColor = (color) => {
+
+    }
+
     useEffect(() => {
 
 
@@ -320,7 +326,7 @@ function DiaryListingPage(props) {
         if(editActive){
 
                 navigation.navigate('NoteEntry', {
-                    note, setNote: setNoteMiddleFunc
+                    note, setNote: setNoteMiddleFunc, setTeaTagColor
                 })
 
         }

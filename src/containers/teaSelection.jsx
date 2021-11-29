@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     Animated,
     FlatList,
@@ -299,7 +299,7 @@ function TeaSelection(props) {
     const textInputWidth = useRef(new Animated.Value(0)).current
     const AnimatedImage = Animated.createAnimatedComponent(Image);
     const iconWidth = useRef(new Animated.Value(0)).current
-
+    const [openNavigation, setOpenNavigation] = useState(false)
     const renderItems = ({item}) => {
 
         let toShow
@@ -321,6 +321,34 @@ function TeaSelection(props) {
 
         )
     }
+
+    useEffect(() => {
+
+        if (openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 1,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 1,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+
+        } else if (!openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 0,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 0,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+        }
+    }, [openNavigation])
     return (
 
 
@@ -363,41 +391,7 @@ function TeaSelection(props) {
                 alignItems: 'flex-end',
                 flexDirection: 'row'
             }}>
-
-                <FlingGestureHandler
-                    direction={Directions.RIGHT | Directions.LEFT}
-                    onHandlerStateChange={({nativeEvent}) => {
-                        if (nativeEvent.state === State.BEGAN) {
-                            beginX = nativeEvent.absoluteX;
-                        }
-                        if (nativeEvent.state === State.END) {
-
-                            if (nativeEvent.absoluteX - beginX < -50) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 1,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 1,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
-
-                            } else if (nativeEvent.absoluteX - beginX > 10) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 0,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 0,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
-                            }
-                        }
-                    }}>
+                <TouchableOpacity activeOpacity={1} onPress={() => {setOpenNavigation(!openNavigation)}}>
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={{
                             height: 66,
@@ -483,7 +477,7 @@ function TeaSelection(props) {
                         </Animated.View>
 
                     </View>
-                </FlingGestureHandler>
+                </TouchableOpacity>
 
             </View>
 

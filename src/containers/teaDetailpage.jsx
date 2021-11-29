@@ -384,8 +384,7 @@ function TeaDetailPage(props) {
                                 <AnimatedTouchable activeOpacity={1} onPress={() => {
 
                                     navigation.navigate('TeaInventoryEdit', {data, teaID: route.params.teaID})
-                                    textInputWidth.setValue(0)
-                                    iconWidth.setValue(0)
+                                    setOpenNavigation(!openNavigation)
                                 }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],

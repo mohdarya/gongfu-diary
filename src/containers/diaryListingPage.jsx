@@ -143,7 +143,6 @@ function DiaryListingPage(props) {
 
     const [editBackground, setEditBackground] = useState({  backgroundColor: '#E9C46A',})
     const [data, setData] = useState(route.params.data)
-    console.log(data)
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const textInputWidth = useRef(new Animated.Value(0)).current
     const AnimatedImage = Animated.createAnimatedComponent(Image);

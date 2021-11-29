@@ -257,7 +257,6 @@ function TeaDetailPage(props) {
                         borderRadius: 30,
                     }}
                           onPress={() => {
-                              console.log(data.link)
                               if (data.link !== null && data.link !== '') {
 
                                       if (!validURL(data.link)) {

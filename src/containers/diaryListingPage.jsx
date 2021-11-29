@@ -210,8 +210,14 @@ function DiaryListingPage(props) {
 
 
     const setNoteMiddleFunc = (note) => {
-        setNote(note)
-        props.editNote(data.sessionID, note)
+        if(note !== "Tap To Enter Note"){
+            setNote(note)
+            props.editNote(data.sessionID, note)
+        }else {
+            setNote('')
+            props.editNote(data.sessionID, '')
+        }
+
     }
     const goToFlavorSelection = () => {
 

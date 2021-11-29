@@ -429,22 +429,7 @@ function HomeScreen(props) {
 
             <View style={styles.navigationGroup}>
 
-                <FlingGestureHandler
-                    direction={Directions.RIGHT | Directions.LEFT}
-                    onHandlerStateChange={({nativeEvent}) => {
-                        if (nativeEvent.state === State.BEGAN) {
-                            beginX = nativeEvent.absoluteX;
-                        }
-                        if (nativeEvent.state === State.END) {
-
-                            if (nativeEvent.absoluteX - beginX < -50) {
-                                setOpenNavigation(true)
-
-                            } else if (nativeEvent.absoluteX - beginX > 10) {
-                            setOpenNavigation(false)
-                            }
-                        }
-                    }}>
+                <TouchableOpacity activeOpacity={1} onPress={() => {setOpenNavigation(!openNavigation)}}>
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={{
                             height: 66,
@@ -536,7 +521,7 @@ function HomeScreen(props) {
                         </Animated.View>
 
                     </View>
-                </FlingGestureHandler>
+                </TouchableOpacity>
                 <View style={styles.navigationBar}>
                     <TouchableOpacity activeOpacity={1} onPress={() => {
                         navigation.navigate('SettingsPage')

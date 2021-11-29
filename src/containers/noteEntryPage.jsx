@@ -400,6 +400,7 @@ function NoteEntry(props) {
                 maxLength={456}
                            onChangeText={(text) => {
                                route.params.setNote(text)
+                               route.params.setTeaTagColor('white')
                            }}
                            placeholder={'Enter your Note for the Tea'}
                 style={{height: 350, width: '80%',alignSelf: 'center', textAlignVertical: 'top', textAlign: 'center', fontSize: 17}}>

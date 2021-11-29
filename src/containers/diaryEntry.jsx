@@ -158,10 +158,11 @@ function DiaryEntry(props) {
     const [startTimer, setStartTimer] = useState(true)
     const [increment, setIncrement] = useState(5);
     const [steepData, setSteepData] = useState({})
-    const [note, setNote] = useState('');
+    const [note, setNote] = useState("Tap To Enter Note");
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
     const [steepArray, setSteepArray] = useState([])
+    const [teaTagColor, setTeaTagColor] = useState('#92a3aa')
     const [openNavigation, setOpenNavigation] = useState(false)
     const [startTime, setStartTime] = useState(() => {
 
@@ -668,8 +669,13 @@ function DiaryEntry(props) {
                     <TouchableOpacity style={styles.noteElement}
                                       activeOpacity={1}
                                       onPress={() => {
+                                          let tempnote = note
+                                          if (tempnote === "Tap To Enter Note")
+                                          {
+                                              tempnote = ''
+                                          }
                                           navigation.navigate('NoteEntry', {
-                                              note, setNote
+                                              note: tempnote, setNote, setTeaTagColor
                                           })
                                       }}
                     >
@@ -677,7 +683,7 @@ function DiaryEntry(props) {
                         <Text style={{
                             textAlignVertical: 'top',
                             height: '100%',
-                            color: 'white',
+                            color: teaTagColor,
                             fontSize: 20,
                             textAlign: 'center'
                         }}>

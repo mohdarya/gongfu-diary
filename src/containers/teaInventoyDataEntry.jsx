@@ -333,7 +333,7 @@ function TeaInventoryEntry(props) {
                                    setTeaData({...teaData, teaName: text})
 
 
-                               }} placeholderTextColor={'white'} placeholder={'Name'} keyboardType={'default'}>
+                               }}  placeholder={'Tea name'} keyboardType={'default'}>
 
                     </TextInput>
                     <TouchableOpacity activeOpacity={1} onPress={() => {
@@ -359,19 +359,19 @@ function TeaInventoryEntry(props) {
                                        amount = parseFloat(text)
                                    }
                                    setTeaData({...teaData, weight: amount})
-                               }} placeholderTextColor={'white'} placeholder={'Weight'} keyboardType={'number-pad'}>
+                               }}  placeholder={'Tea weight'} keyboardType={'number-pad'}>
 
                     </TextInput>
                     <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}}
                                onChangeText={(text) => {
                                    setTeaData({...teaData, vendor: text})
-                               }} placeholderTextColor={'white'} placeholder={'Vendor'} keyboardType={'default'}>
+                               }}  placeholder={'Tea vendor'} keyboardType={'default'}>
 
                     </TextInput>
                     <TextInput style={{fontSize: 20, marginBottom: 15, borderBottomWidth: 2, borderColor: '#E9C46A'}}
                                onChangeText={(text) => {
                                    setTeaData({...teaData, link: text})
-                               }} placeholderTextColor={'white'} placeholder={'Link'} keyboardType={'default'}>
+                               }}  placeholder={'Store link'} keyboardType={'default'}>
 
                     </TextInput>
                 </View>

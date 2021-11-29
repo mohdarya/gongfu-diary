@@ -275,13 +275,15 @@ function DiaryListingPage(props) {
 
         if(editActive){
             setEditBackground({ backgroundColor: '#E53B3B'})
+            
         }
-        else {
+        else if (!editActive) {
 
 
             setEditBackground({ backgroundColor: '#E9C46A'})
+
         }
-        setOpenNavigation(!openNavigation)
+        setOpenNavigation(false)
 
     }, [editActive])
 

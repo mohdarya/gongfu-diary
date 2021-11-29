@@ -162,6 +162,7 @@ function DiaryEntry(props) {
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
     const [buttonText, setButtonText] = useState('Stop')
     const [steepArray, setSteepArray] = useState([])
+    const [openNavigation, setOpenNavigation] = useState(false)
     const [startTime, setStartTime] = useState(() => {
 
         return Date.now()
@@ -238,6 +239,33 @@ function DiaryEntry(props) {
 
     }
 
+    useEffect(() => {
+
+        if (openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 1,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 1,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+
+        } else if (!openNavigation) {
+            Animated.timing(textInputWidth, {
+                toValue: 0,
+                duration: 100,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(iconWidth, {
+                toValue: 0,
+                duration: 1,
+                useNativeDriver: false,
+            }).start();
+        }
+    }, [openNavigation])
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
         return () => {
@@ -671,40 +699,7 @@ function DiaryEntry(props) {
                 flexDirection: 'row'
             }}>
 
-                <FlingGestureHandler
-                    direction={Directions.RIGHT | Directions.LEFT}
-                    onHandlerStateChange={({nativeEvent}) => {
-                        if (nativeEvent.state === State.BEGAN) {
-                            beginX = nativeEvent.absoluteX;
-                        }
-                        if (nativeEvent.state === State.END) {
-
-                            if (nativeEvent.absoluteX - beginX < -50) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 1,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 1,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
-
-                            } else if (nativeEvent.absoluteX - beginX > 10) {
-                                Animated.timing(textInputWidth, {
-                                    toValue: 0,
-                                    duration: 100,
-                                    useNativeDriver: false,
-                                }).start();
-                                Animated.timing(iconWidth, {
-                                    toValue: 0,
-                                    duration: 1,
-                                    useNativeDriver: false,
-                                }).start();
-                            }
-                        }
-                    }}>
+                <TouchableOpacity activeOpacity={1} onPress={() => {setOpenNavigation(!openNavigation)}}>
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={{
                             height: 66,
@@ -812,7 +807,7 @@ function DiaryEntry(props) {
                         </Animated.View>
 
                     </View>
-                </FlingGestureHandler>
+                </TouchableOpacity>
 
             </View>
         </View>

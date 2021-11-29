@@ -229,6 +229,7 @@ function DiaryListingPage(props) {
     }
     const deleteTea = () => {
         props.deleteEntry(route.params.data.sessionID)
+        props.addWeight(data.teaID, data.weight)
         navigation.goBack()
     }
     const steepChanged = (index) => {

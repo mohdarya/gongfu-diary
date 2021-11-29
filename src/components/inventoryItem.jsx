@@ -59,7 +59,7 @@ function InventoryItem(props) {
         }} style={styles.container}>
 
                <View style={styles.circleView}>
-                  <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>
+                  <Text style={{alignSelf: 'center', fontWeight: 'bold', textAlign: 'center'}}>
                       {props.teaAvailable[props.teaID].weight + ' G'}
                     </Text>
                 </View>

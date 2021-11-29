@@ -228,6 +228,7 @@ function TeaInventoryEntry(props) {
     const [typeModal, setTypeModal] = useState(false)
     const textInputWidth = useRef(new Animated.Value(0)).current
     const [teaType, setTeaType] = useState('Type')
+    const [teaTagColor, setTeaTagColor] = useState('#92a3aa')
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     let beginX
     return (
@@ -288,6 +289,7 @@ function TeaInventoryEntry(props) {
                                         <TouchableOpacity style={[styles.FlavorNoteItem, styleToUse]} activeOpacity={1}
                                                           onPress={() => {
                                                               setTeaType(item)
+                                                              setTeaTagColor('white')
                                                               setTeaData({...teaData, type: item})
                                                               setTypeModal(!typeModal)
                                                           }}>
@@ -346,7 +348,7 @@ function TeaInventoryEntry(props) {
                         borderBottomWidth: 2,
                         borderColor: '#E9C46A'
                     }}>
-                        <Text style={{fontSize: 20, marginLeft: 3, color: 'white'}}>
+                        <Text style={{fontSize: 20, marginLeft: 3, color: teaTagColor}}>
                             {teaType}
                         </Text>
                     </TouchableOpacity>

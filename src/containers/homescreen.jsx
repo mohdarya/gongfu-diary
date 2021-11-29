@@ -1,5 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    Animated,
+    FlatList,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    ToastAndroid,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
 import InventoryItem from "../components/inventoryItem";
@@ -541,6 +552,8 @@ function HomeScreen(props) {
                                 teaID: randomTea[0],
                                 teaName: randomTea[1].teaName
                             })
+                        }else{
+                            ToastAndroid.show("Minimum 2 tea needed in inventory", ToastAndroid.LONG)
                         }
                     }} style={{width: 35, height: 32}}>
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/shuffle.png')}/>

@@ -385,6 +385,7 @@ function TeaDetailPage(props) {
 
                                     navigation.navigate('TeaInventoryEdit', {data, teaID: route.params.teaID})
                                     textInputWidth.setValue(0)
+                                    iconWidth.setValue(0)
                                 }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],

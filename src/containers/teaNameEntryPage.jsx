@@ -162,7 +162,7 @@ function TeaNameEntryPage(props) {
     const [flavorText, setFlavorText] = useState('On')
     const [flavorColor, setFlavorColor] = useState( '#E9C46A')
     const [flavorFontColor, setFlavorFontColor] = useState(  '#264653')
-    const [teaTagColor, setTeaTagColor] = useState('grey')
+    const [teaTagColor, setTeaTagColor] = useState('#92a3aa')
     const setTeaName = (teaNameAndID) => {
 
         if(teaNameAndID.teaName.length <=65)

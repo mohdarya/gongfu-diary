@@ -9,7 +9,7 @@ function HistoryItem(props) {
         container: {
             marginTop: 23,
             height: 56,
-            width: '80%',
+            width: '85%',
             flexDirection: 'row',
 
 

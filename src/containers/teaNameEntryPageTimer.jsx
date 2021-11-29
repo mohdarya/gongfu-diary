@@ -180,7 +180,7 @@ function teaNameEntryPageTimer(props) {
             <View style={styles.container}>
                 <View style={styles.topPart}>
                     <View style={styles.topPartBar}>
-                     
+
                     </View>
                     <View style={{ top: '70%',left: '15%',width: '70%', height: 110, backgroundColor: '#E9C46A', borderRadius:30, position: "absolute", alignContent: 'center', justifyContent: 'center'}}>
                         <Text style={{alignSelf: 'center', fontSize: 25, color: '#264653', fontWeight: 'bold'}}>
@@ -191,7 +191,7 @@ function teaNameEntryPageTimer(props) {
                 </View>
                 <View style={styles.infoPart}>
 
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'white'} placeholder={'Starting Time'}  onChangeText={(text) => {
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholder={'First steep time'}  onChangeText={(text) => {
                         let amount
                         if(text === '')
                         {

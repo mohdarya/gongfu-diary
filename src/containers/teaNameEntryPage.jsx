@@ -234,7 +234,7 @@ function TeaNameEntryPage(props) {
                             {teaNameToDisplay}
                         </Text>
                     </TouchableOpacity>
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'grey'} placeholder={'First steep time'}  onChangeText={(text) => {
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholder={'First steep time'}  onChangeText={(text) => {
                         let amount
                         if(text === '')
                         {
@@ -247,7 +247,7 @@ function TeaNameEntryPage(props) {
                     }} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholderTextColor={'grey'} placeholder={'Tea leaf weight'}  onChangeText={(text) => {
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}} placeholder={'Tea leaf weight'}  onChangeText={(text) => {
                         let amount
                         if(text === '')
                         {
@@ -260,7 +260,7 @@ function TeaNameEntryPage(props) {
                     }} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'grey'}  placeholder={'Water Temperature'}  onChangeText={(text) => {
+                    <TextInput style={{fontSize: 20,  borderBottomWidth: 2, borderColor: '#E9C46A'}}   placeholder={'Water Temperature'}  onChangeText={(text) => {
                         let amount
                         if(text === '')
                         {
@@ -273,7 +273,7 @@ function TeaNameEntryPage(props) {
                     }} keyboardType={'number-pad'}>
 
                     </TextInput>
-                    <TextInput style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}  placeholderTextColor={'grey'}  placeholder={'Water Volume'}  onChangeText={(text) => {
+                    <TextInput style={{fontSize: 20, borderBottomWidth: 2, borderColor: '#E9C46A'}}    placeholder={'Water Volume'}  onChangeText={(text) => {
                         let amount
                         if(text === '')
                         {

@@ -399,8 +399,14 @@ function NoteEntry(props) {
                 <TextInput multiline={true}
                 maxLength={456}
                            onChangeText={(text) => {
-                               route.params.setNote(text)
-                               route.params.setTeaTagColor('white')
+                               if(text !== '') {
+                                   route.params.setNote(text)
+                                   route.params.setTeaTagColor('white')
+                               }
+                               else {
+                                   route.params.setNote("Tap To Enter Note")
+                                   route.params.setTeaTagColor('#92a3aa')
+                               }
                            }}
                            placeholder={'Enter your Note for the Tea'}
                 style={{height: 350, width: '80%',alignSelf: 'center', textAlignVertical: 'top', textAlign: 'center', fontSize: 17}}>

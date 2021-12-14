@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {
     Animated, AppState, BackHandler,
 
@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
-import BackgroundTimer from 'react-native-background-timer';
 import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import Sound from "react-native-sound";
 
@@ -131,10 +130,11 @@ function TimerPage(props) {
     const navigation = useNavigation()
     const route = useRoute()
     const {startingTime} = route.params
-    const [first, setFirst] = useState(true)
+
     const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
-    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
-    const [startTimer, setStartTimer] = useState(true)
+
+    const [startTimer, setStartTimer] = useState(false)
+    const[countDownTimerState, setCountdownState] = useState(-1)
     const [increment, setIncrement] = useState(5);
     const [openNavigation, setOpenNavigation] = useState(false)
     const [timerViewVisibility, setTimerViewVisibility] = useState(false)
@@ -142,6 +142,10 @@ function TimerPage(props) {
 
 
 
+    const endingTime = useRef(0);
+    const countdownTimer = useRef(parseInt(startingTime))
+    const first = useRef(true)
+    const firstCounterRun = useRef(true)
     const endButtonAction = () => {
 
 
@@ -152,7 +156,7 @@ function TimerPage(props) {
     function handleBackButtonClick() {
         if(navigation.canGoBack())
         {
-            BackgroundTimer.stopBackgroundTimer();
+
             setStartTimer(false)
             navigation.goBack()
         }
@@ -179,20 +183,26 @@ function TimerPage(props) {
         if (!startTimer) {
 
 
-            if (first) {
+            if(!first.current) {
+               if(firstCounterRun.current)
+               {
 
+                   countdownTimer.current =(parseInt(currentTime))
+                    firstCounterRun.current = false
 
-                setFirst(false)
-                setCountdownTimer(parseInt(currentTime))
+               }
+               else {
+                   countdownTimer.current =(parseInt(currentTime) + parseInt(increment))
+                   setCurrenTime(parseInt(currentTime) + parseInt(increment))
+               }
+           }
 
-            } else {
-                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
-                setCurrenTime(parseInt(currentTime) + parseInt(increment))
-            }
-            BackgroundTimer.stopBackgroundTimer();
             setButtonText('Close')
+            endingTime.current = 0
             deactivateKeepAwake();
         }
+
+
     }, [startTimer])
 
     useEffect(() => {
@@ -228,46 +238,71 @@ function TimerPage(props) {
 
 
         activateKeepAwake();
-        if (!first) {
 
-            setCountdownTimer((t) => t + increment)
+
+        if (!first.current ){
+            setStartTimer(true)
+            endingTime.current = new Date().getTime() +   1000 * parseInt(countdownTimer.current + increment)
+            setCountdownState(countdownTimer.current + increment)
+
+
+        }
+        else {
+            setStartTimer(true)
+            first.current =(false)
+            endingTime.current = new Date().getTime() +   1000 * parseInt(startingTime)
+            setCountdownState(countdownTimer.current)
         }
 
 
-        BackgroundTimer.runBackgroundTimer(() => {
 
 
-                setCountdownTimer(secs => {
 
-                        if (secs > 0) {
-                            return secs - 1
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+    useEffect(() => {
+
+
+            if (startTimer && !first.current) {
+
+                setTimeout(() => {
+                        if (countDownTimerState <= 0) {
+                            setStartTimer(false)
+                            timerEndingSound.play((success) => {
+                                if (!success) {
+                                    console.log('Sound did not play')
+                                }
+                            })
 
 
                         } else {
 
-                            setStartTimer(false)
-                            if (AppState.currentState === 'active') {
-                                Vibration.vibrate(PATTERN)
-                                timerEndingSound.play((success) => {
-                                    if (!success) {
-                                        console.log('Sound did not play')
-                                    }
-                                })
 
-                            }
-                            return 0
-
+                            setCountdownState(Math.ceil(( endingTime.current - new Date().getTime()) / 1000) > 0 ? Math.ceil(( endingTime.current - new Date().getTime()) / 1000) : 0)
 
                         }
+                    }, 1000
+                )
+            }
 
-                })
-
-            },
-            1000);
-        setStartTimer(true)
+        }
 
 
-    }
+        ,
+        [countDownTimerState]
+    )
 
     const clockiFy = (time, origin) => {
         let mins = Math.floor((time / 60))
@@ -322,7 +357,7 @@ function TimerPage(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                {clockiFy(countdownTimer, 'countdownTimer')}
+                                {clockiFy( countDownTimerState , 'countdownTimer')}
                             </Text>
                         </View>
                         <View style={{
@@ -333,7 +368,7 @@ function TimerPage(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    BackgroundTimer.stopBackgroundTimer();
+
                                     setStartTimer(false)
                                     setTimerViewVisibility(!timerViewVisibility)
                                 }} style={{
@@ -378,8 +413,9 @@ function TimerPage(props) {
                     }}>
                         <TouchableOpacity activeOpacity={1} onPress={()=> {
                             setButtonText('Stop')
-                            startInterval()
+
                             setTimerViewVisibility(!timerViewVisibility)
+                            startInterval()
                         }}>
                         <Text style={{alignSelf: 'center', fontSize: 70, color: '#264653', fontWeight: 'bold'}}>
                             {clockiFy(currentTime, 'currentTime')}

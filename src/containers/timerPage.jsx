@@ -270,6 +270,14 @@ function TimerPage(props) {
                                     console.log('Sound did not play')
                                 }
                             })
+                            if (AppState.currentState === 'active') {
+                                Vibration.vibrate(PATTERN);
+                                timerEndingSound.play((success) => {
+                                    if (!success) {
+                                        console.log('Sound did not play');
+                                    }
+                                });
+                            }
 
 
                         } else {

@@ -11,17 +11,15 @@ import {
     TextInput,
     TouchableOpacity,
     Vibration,
-    View
-} from "react-native";
-import {useNavigation, useRoute} from "@react-navigation/core";
-import {addEntry, addSteep} from "../action/diaryEntryAction";
+    View,
+} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/core';
+import {addEntry, addSteep} from '../action/diaryEntryAction';
 import {connect} from 'react-redux';
-import RadarChart from "../components/radarChart";
-import BackgroundTimer from 'react-native-background-timer';
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
-import {deductWeight, setTeaSessionForDay} from "../action/currentTeaAction";
-import Sound from "react-native-sound";
-import {activateKeepAwake, deactivateKeepAwake} from "expo-keep-awake";
+import RadarChart from '../components/radarChart';
+import {deductWeight, setTeaSessionForDay} from '../action/currentTeaAction';
+import Sound from 'react-native-sound';
+import {activateKeepAwake, deactivateKeepAwake} from 'expo-keep-awake';
 
 function DiaryEntry(props) {
 
@@ -113,9 +111,9 @@ function DiaryEntry(props) {
             flexDirection: 'row',
             borderRadius: 25,
 
-            alignItems: "center",
+            alignItems: 'center',
             justifyContent: 'center',
-            alignSelf: "flex-end",
+            alignSelf: 'flex-end',
 
         }, doneButton: {
             backgroundColor: '#E9C46A',
@@ -137,55 +135,55 @@ function DiaryEntry(props) {
     });
 
 
-    let beginX
+    let beginX;
     const [timerEndingSound, setTimerSound] = useState(new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE, (error) => {
         if (error) {
             console.log('failed to load the sound', error);
             return;
         }
-    }))
+    }));
     const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-    const textInputWidth = useRef(new Animated.Value(0)).current
+    const textInputWidth = useRef(new Animated.Value(0)).current;
     const AnimatedImage = Animated.createAnimatedComponent(Image);
-    const iconWidth = useRef(new Animated.Value(0)).current
-    const navigation = useNavigation()
-    const route = useRoute()
-    const {startingTime, teaID, temp, waterVolume, weight, flavor} = route.params.teaData
-    const [first, setFirst] = useState(true)
-    const [confirmationVisible, setConfirmation] = useState(false)
-    const [currentTime, setCurrenTime] = useState(parseInt(startingTime))
-    const [countdownTimer, setCountdownTimer] = useState(parseInt(startingTime))
-    const [startTimer, setStartTimer] = useState(true)
+    const iconWidth = useRef(new Animated.Value(0)).current;
+    const navigation = useNavigation();
+    const route = useRoute();
+    const {startingTime, teaID, temp, waterVolume, weight, flavor} = route.params.teaData;
+    const [confirmationVisible, setConfirmation] = useState(false);
+    const [currentTime, setCurrenTime] = useState(parseInt(startingTime));
+    const [countDownTimerState, setCountdownState] = useState(-1);
+
+    const [startTimer, setStartTimer] = useState(false);
     const [increment, setIncrement] = useState(5);
-    const [steepData, setSteepData] = useState({})
-    const [note, setNote] = useState("Tap To Enter Note");
-    const [timerViewVisibility, setTimerViewVisibility] = useState(false)
-    const [buttonText, setButtonText] = useState('Stop')
-    const [steepArray, setSteepArray] = useState([])
-    const [teaTagColor, setTeaTagColor] = useState('#92a3aa')
-    const [openNavigation, setOpenNavigation] = useState(false)
+    const [steepData, setSteepData] = useState({});
+    const [note, setNote] = useState('Tap To Enter Note');
+    const [timerViewVisibility, setTimerViewVisibility] = useState(false);
+    const [buttonText, setButtonText] = useState('Stop');
+    const [steepArray, setSteepArray] = useState([]);
+    const [teaTagColor, setTeaTagColor] = useState('#92a3aa');
+    const [openNavigation, setOpenNavigation] = useState(false);
     const [startTime, setStartTime] = useState(() => {
 
-        return Date.now()
+        return Date.now();
 
-    })
+    });
 
-
-
-    let height
-    if(flavor)
-    {
-        height = 1580
-    }
-    else if(!flavor)
-    {
-        height = 1000
+    const endingTime = useRef(0);
+    const countdownTimer = useRef(parseInt(startingTime));
+    const first = useRef(true);
+    const firstCounterRun = useRef(true);
+    const countdownFunction = useRef(null)
+    let height;
+    if (flavor) {
+        height = 1580;
+    } else if (!flavor) {
+        height = 1000;
     }
     const setSteepArrayMiddleFunc = () => {
 
-        setSteepArray([...steepArray, [steepData]])
+        setSteepArray([...steepArray, [steepData]]);
 
-    }
+    };
 
 
     const createEntry = (force) => {
@@ -194,62 +192,58 @@ function DiaryEntry(props) {
         if (!first || force) {
 
 
-            let sessionID = teaID + props.teas[teaID].teaName + startTime
+            let sessionID = teaID + props.teas[teaID].teaName + startTime;
 
 
-            let duration = Date.now() - parseInt(startTime)
-            let tempnote = note
-            if (tempnote === "Tap To Enter Note")
-            {
-                tempnote = ''
+            let duration = Date.now() - parseInt(startTime);
+            let tempnote = note;
+            if (tempnote === 'Tap To Enter Note') {
+                tempnote = '';
             }
 
-            props.setTeaDay(new Date().getDay(), new Date().getDate())
-            props.deductWeight(teaID, weight)
+            props.setTeaDay(new Date().getDay(), new Date().getDate());
+            props.deductWeight(teaID, weight);
             props.createEntry({
                 teaID, waterVolume, weight, temp, duration, note: tempnote,
                 sessionID: sessionID,
                 teaName: props.teas[teaID].teaName,
                 steeps: [...steepArray, [steepData]],
-                flavor
+                flavor,
 
 
-            })
+            });
         }
-    }
+    };
 
     const endButtonAction = () => {
 
-        createEntry(false)
-        setStartTimer(false)
-        navigation.navigate("HomeScreen")
-    }
+        createEntry(false);
+        setStartTimer(false);
+        navigation.navigate('HomeScreen');
+    };
     const handleBack = () => {
 
+        clearTimeout( countdownFunction.current)
+        setConfirmation(!confirmationVisible);
 
-        setConfirmation(!confirmationVisible)
-
-    }
+    };
 
     function handleBackButtonClick(goHome) {
 
-        if(goHome)
-        {
-            navigation.navigate("HomeScreen")
-            return true
-        }
-        else
-        {
-        if (navigation.canGoBack()) {
-
-            handleBack()
-
-            return true
-
+        if (goHome) {
+            navigation.navigate('HomeScreen');
+            return true;
         } else {
-            return true
+            if (navigation.canGoBack()) {
+                handleBack();
 
-        }   }
+                return true;
+
+            } else {
+                return true;
+
+            }
+        }
 
     }
 
@@ -279,7 +273,7 @@ function DiaryEntry(props) {
                 useNativeDriver: false,
             }).start();
         }
-    }, [openNavigation])
+    }, [openNavigation]);
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
         return () => {
@@ -290,7 +284,7 @@ function DiaryEntry(props) {
     const PATTERN = [
         1 * ONE_SECOND_IN_MS,
         2 * ONE_SECOND_IN_MS,
-        3 * ONE_SECOND_IN_MS
+        3 * ONE_SECOND_IN_MS,
     ];
 
 
@@ -298,111 +292,133 @@ function DiaryEntry(props) {
         if (!startTimer) {
 
 
-            if (first) {
+            if (!first.current) {
+                if (firstCounterRun.current) {
 
+                    countdownTimer.current = (parseInt(currentTime));
+                    firstCounterRun.current = false;
 
-                setFirst(false)
-                setCountdownTimer(parseInt(currentTime))
-
-            } else {
-                setCountdownTimer(parseInt(currentTime) + parseInt(increment))
-                setCurrenTime(parseInt(currentTime) + parseInt(increment))
+                } else {
+                    countdownTimer.current = (parseInt(currentTime) + parseInt(increment));
+                    setCurrenTime(parseInt(currentTime) + parseInt(increment));
+                }
             }
-            BackgroundTimer.stopBackgroundTimer();
-            setButtonText('Close')
+            clearTimeout( countdownFunction.current)
+            setButtonText('Close');
+            endingTime.current = 0;
             deactivateKeepAwake();
         }
-    }, [startTimer])
+
+
+    }, [startTimer]);
     const startInterval = () => {
 
 
         activateKeepAwake();
-        if (!first) {
 
-            setSteepArrayMiddleFunc()
-            setCountdownTimer((t) => t + increment)
+
+        if (!first.current) {
+            setSteepArrayMiddleFunc();
+            setStartTimer(true);
+            endingTime.current = new Date().getTime() + 1000 * parseInt(countdownTimer.current + increment);
+            setCountdownState(countdownTimer.current + increment);
+
+
+        } else {
+            setStartTimer(true);
+            first.current = (false);
+            endingTime.current = new Date().getTime() + 1000 * parseInt(startingTime);
+            setCountdownState(countdownTimer.current);
         }
 
 
-        BackgroundTimer.runBackgroundTimer(() => {
+    };
 
 
-                setCountdownTimer(secs => {
-
-                    if (secs > 0) {
-                        return secs - 1
+    useEffect(() => {
 
 
-                    } else {
+            if (startTimer && !first.current) {
 
-                        setStartTimer(false)
-                        if (AppState.currentState === 'active') {
-                            Vibration.vibrate(PATTERN)
+                countdownFunction.current =          setTimeout(() => {
+                        if (countDownTimerState <= 0) {
+                            setStartTimer(false);
                             timerEndingSound.play((success) => {
                                 if (!success) {
-                                    console.log('Sound did not play')
+                                    console.log('Sound did not play');
                                 }
-                            })
+                            });
+
+                            if (AppState.currentState === 'active') {
+                                Vibration.vibrate(PATTERN);
+                                timerEndingSound.play((success) => {
+                                    if (!success) {
+                                        console.log('Sound did not play');
+                                    }
+                                });
+                            }
+
+
+                        } else {
+
+
+                            setCountdownState(Math.ceil((endingTime.current - new Date().getTime()) / 1000) > 0 ? Math.ceil((endingTime.current - new Date().getTime()) / 1000) : 0);
+
                         }
-                        return 0
+                    }, 1000,
+                );
+            }
 
-
-                    }
-
-                })
-
-            },
-            1000);
-        setStartTimer(true)
-
-
-    }
-
-
-    const clockiFy = (time, origin) => {
-        let mins = Math.floor((time / 60))
-        let seconds = Math.floor(time % 60)
-
-        let displayMins = mins < 10 ? `${mins}` : mins
-        let displaySecs = seconds < 10 ? `0${seconds}` : seconds
-
-        if (displayMins === '0' && origin === 'currentTime') {
-            return displaySecs
-        } else {
-            return (
-                displayMins + ':'+ displaySecs
-            )
         }
 
-    }
 
-    let backgroundColour
+        ,
+        [countDownTimerState],
+    );
+    const clockiFy = (time, origin) => {
+        let mins = Math.floor((time / 60));
+        let seconds = Math.floor(time % 60);
+
+        let displayMins = mins < 10 ? `${mins}` : mins;
+        let displaySecs = seconds < 10 ? `0${seconds}` : seconds;
+
+        if (displayMins === '0' && origin === 'currentTime') {
+            return displaySecs;
+        } else {
+            return (
+                displayMins + ':' + displaySecs
+            );
+        }
+
+    };
+
+    let backgroundColour;
 
     if (props.teas[teaID].type === 'Hei cha') {
-        backgroundColour = props.colors.HeiCha
+        backgroundColour = props.colors.HeiCha;
     } else if (props.teas[teaID].type === 'Raw Pu-erh') {
-        backgroundColour = props.colors.RawPuerh
+        backgroundColour = props.colors.RawPuerh;
     } else if (props.teas[teaID].type === 'Ripe Pu-erh') {
-        backgroundColour = props.colors.RipePuerh
+        backgroundColour = props.colors.RipePuerh;
     } else {
-        backgroundColour = props.colors[props.teas[teaID].type]
+        backgroundColour = props.colors[props.teas[teaID].type];
     }
     const goToFlavorSelection = () => {
         navigation.navigate('FlavorEntry', {
             setSteepData,
-            steepData
-        })
-    }
+            steepData,
+        });
+    };
 
-    const [teaNameToDisplay, setTeaName] = useState()
+    const [teaNameToDisplay, setTeaName] = useState();
 
     useEffect(() => {
         if (props.teas[teaID].teaName.length <= 110) {
-            setTeaName(props.teas[teaID].teaName)
+            setTeaName(props.teas[teaID].teaName);
         } else {
-            setTeaName(props.teas[teaID].teaName.substring(0, 110) + ' ...')
+            setTeaName(props.teas[teaID].teaName.substring(0, 110) + ' ...');
         }
-    }, [props.teas])
+    }, [props.teas]);
 
 
     return (
@@ -416,21 +432,21 @@ function DiaryEntry(props) {
                    visible={confirmationVisible}
                    onRequestClose={() => {
 
-                       setConfirmation(!confirmationVisible)
+                       setConfirmation(!confirmationVisible);
                    }}>
                 <View style={{
                     height: '50%',
                     width: '100%',
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}>
                     <View style={{
                         backgroundColor: 'white',
                         justifyContent: 'space-around',
                         height: 200,
                         width: '90%',
-                        borderRadius: 20
+                        borderRadius: 20,
                     }}>
 
                         <Text style={{
@@ -440,7 +456,7 @@ function DiaryEntry(props) {
                             marginRight: 20,
                             textAlign: 'center',
                             marginTop: 5,
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
                         }}>
                             Would You Like To Save Your Data The Data?
                         </Text>
@@ -452,19 +468,17 @@ function DiaryEntry(props) {
                             marginLeft: 50,
                         }}>
                             <TouchableOpacity style={styles.doneButton} onPress={() => {
-                                createEntry(true)
-                                setStartTimer(false)
-
-                                setConfirmation(!confirmationVisible)
-                                handleBackButtonClick(true)
+                                createEntry(true);
+                                setConfirmation(!confirmationVisible);
+                                handleBackButtonClick(true);
                             }} activeOpacity={1}>
                                 <Text style={styles.doneButtonText}>
                                     Yes
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.doneButton} onPress={() => {
-                                setConfirmation(!confirmationVisible)
-                                navigation.goBack()
+                                setConfirmation(!confirmationVisible);
+                                navigation.goBack();
                             }} activeOpacity={1}>
                                 <Text style={styles.doneButtonText}>
                                     No
@@ -481,7 +495,7 @@ function DiaryEntry(props) {
                    visible={timerViewVisibility}
                    onRequestClose={() => {
 
-                       setTimerViewVisibility(!timerViewVisibility)
+                       setTimerViewVisibility(!timerViewVisibility);
                    }}>
                 <View style={{height: '100%', width: '100%', justifyContent: 'flex-end'}}>
                     <View style={{
@@ -489,7 +503,7 @@ function DiaryEntry(props) {
                         width: '100%',
                         backgroundColor: '#13242A',
                         borderTopLeftRadius: 100,
-                        borderTopRightRadius: 100
+                        borderTopRightRadius: 100,
                     }}>
 
 
@@ -507,7 +521,7 @@ function DiaryEntry(props) {
 
                         }}>
                             <Text style={{alignSelf: 'center', fontWeight: 'bold', color: 'white', fontSize: 80}}>
-                                {clockiFy(countdownTimer, 'countdownTimer')}
+                                {clockiFy(countDownTimerState, 'countdownTimer')}
                             </Text>
                         </View>
                         <View style={{
@@ -518,9 +532,8 @@ function DiaryEntry(props) {
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    BackgroundTimer.stopBackgroundTimer();
-                                    setStartTimer(false)
-                                    setTimerViewVisibility(!timerViewVisibility)
+                                    setStartTimer(false);
+                                    setTimerViewVisibility(!timerViewVisibility);
                                 }} style={{
                                 backgroundColor: '#E53B3B',
                                 width: 200,
@@ -547,7 +560,7 @@ function DiaryEntry(props) {
             </Modal>
             <ScrollView style={{flex: 1}} contentContainerStyle={{height: height}}>
                 <View style={styles.topPart}>
-                    <View style={[styles.topPartBar,]}>
+                    <View style={[styles.topPartBar]}>
                         <View style={{
                             top: 20,
                             width: 80,
@@ -555,9 +568,9 @@ function DiaryEntry(props) {
                             backgroundColor: backgroundColour,
                             borderRadius: 100,
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}>
-                            <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50,}}>
+                            <TouchableOpacity activeOpacity={1} style={{width: 50, height: 50}}>
                                 <Image style={{height: '100%', width: '100%'}}
                                        source={require('../img/teaLeafWhite.png')}/>
                             </TouchableOpacity>
@@ -570,14 +583,15 @@ function DiaryEntry(props) {
                         height: 300,
                         backgroundColor: '#E9C46A',
                         borderRadius: 30,
-                        position: "absolute",
+                        position: 'absolute',
                         alignContent: 'center',
-                        justifyContent: 'flex-start'
+                        justifyContent: 'flex-start',
                     }}>
                         <TouchableOpacity activeOpacity={1} onPress={() => {
-                            setButtonText('Stop')
-                            startInterval()
-                            setTimerViewVisibility(!timerViewVisibility)
+                            setButtonText('Stop');
+
+                            setTimerViewVisibility(!timerViewVisibility);
+                            startInterval();
                         }}>
                             <Text style={{alignSelf: 'center', fontSize: 35, color: '#264653', fontWeight: 'bold'}}>
                                 {clockiFy(currentTime, 'currentTime')}
@@ -591,16 +605,16 @@ function DiaryEntry(props) {
                             marginTop: 5,
                             alignSelf: 'center',
                             height: 2,
-                            backgroundColor: '#2A9D8F'
+                            backgroundColor: '#2A9D8F',
                         }}/>
                         <TextInput
                             selectTextOnFocus={true}
-                            keyboardType={"number-pad"}
+                            keyboardType={'number-pad'}
                             onChangeText={(text) => {
                                 if (text !== '') {
-                                    setIncrement(parseInt(text))
+                                    setIncrement(parseInt(text));
                                 } else {
-                                    setIncrement(0)
+                                    setIncrement(0);
                                 }
                             }}
                             style={{
@@ -608,7 +622,7 @@ function DiaryEntry(props) {
 
                                 fontSize: 25,
                                 color: '#264653',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
                             }}
                             value={increment.toString()}>
 
@@ -628,7 +642,7 @@ function DiaryEntry(props) {
                             fontSize: 15,
                             color: '#264653',
                             fontWeight: 'bold',
-                            textAlign: 'center'
+                            textAlign: 'center',
                         }}>
                             {teaNameToDisplay}
                         </Text>
@@ -638,30 +652,30 @@ function DiaryEntry(props) {
                 </View>
 
                 {flavor &&
-                <View style={styles.steepView}>
-                    <View style={styles.steepTag}>
-                        <Text style={{
-                            alignSelf: 'center',
-                            height: '100%',
-                            textAlignVertical: 'center',
-                            fontSize: 20,
-                            color: '#264653',
-                            fontWeight: 'bold',
-                            textAlign: 'center'
-                        }}>
-                            Flavor
-                        </Text>
+                    <View style={styles.steepView}>
+                        <View style={styles.steepTag}>
+                            <Text style={{
+                                alignSelf: 'center',
+                                height: '100%',
+                                textAlignVertical: 'center',
+                                fontSize: 20,
+                                color: '#264653',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                            }}>
+                                Flavor
+                            </Text>
 
+                        </View>
+                        <TouchableOpacity style={styles.graphView}
+                                          activeOpacity={1}
+                                          onPress={goToFlavorSelection}
+                        >
+
+                            <RadarChart steeps={{...steepData}}/>
+
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.graphView}
-                                      activeOpacity={1}
-                                      onPress={goToFlavorSelection}
-                    >
-
-                        <RadarChart steeps={{...steepData}}/>
-
-                    </TouchableOpacity>
-                </View>
 
                 }
                 <View style={styles.notesView}>
@@ -673,7 +687,7 @@ function DiaryEntry(props) {
                             fontSize: 20,
                             color: '#264653',
                             fontWeight: 'bold',
-                            textAlign: 'center'
+                            textAlign: 'center',
                         }}>
                             Notes
                         </Text>
@@ -682,14 +696,13 @@ function DiaryEntry(props) {
                     <TouchableOpacity style={styles.noteElement}
                                       activeOpacity={1}
                                       onPress={() => {
-                                          let tempnote = note
-                                          if (tempnote === "Tap To Enter Note")
-                                          {
-                                              tempnote = ''
+                                          let tempnote = note;
+                                          if (tempnote === 'Tap To Enter Note') {
+                                              tempnote = '';
                                           }
                                           navigation.navigate('NoteEntry', {
-                                              note: tempnote, setNote, setTeaTagColor
-                                          })
+                                              note: tempnote, setNote, setTeaTagColor,
+                                          });
                                       }}
                     >
 
@@ -698,7 +711,7 @@ function DiaryEntry(props) {
                             height: '100%',
                             color: teaTagColor,
                             fontSize: 20,
-                            textAlign: 'center'
+                            textAlign: 'center',
                         }}>
                             {note}
                         </Text>
@@ -710,15 +723,17 @@ function DiaryEntry(props) {
             </ScrollView>
 
             <View style={{
-                position: "absolute",
+                position: 'absolute',
                 bottom: '10%',
                 width: '100%',
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
-                flexDirection: 'row'
+                flexDirection: 'row',
             }}>
 
-                <TouchableOpacity activeOpacity={1} onPress={() => {setOpenNavigation(!openNavigation)}}>
+                <TouchableOpacity activeOpacity={1} onPress={() => {
+                    setOpenNavigation(!openNavigation);
+                }}>
                     <View style={styles.sessionActionMenu}>
                         <Animated.View style={{
                             height: 66,
@@ -728,7 +743,7 @@ function DiaryEntry(props) {
                             borderBottomLeftRadius: 25,
                             width: textInputWidth.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [65, 67]
+                                outputRange: [65, 67],
                             }),
 
                         }}>
@@ -736,8 +751,8 @@ function DiaryEntry(props) {
                             <AnimatedImage style={{
                                 width: iconWidth.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, 67]
-                                }), height: 67, alignSelf: 'center'
+                                    outputRange: [0, 67],
+                                }), height: 67, alignSelf: 'center',
                             }}
                                            source={require('../img/push.png')}/>
 
@@ -745,8 +760,8 @@ function DiaryEntry(props) {
                             <AnimatedImage style={{
                                 height: 67, width: iconWidth.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [60, 0]
-                                }), alignSelf: 'center'
+                                    outputRange: [60, 0],
+                                }), alignSelf: 'center',
                             }}
                                            source={require('../img/pull.png')}/>
 
@@ -758,7 +773,7 @@ function DiaryEntry(props) {
                                     height: 66,
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 230]
+                                        outputRange: [0, 230],
                                     }),
                                     backgroundColor: '#E9C46A',
                                     justifyContent: 'space-around',
@@ -775,24 +790,24 @@ function DiaryEntry(props) {
 
                                 width: textInputWidth.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, 50]
+                                    outputRange: [0, 50],
                                 }),
                                 borderRadius: 20,
                                 alignSelf: 'center',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
                             }}>
                                 <AnimatedTouchable activeOpacity={1} onPress={() => {
-                                    setButtonText('Stop')
-                                    startInterval()
-                                    setTimerViewVisibility(!timerViewVisibility)
+                                    setButtonText('Stop');
+                                    startInterval();
+                                    setTimerViewVisibility(!timerViewVisibility);
                                 }} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 40]
+                                        outputRange: [0, 40],
                                     }), height: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 40]
+                                        outputRange: [0, 40],
                                     }),
                                 }}>
                                     <Image style={{height: '100%', width: '100%'}}
@@ -804,20 +819,20 @@ function DiaryEntry(props) {
 
                                 width: textInputWidth.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, 50]
+                                    outputRange: [0, 50],
                                 }),
                                 borderRadius: 20,
                                 alignSelf: 'center',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
                             }}>
                                 <AnimatedTouchable activeOpacity={1} onPress={endButtonAction} style={{
                                     width: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 40]
+                                        outputRange: [0, 40],
                                     }), height: textInputWidth.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, 40]
+                                        outputRange: [0, 40],
                                     }),
                                 }}>
                                     <Image style={{height: '100%', width: '100%'}} source={require('../img/stop.png')}/>
@@ -832,7 +847,7 @@ function DiaryEntry(props) {
         </View>
 
 
-    )
+    );
 }
 
 
@@ -842,7 +857,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         colors: TeaAvailable.teaColour,
         teas: TeaAvailable.teaAvailable,
-        Diary: Diary.diaryEntry
+        Diary: Diary.diaryEntry,
     };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -851,7 +866,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         setTeaDay: (day, date) => dispatch(setTeaSessionForDay(day, date)),
         createEntry: (data) => dispatch(addEntry(data)),
         addSteep: (sessionID, steepData) => dispatch(addSteep(steepData, sessionID)),
-        deductWeight: (teaId, newData) => dispatch(deductWeight(teaId, newData))
+        deductWeight: (teaId, newData) => dispatch(deductWeight(teaId, newData)),
     };
 };
 

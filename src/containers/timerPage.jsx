@@ -146,6 +146,7 @@ function TimerPage(props) {
     const countdownTimer = useRef(parseInt(startingTime))
     const first = useRef(true)
     const firstCounterRun = useRef(true)
+    const countdownFunction = useRef(null)
     const endButtonAction = () => {
 
 
@@ -157,7 +158,7 @@ function TimerPage(props) {
         if(navigation.canGoBack())
         {
 
-            setStartTimer(false)
+            clearTimeout( countdownFunction.current)
             navigation.goBack()
         }
         else{
@@ -196,7 +197,7 @@ function TimerPage(props) {
                    setCurrenTime(parseInt(currentTime) + parseInt(increment))
                }
            }
-
+            clearTimeout( countdownFunction.current)
             setButtonText('Close')
             endingTime.current = 0
             deactivateKeepAwake();
@@ -253,22 +254,6 @@ function TimerPage(props) {
             endingTime.current = new Date().getTime() +   1000 * parseInt(startingTime)
             setCountdownState(countdownTimer.current)
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -277,7 +262,7 @@ function TimerPage(props) {
 
             if (startTimer && !first.current) {
 
-                setTimeout(() => {
+                countdownFunction.current =    setTimeout(() => {
                         if (countDownTimerState <= 0) {
                             setStartTimer(false)
                             timerEndingSound.play((success) => {

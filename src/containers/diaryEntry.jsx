@@ -189,7 +189,7 @@ function DiaryEntry(props) {
     const createEntry = (force) => {
 
 
-        if (!first || force) {
+        if (!firstCounterRun.current || force) {
 
 
             let sessionID = teaID + props.teas[teaID].teaName + startTime;

@@ -17,7 +17,7 @@ import {
     View
 } from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+
 import {addEntry, addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
 import {addTea, editTea} from "../action/currentTeaAction";

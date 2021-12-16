@@ -15,7 +15,7 @@ import Slider from "@react-native-community/slider";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import InventoryItem from "../components/inventoryItem";
 import {connect} from "react-redux";
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
+
 
 
 function TeaSelection(props) {

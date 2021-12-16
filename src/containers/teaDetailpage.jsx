@@ -3,7 +3,6 @@ import {Animated, FlatList, Image, Linking, StyleSheet, Text, ToastAndroid, Touc
 import {useNavigation, useRoute} from "@react-navigation/core";
 import HistoryItem from "../components/historyItem";
 import {connect} from "react-redux";
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import {archiveTea, unarchiveTea} from "../action/currentTeaAction";
 
 

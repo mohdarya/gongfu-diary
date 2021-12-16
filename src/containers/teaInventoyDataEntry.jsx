@@ -13,7 +13,6 @@ import {
     View
 } from "react-native";
 import {useNavigation} from "@react-navigation/core";
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import {addSteep} from "../action/diaryEntryAction";
 import {connect} from "react-redux";
 import {addTea} from "../action/currentTeaAction";

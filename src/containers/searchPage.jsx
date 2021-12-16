@@ -4,7 +4,6 @@ import {getFocusedRouteNameFromRoute, useNavigation, useRoute} from "@react-navi
 import {connect} from "react-redux";
 import InventoryItem from "../components/inventoryItem";
 import HistoryItem from "../components/historyItem";
-import {Directions, FlingGestureHandler, State} from 'react-native-gesture-handler';
 
 function SearchPage(props) {
 

@@ -15,7 +15,7 @@ import {useNavigation} from "@react-navigation/core";
 import {connect} from "react-redux";
 import InventoryItem from "../components/inventoryItem";
 import HistoryItem from "../components/historyItem";
-import {Directions, FlingGestureHandler, State} from 'react-native-gesture-handler';
+
 
 function HomeScreen(props) {
 

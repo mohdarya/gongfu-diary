@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/core";
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import Sound from "react-native-sound";
 
 function TimerPage(props) {

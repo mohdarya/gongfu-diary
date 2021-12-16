@@ -4,7 +4,6 @@ import {useNavigation, useRoute} from "@react-navigation/core";
 import {addEntry, addSteep, editEntryName, editEntrySteep, editNote, removeEntry} from "../action/diaryEntryAction";
 import {connect} from 'react-redux';
 import RadarChart from "../components/radarChart";
-import {Directions, FlingGestureHandler, State} from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
 import SteepSelector from "../components/steepSelector";
 import {addWeight, deductWeight} from "../action/currentTeaAction";

@@ -84,7 +84,7 @@ export function currentTeaReducer(state = initialState, action) {
                         ...state.teaAvailable,
                         [action.teaID]: {
                             ...state.teaAvailable[action.teaID],
-                            weight: parseFloat(parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)).toFixed(1),
+                            weight: 0,
                             status: 'archived'
                         }
                     }
@@ -115,19 +115,6 @@ export function currentTeaReducer(state = initialState, action) {
                             ...state.teaAvailable[action.teaID],
                             weight: parseFloat(parseFloat(state.teaAvailable[action.teaID].weight) + parseFloat(action.weight)).toFixed(1),
                             status: 'active'
-                        }
-                    }
-
-                }
-            } else {
-
-                return {
-                    ...state,
-                    teaAvailable: {
-                        ...state.teaAvailable,
-                        [action.teaID]: {
-                            ...state.teaAvailable[action.teaID],
-                            weight: parseFloat(parseFloat(state.teaAvailable[action.teaID].weight) - parseFloat(action.weight)).toFixed(1)
                         }
                     }
 

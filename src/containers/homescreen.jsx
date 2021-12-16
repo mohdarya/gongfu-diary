@@ -147,13 +147,14 @@ function HomeScreen(props) {
             position: 'absolute',
             justifyContent: 'space-between',
             bottom: 0,
+            backgroundColor: 'black',
             width: '100%',
             height: '20%'
         },
         sessionActionMenu: {
             height: 66,
             width: 'auto',
-            backgroundColor: '#E9C46A',
+
             flexDirection: 'row',
             borderRadius: 25,
 
@@ -438,11 +439,19 @@ function HomeScreen(props) {
                 </ScrollView>
             </View>
 
-            <View style={styles.navigationGroup}>
 
-                <TouchableOpacity activeOpacity={1} onPress={() => {setOpenNavigation(!openNavigation)}}>
-                    <View style={styles.sessionActionMenu}>
-                        <Animated.View style={{
+
+            <View style={{
+                position: "absolute",
+                bottom: '10%',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                flexDirection: 'row'
+            }}>
+
+            <View style={styles.sessionActionMenu}>
+                        <AnimatedTouchable activeOpacity={1}  onPress={() => {setOpenNavigation(!openNavigation)}} style={{
                             height: 66,
 
                             flexDirection: 'row',
@@ -475,7 +484,7 @@ function HomeScreen(props) {
                                    source={require('../img/pull.png')}/>
 
 
-                        </Animated.View>
+                        </AnimatedTouchable>
                         <Animated.View
                             style={[
 
@@ -532,7 +541,15 @@ function HomeScreen(props) {
                         </Animated.View>
 
                     </View>
-                </TouchableOpacity>
+                </View>
+            <View style={{
+                position: "absolute",
+                bottom: '0%',
+                width: '100%',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                flexDirection: 'row'
+            }}>
                 <View style={styles.navigationBar}>
                     <TouchableOpacity activeOpacity={1} onPress={() => {
                         navigation.navigate('SettingsPage')
@@ -559,6 +576,7 @@ function HomeScreen(props) {
                         <Image style={{height: '100%', width: '100%'}} source={require('../img/shuffle.png')}/>
                     </TouchableOpacity>
                 </View>
+
             </View>
 
         </View>

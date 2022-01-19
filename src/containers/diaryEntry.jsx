@@ -342,12 +342,7 @@ function DiaryEntry(props) {
 
                 countdownFunction.current =          setTimeout(() => {
                         if (countDownTimerState <= 0) {
-                            setStartTimer(false);
-                            timerEndingSound.play((success) => {
-                                if (!success) {
-                                    console.log('Sound did not play');
-                                }
-                            });
+
 
                             if (AppState.currentState === 'active') {
                                 Vibration.vibrate(PATTERN);
@@ -356,6 +351,7 @@ function DiaryEntry(props) {
                                         console.log('Sound did not play');
                                     }
                                 });
+                                setStartTimer(false);
                             }
 
 

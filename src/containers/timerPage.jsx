@@ -116,7 +116,7 @@ function TimerPage(props) {
 
 
     let beginX
-    const [ timerEndingSound, setTimerSound] = useState(new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
+    const  timerEndingSound = useRef(new Sound('phone_ring_bell.wav', Sound.MAIN_BUNDLE,(error) => {
         if (error) {
             console.log('failed to load the sound', error);
             return;
@@ -211,7 +211,7 @@ function TimerPage(props) {
                         setCountdownState(0);
                         if (AppState.currentState === 'active') {
                             Vibration.vibrate(PATTERN);
-                            timerEndingSound.play((success) => {
+                            timerEndingSound.current.play((success) => {
                                 if (!success) {
                                     console.log('Sound did not play');
                                 }

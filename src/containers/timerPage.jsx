@@ -208,7 +208,7 @@ function TimerPage(props) {
                     if (Math.ceil((endingTime.current - new Date().getTime()) / 1000) < 0) {
 
 
-
+                        setCountdownState(0);
                         if (AppState.currentState === 'active') {
                             Vibration.vibrate(PATTERN);
                             timerEndingSound.play((success) => {

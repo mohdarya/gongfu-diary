@@ -223,7 +223,7 @@ function DiaryEntry(props) {
     };
     const handleBack = () => {
 
-        clearTimeout( countdownFunction.current)
+        clearInterval( countdownFunction.current)
         setConfirmation(!confirmationVisible);
 
     };
@@ -303,10 +303,38 @@ function DiaryEntry(props) {
                     setCurrenTime(parseInt(currentTime) + parseInt(increment));
                 }
             }
-            clearTimeout( countdownFunction.current)
+            clearInterval( countdownFunction.current)
             setButtonText('Close');
             endingTime.current = 0;
             deactivateKeepAwake();
+        }
+        else if (startTimer && !first.current) {
+
+            countdownFunction.current =          setInterval(() => {
+
+
+                    if (Math.ceil((endingTime.current - new Date().getTime()) / 1000) < 0) {
+
+
+
+                        if (AppState.currentState === 'active') {
+                            Vibration.vibrate(PATTERN);
+                            timerEndingSound.play((success) => {
+                                if (!success) {
+                                    console.log('Sound did not play');
+                                }
+                            });
+                            setStartTimer(false);
+                        }
+
+
+                    } else {
+
+                        setCountdownState(Math.ceil((endingTime.current - new Date().getTime()) / 1000) > 0 ? Math.ceil((endingTime.current - new Date().getTime()) / 1000) : 0);
+
+                    }
+                }, 1000,
+            );
         }
 
 
@@ -319,58 +347,25 @@ function DiaryEntry(props) {
 
         if (!first.current) {
             setSteepArrayMiddleFunc();
-            setStartTimer(true);
+
             endingTime.current = new Date().getTime() + 1000 * parseInt(countdownTimer.current + increment);
             setCountdownState(countdownTimer.current + increment);
+            setStartTimer(true);
+
 
 
         } else {
-            setStartTimer(true);
+
             first.current = (false);
             endingTime.current = new Date().getTime() + 1000 * parseInt(startingTime);
             setCountdownState(countdownTimer.current);
+            setStartTimer(true);
         }
 
 
     };
 
 
-    useEffect(() => {
-
-
-            if (startTimer && !first.current) {
-
-                countdownFunction.current =          setTimeout(() => {
-                        if (countDownTimerState <= 0) {
-
-
-                            if (AppState.currentState === 'active') {
-                                Vibration.vibrate(PATTERN);
-                                timerEndingSound.play((success) => {
-                                    if (!success) {
-                                        console.log('Sound did not play');
-                                    }
-                                });
-                                setStartTimer(false);
-                            }
-
-
-                        } else {
-
-
-                            setCountdownState(Math.ceil((endingTime.current - new Date().getTime()) / 1000) > 0 ? Math.ceil((endingTime.current - new Date().getTime()) / 1000) : 0);
-
-                        }
-                    }, 1000,
-                );
-            }
-
-        }
-
-
-        ,
-        [countDownTimerState],
-    );
     const clockiFy = (time, origin) => {
         let mins = Math.floor((time / 60));
         let seconds = Math.floor(time % 60);
@@ -585,6 +580,7 @@ function DiaryEntry(props) {
                     }}>
                         <TouchableOpacity activeOpacity={1} onPress={() => {
                             setButtonText('Stop');
+
 
                             setTimerViewVisibility(!timerViewVisibility);
                             startInterval();

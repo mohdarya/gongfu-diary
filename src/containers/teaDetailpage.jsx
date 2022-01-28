@@ -94,15 +94,16 @@ function TeaDetailPage(props) {
     useEffect(() => {
         let items = []
 
-        let loopNumber = props.diary.length
+        let tempData = Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID)
+        let loopNumber = tempData.length
 
         if (loopNumber > 5) {
             loopNumber = 5
         }
         for (let i = 0; i < loopNumber; i++) {
-            if (props.diary[props.diary.length - 1 - i].teaID === route.params.teaID) {
-                items.push({...props.diary[props.diary.length - 1 - i]})
-            }
+
+                items.push(tempData[i])
+
         }
         setHistoryItems(items)
     }, [props.wholeDiary])
@@ -112,7 +113,7 @@ function TeaDetailPage(props) {
 
 
         return (
-            <HistoryItem key={`historyItem${item.sessionID}`} data={{...item}}/>
+            <HistoryItem key={`historyItem${item[1].sessionID}`} data={item[1]}/>
         )
     }
 

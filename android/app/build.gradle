@@ -134,9 +134,9 @@ android {
         applicationId "com.gongfudiary"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 15
         resConfigs "en"
-        versionName "2.4.4"
+        versionName "2.5.0"
     }
     splits {
         abi {

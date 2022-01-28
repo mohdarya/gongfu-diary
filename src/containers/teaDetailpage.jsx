@@ -97,25 +97,16 @@ function TeaDetailPage(props) {
         let tempData = Object.entries(props.diary).filter(([key, value]) => value.teaID === route.params.teaID)
         let loopNumber = tempData.length
 
-        if (loopNumber > 5) {
-            loopNumber = 5
+        if (loopNumber > 3) {
+            loopNumber = 3
         }
         for (let i = 0; i < loopNumber; i++) {
-
-                items.push(tempData[i])
-
+                items.push( <HistoryItem key={`historyItem${tempData[tempData.length - 1 - i][1].sessionID}`} data={tempData[tempData.length - 1 - i][1]}/>)
         }
         setHistoryItems(items)
     }, [props.wholeDiary])
 
 
-    const renderItems = ({item}) => {
-
-
-        return (
-            <HistoryItem key={`historyItem${item[1].sessionID}`} data={item[1]}/>
-        )
-    }
 
     let backgroundColour
 
@@ -295,11 +286,7 @@ function TeaDetailPage(props) {
                 </View>
 
                 <View style={styles.historyView}>
-                    <FlatList data={historyItems} style={{height: '100%'}} renderItem={renderItems}
-
-
-                              keyExtractor={item => item.sessionID}/>
-
+                    {historyItems}
 
                 </View>
             </View>
@@ -307,7 +294,7 @@ function TeaDetailPage(props) {
 
             <View style={{
                 position: "absolute",
-                bottom: '10%',
+                bottom: '5%',
                 width: '100%',
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
